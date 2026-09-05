@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Academic profile and publications of Shengda Zhao." />
+    <title>Shengda Zhao | Research</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="research.css" />
+  </head>
+  <body>
+    <nav class="floating-nav" aria-label="Page navigation">
+      <a href="#profile">Profile</a>
+      <a href="#record">Academic record</a>
+      <a href="#research">Research</a>
+      <a href="#publication-title">Publications</a>
+    </nav>
+    <main>
+      <section class="hero" aria-labelledby="name">
+        <p class="eyebrow">THEORETICAL &amp; COMPUTATIONAL STATISTICAL PHYSICS</p>
+        <h1 id="name">Shengda Zhao</h1>
+        <p class="lede">Studying emergent organization, fluctuations, and transport in complex systems.</p>
+        <div class="focuses" aria-label="Research focuses">
+          <span>Complex matter</span><span>Nonequilibrium systems</span><span>Emergent dynamics</span>
+        </div>
+      </section>
+
+      <section id="profile" class="overview" aria-label="Research overview">
+        <div><p class="section-kicker">RESEARCH PROFILE</p><h2>From soft-matter theory to complex networks.</h2></div>
+        <p>I am a theoretical physicist working across soft condensed matter and complex systems. My research centres on analytical derivation and model building: self-consistent field theories for sliding-topological and topology-transformable polymers, diffusion theory in hyperuniform media, combinatorial optimization for complex free-energy landscapes, and phenomenological descriptions of exciton transport in organic solar cells.</p>
+      </section>
+
+      <section id="record" class="academic-record" aria-labelledby="record-title">
+        <div class="record-heading"><p class="section-kicker">ACADEMIC RECORD</p><h2 id="record-title">Education and research skills.</h2><p>Trained in theoretical derivation, with foundations in calculus, matrix analysis, discrete mathematics, and theoretical statistical physics.</p><div class="profile-links"><a href="https://scholar.google.com/citations?user=BkVINFYAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a><a href="https://orcid.org/0009-0000-1347-0587" target="_blank" rel="noreferrer">ORCID ↗</a><a href="https://github.com/liftes" target="_blank" rel="noreferrer">GitHub ↗</a></div><ul class="skill-list" aria-label="Programming languages"><li><strong>Programming languages</strong><span>Python · C/C++ · Fortran</span></li></ul></div>
+        <div class="record-content">
+          <div class="metric-grid" aria-label="Scholar metrics">
+            <div class="metric"><span>46</span><small>Citations</small></div><div class="metric"><span>4</span><small>h-index</small></div><p class="metric-note">Data from Google Scholar · updated August 2026.</p>
+          </div>
+          <ol class="education-list" aria-label="Education">
+            <li><span class="education-date">2024—present</span><div><strong>Ph.D. Candidate, Physics</strong><p>Beijing Jiaotong University · Condensed Matter and Complex Systems</p></div></li>
+            <li><span class="education-date">2021—2024</span><div><strong>M.Sc., Physics</strong><p>Beijing Jiaotong University · Condensed Matter</p></div></li>
+            <li><span class="education-date">2017—2021</span><div><strong>B.Sc., Optoelectronic Information Science and Engineering</strong><p>Beijing Jiaotong University · GPA 3.88/4.00 · Dual degree in Computer Science and Technology, GPA 3.74/4.00</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="research" class="research-themes" aria-labelledby="research-title">
+        <div class="theme-intro"><p class="section-kicker">RESEARCH THEMES</p><h2 id="research-title">Theory as a bridge between matter, motion, and networks.</h2></div>
+        <div class="theme-grid">
+          <article class="theme-card"><p class="theme-number">01</p><h3>Soft-matter field theory</h3><p>Derive self-consistent field descriptions for sliding-topological, topology-transformable, and sequence-controlled polymers, connecting molecular constraints to phase behaviour and adsorption.</p><p class="theme-citations">Selected works: <a href="#work-zhao2024phase" aria-label="Open topology-transformable polymer work">[work]</a>, <a href="#work-zhao2025optimization" aria-label="Open sequence optimization work">[work]</a></p></article>
+          <article class="theme-card"><p class="theme-number">02</p><h3>Transport in structured media</h3><p>Develop diffusion theory for two-dimensional hyperuniform media and investigate collective dynamics in driven and active systems.</p><p class="theme-citations">Selected works: <a href="#work-zhang2026diffusion" aria-label="Open hyperuniform diffusion work">[work]</a>, <a href="#work-zhang2026wetting" aria-label="Open driven laning work">[work]</a></p></article>
+          <article class="theme-card"><p class="theme-number">03</p><h3>Complex networks &amp; optimization</h3><p>Use statistical-physics-inspired and combinatorial optimization methods to model real transport networks and collective urban dynamics.</p><p class="theme-citations">Selected works: <a href="#work-zhao2025traffic" aria-label="Open traffic optimization work">[work]</a>, <a href="#work-li2025stranding" aria-label="Open subway propagation work">[work]</a></p></article>
+          <article class="theme-card"><p class="theme-number">04</p><h3>Organic photovoltaics</h3><p>Apply phenomenological modeling to molecular-orientation-dependent exciton separation and charge-transport questions in organic solar cells.</p><p class="theme-citations">Selected works: <a href="#work-yan2023exciton" aria-label="Open exciton separation work">[work]</a>, <a href="#work-liu2023stereoisomeric" aria-label="Open molecular design work">[work]</a></p></article>
+        </div>
+      </section>
+
+      <section class="publications" aria-labelledby="publication-title">
+        <div class="section-topline">
+          <div>
+            <p class="section-kicker">SELECTED &amp; COMPLETE RECORD</p>
+            <h2 id="publication-title">Research works</h2>
+          </div>
+          <label class="sort-control">Sort works
+            <select id="sortWorks" aria-label="Sort research works">
+              <option value="curated">CV identifier order</option>
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="role">Lead contributions first</option>
+            </select>
+          </label>
+        </div>
+        <p id="status" class="status" aria-live="polite">Loading publications…</p>
+        <div id="workGrid" class="work-grid"></div>
+      </section>
+    </main>
+    <dialog id="workDialog" class="work-dialog" aria-labelledby="dialogTitle">
+      <button id="closeDialog" class="close-dialog" aria-label="Close work details">×</button>
+      <div id="dialogContent"></div>
+    </dialog>
+    <footer><span>© <span id="year"></span> Shengda Zhao</span><span>Built from a BibTeX source</span></footer>
+    <script src="data/work-notes.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
