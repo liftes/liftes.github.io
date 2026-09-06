@@ -143,6 +143,11 @@ h2 {
 }
 
 .card {
+    --space-meta-title: 19px;     /* 顶部标签 → 标题 */
+    --space-title-venue: 23px;    /* 标题 → 期刊 */
+    --space-venue-authors: 7px;   /* 期刊 → 作者 */
+    --space-authors-role: 7px;   /* 作者 → 脚注横线 */
+    --space-role-text: 7px;       /* 横线 → 作者顺位文字 */
     display: flex;
     flex-direction: column;
     min-height: 340px;
@@ -164,7 +169,8 @@ h2 {
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin-bottom: 19px;
+    margin-bottom: 0;
+    padding-bottom: var(--space-meta-title);
 }
 
 .year {
@@ -176,26 +182,38 @@ h2 {
 
 .card h3 {
     min-height: var(--card-title-height, 0px);
-    display: -webkit-box;
-    overflow: hidden;
-    margin: 0 0 200px;
+    display: block;
+    margin: 0;
+    padding-bottom: var(--space-title-venue);
     font-family: "Times New Roman", Georgia, serif;
     font-size: 1.55rem;
     letter-spacing: -.025em;
     line-height: 1.12;
+}
+
+.card-title-text {
+    display: -webkit-box;
+    overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
 
+.card-venue-text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .venue {
-    margin: 0 0 8px;
+    margin: 0;
     color: var(--teal);
     font-size: .91rem;
     font-weight: 650;
 }
 
 .authors {
-    margin: 0 0 19px;
+    margin: 0;
     color: #526067;
     font-size: .88rem;
 }
@@ -296,17 +314,20 @@ footer {
 
 .card .authors {
     min-height: var(--card-authors-height, 0px);
-    margin-bottom: 11px;
+    margin: 0;
+    padding-bottom: var(--space-authors-role);
 }
 
 .card .venue {
     min-height: var(--card-venue-height, 0px);
+    margin: 0;
+    padding-bottom: var(--space-venue-authors);
 }
 
 .card .author-role {
     margin-top: 0;
     margin-bottom: 0;
-    padding-top: 8px;
+    padding-top: var(--space-role-text);
     border-top: 1px solid var(--line);
     color: #7b888d;
     font-size: .75rem;
