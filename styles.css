@@ -140,16 +140,18 @@ h2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
+    min-width: 0;
 }
 
 .card {
     --space-meta-title: 19px;     /* 顶部标签 → 标题 */
     --space-title-venue: 23px;    /* 标题 → 期刊 */
     --space-venue-authors: 7px;   /* 期刊 → 作者 */
-    --space-authors-role: 7px;   /* 作者 → 脚注横线 */
+    --space-authors-role: 9px;   /* 作者 → 脚注横线 */
     --space-role-text: 7px;       /* 横线 → 作者顺位文字 */
     display: flex;
     flex-direction: column;
+    min-width: 0;
     min-height: 340px;
     padding: 25px;
     border: 1px solid var(--line);
@@ -314,8 +316,10 @@ footer {
 
 .card .authors {
     min-height: var(--card-authors-height, 0px);
-    margin: 0;
-    padding-bottom: var(--space-authors-role);
+    margin: 0 0 var(--space-authors-role);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .card .venue {
@@ -332,6 +336,31 @@ footer {
     color: #7b888d;
     font-size: .75rem;
     font-weight: 400;
+}
+
+@media (max-width: 720px) {
+    .card h3,
+    .card .venue,
+    .card .authors {
+        min-height: 0;
+    }
+
+    .card-title-text {
+        max-height: 4.48em;
+        -webkit-line-clamp: 4;
+    }
+
+    .card-venue-text,
+    .card .authors {
+        display: -webkit-box;
+        max-height: 2.7em;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: normal;
+        line-height: 1.35;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
 }
 
 .work-dialog {

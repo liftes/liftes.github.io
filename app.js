@@ -17,7 +17,7 @@ function clean(value = '') { return value.replace(/[{}]/g, '').replace(/\s+/g, '
 function field(body, name) { const match = body.match(new RegExp(`\\b${name}\\s*=\\s*[{\"]([\\s\\S]*?)[}\"]\\s*(?:,|$)`, 'i')); return match ? clean(match[1]) : ''; }
 function parseBibtex(text) {
   const entries = []; const starts = [...text.matchAll(/@(article|online|inproceedings|patent)\s*\{\s*([^,]+)/gi)];
-  starts.forEach((start, index) => { const body = text.slice(start.index, starts[index + 1]?.index || text.length); entries.push({ key: start[2].trim(), entryType: start[1].toLowerCase(), title: field(body, 'title'), authors: field(body, 'author'), venue: field(body, 'journaltitle'), year: field(body, 'year') || field(body, 'date').slice(0, 4), volume: field(body, 'volume'), number: field(body, 'number'), pages: field(body, 'pages'), doi: field(body, 'doi'), keywords: field(body, 'keywords'), sortkey: field(body, 'sortkey') }); });
+  starts.forEach((start, index) => { const body = text.slice(start.index, starts[index + 1]?.index || text.length); entries.push({ key: start[2].trim(), entryType: start[1].toLowerCase(), title: field(body, 'title'), authors: field(body, 'author'), venue: field(body, 'journaltitle'), year: field(body, 'year') || field(body, 'date').slice(0, 4), volume: field(body, 'volume'), number: field(body, 'number'), pages: field(body, 'pages'), doi: field(body, 'doi'), keywords: field(body, 'keywords'), corresponding: field(body, 'corresponding'), sortkey: field(body, 'sortkey') }); });
   return entries.filter(entry => entry.entryType !== 'patent');
 }
 function parseForthcomingBibtex(text) {
@@ -31,13 +31,15 @@ function parseForthcomingBibtex(text) {
 function role(work) { return work.keywords.includes('mainwork') ? 'Lead work' : work.entryType === 'inproceedings' ? 'Conference abstract' : work.entryType === 'online' ? 'Preprint' : 'Collaborative work'; }
 function escapeHtml(value) { const element = document.createElement('div'); element.textContent = value; return element.innerHTML; }
 function displayName(name) { const cleaned = clean(name); if (/^others$/i.test(cleaned)) return 'et al.'; const parts = cleaned.split(',').map(item => item.trim()); return parts.length > 1 ? [...parts.slice(1), parts[0]].join(' ') : cleaned; }
-function formattedAuthors(work) { return work.authors.split(/\s+and\s+/i).map(name => { const displayed = displayName(name); const mark = work.keywords.includes('corresponding') ? '*' : ''; return /^Shengda Zhao$/i.test(displayed) ? `<strong>Shengda Zhao${mark}</strong>` : escapeHtml(displayed); }).join(', '); }
+function correspondingNames(work) { const listed = work.corresponding ? work.corresponding.split(/\s+and\s+/i).map(displayName) : []; return listed.length ? listed : (work.keywords.includes('corresponding') ? ['Shengda Zhao'] : []); }
+function isCorrespondingAuthor(work, name) { return correspondingNames(work).some(item => item.toLowerCase() === name.toLowerCase()); }
+function formattedAuthors(work) { return work.authors.split(/\s+and\s+/i).map(name => { const displayed = displayName(name); const mark = isCorrespondingAuthor(work, displayed) ? '*' : ''; const label = `${displayed}${mark}`; return /^Shengda Zhao$/i.test(displayed) ? `<strong>${escapeHtml(label)}</strong>` : escapeHtml(label); }).join(', '); }
 function authorRole(work) {
   const position = work.authors.split(/\s+and\s+/i).map(displayName).findIndex(name => /^Shengda Zhao$/i.test(name)) + 1;
   const labels = ['First author', 'Second author', 'Third author'];
   const suffix = position % 100 >= 11 && position % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[position % 10] || 'th');
   const authorLabel = position ? (labels[position - 1] || `${position}${suffix} author`) : 'Contributor';
-  return [authorLabel, work.keywords.includes('corresponding') ? 'Co-corresponding author' : ''].filter(Boolean).join(' · ');
+  return [authorLabel, isCorrespondingAuthor(work, 'Shengda Zhao') ? 'Co-corresponding author' : ''].filter(Boolean).join(' · ');
 }
 function citationLine(work) { const pieces = [work.venue]; if (work.volume) pieces.push(work.volume + (work.number ? `(${work.number})` : '')); if (work.pages) pieces.push(work.pages); return pieces.filter(Boolean).join(', ') || (work.entryType === 'online' ? 'arXiv preprint' : 'Publication details pending'); }
 function fixedCitationOrder(a, b) { return (+b.year || 0) - (+a.year || 0) || b.title.charAt(0).localeCompare(a.title.charAt(0)) || b.title.localeCompare(a.title); }
@@ -97,7 +99,8 @@ function alignCardRows(gridSelector, cardSelector, rows) {
   document.querySelectorAll(gridSelector).forEach(gridElement => {
     const cards = [...gridElement.querySelectorAll(cardSelector)];
     cards.forEach(card => rows.forEach(([, variable]) => card.style.removeProperty(variable)));
-    if (window.matchMedia('(max-width: 720px)').matches) return;
+    const columnCount = getComputedStyle(gridElement).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length;
+    if (columnCount < 2) return;
     for (let index = 0; index < cards.length; index += 2) {
       const pair = cards.slice(index, index + 2);
       rows.forEach(([selector, variable]) => {
