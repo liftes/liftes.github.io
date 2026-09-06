@@ -1,6 +1,7 @@
 const grid = document.querySelector('#workGrid');
 const statusLine = document.querySelector('#status');
 const dialog = document.querySelector('#workDialog');
+const dialogMeta = document.querySelector('#dialogMeta');
 const dialogContent = document.querySelector('#dialogContent');
 const publicationChart = document.querySelector('#publicationChart');
 let works = [];
@@ -9,6 +10,7 @@ const pageState = { main: 1, collaborative: 1 };
 const pageSizeState = { main: 10, collaborative: 10 };
 const sortState = { main: 'curated', collaborative: 'curated', ongoing: 'curated' };
 const expandedState = { main: true, collaborative: false, ongoing: false };
+let alignmentFrame;
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 function clean(value = '') { return value.replace(/[{}]/g, '').replace(/\s+/g, ' ').trim(); }
@@ -78,7 +80,7 @@ function forthcomingGroupMarkup() {
   const items = orderedWorks(referenceOrder, 'ongoing');
   const expanded = expandedState.ongoing;
   const total = items.length;
-  return `<section class="work-group work-group-ongoing" aria-labelledby="ongoing-works-title"><div class="work-group-header"><div><h3 id="ongoing-works-title">Works in progress</h3><p>Manuscripts under review and ongoing research · ${total} work${total === 1 ? '' : 's'}</p></div>${groupToolbar('ongoing', 'Works in progress', total, expanded)}</div>${expanded ? `<div class="forthcoming-grid">${items.map(work => `<article id="forthcoming-${escapeHtml(work.key)}" class="forthcoming-card"><div class="forthcoming-card-head"><span class="work-id" aria-label="Work in progress reference ${work.citationId}">${work.citationId}</span><span class="forthcoming-status">${escapeHtml(work.status || 'In preparation')}</span></div><h3>${escapeHtml(work.title)}</h3><p class="forthcoming-journal">${escapeHtml(work.journal || 'Planned venue to be confirmed')}</p><p>${escapeHtml(work.summary || 'Research summary to be added.')}</p></article>`).join('')}</div>` : ''}</section>`;
+  return `<section class="work-group work-group-ongoing" aria-labelledby="ongoing-works-title"><div class="work-group-header"><div><h3 id="ongoing-works-title">Works in progress</h3><p>Manuscripts under review and ongoing research · ${total} work${total === 1 ? '' : 's'}</p></div>${groupToolbar('ongoing', 'Works in progress', total, expanded)}</div>${expanded ? `<div class="forthcoming-grid">${items.map(work => `<button id="forthcoming-${escapeHtml(work.key)}" class="forthcoming-card" type="button" data-forthcoming-key="${escapeHtml(work.key)}" aria-label="View details: ${escapeHtml(work.title)}"><span class="forthcoming-card-head"><span class="work-id" aria-label="Work in progress reference ${work.citationId}">${work.citationId}</span><span class="forthcoming-status">${escapeHtml(work.status || 'In preparation')}</span></span><h3>${escapeHtml(work.title)}</h3><p class="forthcoming-journal">${escapeHtml(work.journal || 'Planned venue to be confirmed')}</p><p>${escapeHtml(work.summary || 'Research summary to be added.')}</p></button>`).join('')}</div>` : ''}</section>`;
 }
 function render() {
   const items = works;
@@ -89,10 +91,39 @@ function render() {
   const correspondingWorks = works.filter(work => work.keywords.includes('corresponding')).length;
   const collaborativeWorks = works.filter(work => !work.keywords.includes('mainwork')).length;
   statusLine.textContent = `${items.length} research works · ${firstAuthorWorks} first-author works · ${correspondingWorks} co-corresponding work · ${collaborativeWorks} collaborative works`;
+  scheduleCardAlignment();
+}
+function alignCardRows(gridSelector, cardSelector, rows) {
+  document.querySelectorAll(gridSelector).forEach(gridElement => {
+    const cards = [...gridElement.querySelectorAll(cardSelector)];
+    cards.forEach(card => rows.forEach(([, variable]) => card.style.removeProperty(variable)));
+    if (window.matchMedia('(max-width: 720px)').matches) return;
+    for (let index = 0; index < cards.length; index += 2) {
+      const pair = cards.slice(index, index + 2);
+      rows.forEach(([selector, variable]) => {
+        const height = Math.max(...pair.map(card => card.querySelector(selector)?.getBoundingClientRect().height || 0));
+        pair.forEach(card => card.style.setProperty(variable, `${Math.ceil(height)}px`));
+      });
+    }
+  });
+}
+function scheduleCardAlignment() {
+  cancelAnimationFrame(alignmentFrame);
+  alignmentFrame = requestAnimationFrame(() => {
+    alignCardRows('.work-grid', '.card', [['h3', '--card-title-height'], ['.venue', '--card-venue-height'], ['.authors', '--card-authors-height']]);
+    alignCardRows('.forthcoming-grid', '.forthcoming-card', [['h3', '--forthcoming-title-height'], ['.forthcoming-journal', '--forthcoming-venue-height']]);
+  });
 }
 function openDetail(key) {
   const work = works.find(item => item.key === key); if (!work) return; const note = (window.WORK_NOTES || {})[key] || {}; const doi = work.doi ? `<a class="detail-link" href="https://doi.org/${escapeHtml(work.doi)}" target="_blank" rel="noreferrer">Open publication ↗</a>` : '';
-  dialogContent.innerHTML = `<div class="dialog-header"><span class="work-id" aria-label="CV reference ${work.citationId}">${work.citationId}</span><span class="type dialog-type">${role(work)}</span></div><h3 id="dialogTitle">${escapeHtml(work.title)}</h3><p class="venue">${escapeHtml(citationLine(work))} · ${escapeHtml(work.year)}</p><p class="authors">${formattedAuthors(work)} <span class="author-role-inline">(${authorRole(work)})</span></p><div class="detail-block"><h4>About this work</h4><p>${escapeHtml(note.summary || 'Bibliographic record imported automatically from publications.bib.')}</p></div><div class="detail-block"><h4>My contribution</h4><p>${escapeHtml(note.contribution || 'Add a short contribution statement in data/work-notes.js for this record.')}</p></div>${doi}`;
+  dialogMeta.innerHTML = `<div class="dialog-header"><span class="work-id" aria-label="CV reference ${work.citationId}">${work.citationId}</span><span class="type dialog-type">${role(work)}</span></div>`;
+  dialogContent.innerHTML = `<h3 id="dialogTitle">${escapeHtml(work.title)}</h3><p class="venue">${escapeHtml(citationLine(work))} · ${escapeHtml(work.year)}</p><p class="authors">${formattedAuthors(work)} <span class="author-role-inline">(${authorRole(work)})</span></p><div class="detail-block"><h4>About this work</h4><p>${escapeHtml(note.summary || 'Bibliographic record imported automatically from publications.bib.')}</p></div><div class="detail-block"><h4>My contribution</h4><p>${escapeHtml(note.contribution || 'Add a short contribution statement in data/work-notes.js for this record.')}</p></div>${doi}`;
+  dialog.showModal();
+}
+function openForthcomingDetail(key) {
+  const work = forthcomingWorks.find(item => item.key === key); if (!work) return;
+  dialogMeta.innerHTML = `<div class="dialog-header"><span class="work-id" aria-label="Work in progress reference ${work.citationId}">${work.citationId}</span><span class="type dialog-type">Work in progress</span></div>`;
+  dialogContent.innerHTML = `<h3 id="dialogTitle">${escapeHtml(work.title)}</h3><p class="venue">${escapeHtml(work.journal || 'Planned venue to be confirmed')}</p><p class="authors"><span class="author-role-inline">${escapeHtml(work.status || 'In preparation')}</span></p><div class="detail-block"><h4>About this work</h4><p>${escapeHtml(work.summary || 'Research summary to be added.')}</p></div>`;
   dialog.showModal();
 }
 function decorateResearchLinks() { document.querySelectorAll('.theme-citations a[href^="#work-"]').forEach(link => { const key = link.getAttribute('href').replace('#work-', ''); const work = works.find(item => item.key === key); if (work) link.textContent = `[${work.citationId}]`; }); }
@@ -112,7 +143,8 @@ document.addEventListener('click', event => {
   pageState[group] = Math.max(1, Math.min(pages, pageState[group] + (direction === 'next' ? 1 : -1)));
   render();
 });
-grid.addEventListener('click', event => { const card = event.target.closest('[data-key]'); if (card) openDetail(card.dataset.key); });
-document.addEventListener('click', event => { const link = event.target.closest('.theme-citations a[href^="#work-"]'); if (!link) return; const key = link.getAttribute('href').replace('#work-', ''); event.preventDefault(); history.replaceState(null, '', link.getAttribute('href')); openDetail(key); });
+grid.addEventListener('click', event => { const card = event.target.closest('[data-key]'); if (card) { openDetail(card.dataset.key); return; } const forthcomingCard = event.target.closest('[data-forthcoming-key]'); if (forthcomingCard) openForthcomingDetail(forthcomingCard.dataset.forthcomingKey); });
+document.addEventListener('click', event => { const link = event.target.closest('.theme-citations a[href^="#work-"], .theme-citations a[href^="#forthcoming-"]'); if (!link) return; const href = link.getAttribute('href'); event.preventDefault(); history.replaceState(null, '', href); if (href.startsWith('#work-')) openDetail(href.replace('#work-', '')); else openForthcomingDetail(href.replace('#forthcoming-', '')); });
 document.querySelector('#closeDialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+window.addEventListener('resize', scheduleCardAlignment);
