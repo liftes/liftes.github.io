@@ -321,19 +321,33 @@ footer {
 
 .close-dialog {
     position: absolute;
-    top: 12px;
-    right: 15px;
+    top: 36px;
+    right: 36px;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     border: 0;
     background: transparent;
     color: var(--muted);
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 1;
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+    padding-right: 40px;
+    margin-bottom: 32px;
 }
 
 .dialog-type {
     display: inline-block;
-    margin-bottom: 17px;
+    margin: 0;
 }
 
 .work-dialog h3 {
@@ -388,5 +402,10 @@ footer {
 @media (max-width: 720px) {
     .work-dialog {
         padding: 28px 23px;
+    }
+
+    .close-dialog {
+        top: 28px;
+        right: 23px;
     }
 }
