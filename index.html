@@ -7,7 +7,7 @@
     <title>Shengda Zhao | Research</title>
     <link rel="icon" type="image/png" href="assets/sz-monogram.png" />
     <link rel="stylesheet" href="styles.css?v=20260906" />
-    <link rel="stylesheet" href="research.css?v=20260906" />
+    <link rel="stylesheet" href="research.css?v=20260906-8" />
     <link rel="stylesheet" href="brand.css?v=20260906" />
   </head>
   <body id="top">
@@ -64,21 +64,14 @@
 
       <section class="publications" aria-labelledby="publication-title">
         <div class="section-topline">
-          <div>
+          <div class="publication-intro">
             <p class="section-kicker">SELECTED &amp; COMPLETE RECORD</p>
             <h2 id="publication-title">Research works</h2>
           </div>
-          <label class="sort-control">Sort works
-            <select id="sortWorks" aria-label="Sort research works">
-              <option value="curated">CV identifier order</option>
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
-              <option value="role">Lead contributions first</option>
-            </select>
-          </label>
+          <div id="publicationChart" class="publication-chart" aria-live="polite"></div>
         </div>
         <p id="status" class="status" aria-live="polite">Loading publications…</p>
-        <div id="workGrid" class="work-grid"></div>
+        <div id="workGrid"></div>
       </section>
     </main>
     <dialog id="workDialog" class="work-dialog" aria-labelledby="dialogTitle">
@@ -87,6 +80,6 @@
     </dialog>
     <footer><span>© <span id="year"></span> Shengda Zhao</span><span>Built from a BibTeX source</span></footer>
     <script src="data/work-notes.js"></script>
-    <script src="app.js?v=20260906"></script>
+    <script src="app.js?v=20260906-9"></script>
   </body>
 </html>

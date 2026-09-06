@@ -1,9 +1,14 @@
 const grid = document.querySelector('#workGrid');
 const statusLine = document.querySelector('#status');
-const sortControl = document.querySelector('#sortWorks');
 const dialog = document.querySelector('#workDialog');
 const dialogContent = document.querySelector('#dialogContent');
+const publicationChart = document.querySelector('#publicationChart');
 let works = [];
+let forthcomingWorks = [];
+const pageState = { main: 1, collaborative: 1 };
+const pageSizeState = { main: 10, collaborative: 10 };
+const sortState = { main: 'curated', collaborative: 'curated', ongoing: 'curated' };
+const expandedState = { main: true, collaborative: false, ongoing: false };
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 function clean(value = '') { return value.replace(/[{}]/g, '').replace(/\s+/g, ' ').trim(); }
@@ -12,6 +17,14 @@ function parseBibtex(text) {
   const entries = []; const starts = [...text.matchAll(/@(article|online|inproceedings|patent)\s*\{\s*([^,]+)/gi)];
   starts.forEach((start, index) => { const body = text.slice(start.index, starts[index + 1]?.index || text.length); entries.push({ key: start[2].trim(), entryType: start[1].toLowerCase(), title: field(body, 'title'), authors: field(body, 'author'), venue: field(body, 'journaltitle'), year: field(body, 'year') || field(body, 'date').slice(0, 4), volume: field(body, 'volume'), number: field(body, 'number'), pages: field(body, 'pages'), doi: field(body, 'doi'), keywords: field(body, 'keywords'), sortkey: field(body, 'sortkey') }); });
   return entries.filter(entry => entry.entryType !== 'patent');
+}
+function parseForthcomingBibtex(text) {
+  const source = text.replace(/^%.*$/gm, '');
+  const starts = [...source.matchAll(/@([a-z]+)\s*\{\s*([^,]+)/gi)];
+  return starts.map((start, index) => {
+    const body = source.slice(start.index, starts[index + 1]?.index || source.length);
+    return { key: start[2].trim(), title: field(body, 'title'), journal: field(body, 'plannedjournal') || field(body, 'journaltitle'), status: field(body, 'status'), summary: field(body, 'summary') || field(body, 'abstract'), year: field(body, 'year') };
+  }).filter(work => work.title);
 }
 function role(work) { return work.keywords.includes('mainwork') ? 'Lead work' : work.entryType === 'inproceedings' ? 'Conference abstract' : work.entryType === 'online' ? 'Preprint' : 'Collaborative work'; }
 function escapeHtml(value) { const element = document.createElement('div'); element.textContent = value; return element.innerHTML; }
@@ -27,10 +40,51 @@ function authorRole(work) {
 function citationLine(work) { const pieces = [work.venue]; if (work.volume) pieces.push(work.volume + (work.number ? `(${work.number})` : '')); if (work.pages) pieces.push(work.pages); return pieces.filter(Boolean).join(', ') || (work.entryType === 'online' ? 'arXiv preprint' : 'Publication details pending'); }
 function fixedCitationOrder(a, b) { return (+b.year || 0) - (+a.year || 0) || b.title.charAt(0).localeCompare(a.title.charAt(0)) || b.title.localeCompare(a.title); }
 function assignCitationIds() { ['mainwork', 'collaborative'].forEach((group, index) => { works.filter(work => group === 'mainwork' ? work.keywords.includes('mainwork') : !work.keywords.includes('mainwork')).sort(fixedCitationOrder).forEach((work, number) => { work.citationId = `${index === 0 ? 'M' : 'C'}${number + 1}`; work.citationRank = number + 1; }); }); }
-function orderedWorks() { const option = sortControl.value; return [...works].sort((a, b) => { if (option === 'newest') return (+b.year || 0) - (+a.year || 0); if (option === 'oldest') return (+a.year || 0) - (+b.year || 0); if (option === 'role') return +(b.keywords.includes('mainwork')) - +(a.keywords.includes('mainwork')) || (+b.year || 0) - (+a.year || 0); return (a.citationId[0] === b.citationId[0] ? 0 : a.citationId[0] === 'M' ? -1 : 1) || a.citationRank - b.citationRank; }); }
+function orderedWorks(items = works, group = 'main') { const option = sortState[group] || 'curated'; return [...items].sort((a, b) => { if (option === 'newest') return (+b.year || 0) - (+a.year || 0) || fixedCitationOrder(a, b); if (option === 'oldest') return (+a.year || 0) - (+b.year || 0) || fixedCitationOrder(a, b); return (a.citationRank || 0) - (b.citationRank || 0); }); }
+function cardMarkup(work) { return `<button id="work-${escapeHtml(work.key)}" class="card" type="button" data-key="${escapeHtml(work.key)}" aria-label="View details: ${escapeHtml(work.title)}"><span class="card-meta"><span class="card-meta-left"><span class="work-id" aria-label="CV reference ${work.citationId}">${work.citationId}</span><span class="type">${role(work)}</span></span><span class="year">${escapeHtml(work.year)}</span></span><h3>${escapeHtml(work.title)}</h3><p class="venue">${escapeHtml(citationLine(work))}</p><p class="authors">${formattedAuthors(work)}</p><p class="author-role">${authorRole(work)}</p></button>`; }
+function pageSizeOptions(group) { const selected = pageSizeState[group]; return [10, 20, 'all'].map(size => `<option value="${size}"${selected === size || selected === Number(size) ? ' selected' : ''}>${size === 'all' ? 'All' : size}</option>`).join(''); }
+function sortOptions(group) { const selected = sortState[group]; return [['curated', 'Reference order'], ['newest', 'Newest first'], ['oldest', 'Oldest first']].map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${label}</option>`).join(''); }
+function groupToolbar(group, title, total, expanded, paginated = false) { const pageSize = paginated && expanded && total > 10 ? `<label class="page-size-control">Per page<select data-page-size="${group}" aria-label="Works per page for ${title}">${pageSizeOptions(group)}</select></label>` : ''; return `<div class="group-actions"><label class="group-sort-control">Order<select data-group-sort="${group}" aria-label="Sort ${title}">${sortOptions(group)}</select></label>${pageSize}<button type="button" class="group-toggle" data-toggle-group="${group}" aria-expanded="${expanded}">${expanded ? 'Hide' : `Show ${total} works`}</button></div>`; }
+function paginationMarkup(group, total) {
+  const size = pageSizeState[group];
+  const pages = size === 'all' ? 1 : Math.max(1, Math.ceil(total / size));
+  const page = Math.min(pageState[group], pages);
+  if (pages === 1) return `<span class="page-summary">Showing ${total} of ${total}</span>`;
+  return `<span class="page-summary">Page ${page} of ${pages}</span><div class="page-buttons"><button type="button" class="page-button" data-page-group="${group}" data-page-direction="previous"${page === 1 ? ' disabled' : ''}>Previous</button><button type="button" class="page-button" data-page-group="${group}" data-page-direction="next"${page === pages ? ' disabled' : ''}>Next</button></div>`;
+}
+function groupMarkup(group, title, description) {
+  const expanded = expandedState[group];
+  const allItems = orderedWorks(works.filter(work => group === 'main' ? work.keywords.includes('mainwork') : !work.keywords.includes('mainwork')), group);
+  const total = allItems.length;
+  const size = pageSizeState[group];
+  const pages = size === 'all' ? 1 : Math.max(1, Math.ceil(total / size));
+  pageState[group] = Math.min(pageState[group], pages);
+  const visibleItems = expanded ? (size === 'all' ? allItems : allItems.slice((pageState[group] - 1) * size, pageState[group] * size)) : [];
+  const pagination = expanded ? `<div class="pagination" aria-label="${title} pagination">${paginationMarkup(group, total)}</div>` : '';
+  return `<section class="work-group work-group-${group}" aria-labelledby="${group}-works-title"><div class="work-group-header"><div><h3 id="${group}-works-title">${title}</h3><p>${description} · ${total} works</p></div>${groupToolbar(group, title, total, expanded, true)}</div>${expanded ? `<div class="work-grid">${visibleItems.map(cardMarkup).join('')}</div>${pagination}` : ''}</section>`;
+}
+function renderPublicationChart() {
+  const yearlyCounts = new Map();
+  works.forEach(work => { if (work.year) yearlyCounts.set(work.year, (yearlyCounts.get(work.year) || 0) + 1); });
+  const years = [...yearlyCounts.keys()].sort((a, b) => +a - +b);
+  const maximum = Math.max(...yearlyCounts.values(), 1);
+  const bars = years.map(year => { const count = yearlyCounts.get(year); const height = Math.max(8, Math.round((count / maximum) * 28)); return `<div class="year-bar"><span>${count}</span><i style="--bar-height:${height}px"></i><small>${escapeHtml(year)}</small></div>`; }).join('');
+  publicationChart.innerHTML = `<p class="chart-caption">Works / year</p><div class="year-chart" role="img" aria-label="Publication counts by year: ${years.map(year => `${year}: ${yearlyCounts.get(year)}`).join(', ')}">${bars}</div>`;
+}
+function forthcomingGroupMarkup() {
+  if (!forthcomingWorks.length) return '';
+  const referenceOrder = [...forthcomingWorks].sort((a, b) => (+b.year || 0) - (+a.year || 0) || b.title.localeCompare(a.title));
+  referenceOrder.forEach((work, index) => { work.citationId = `U${index + 1}`; work.citationRank = index + 1; });
+  const items = orderedWorks(referenceOrder, 'ongoing');
+  const expanded = expandedState.ongoing;
+  const total = items.length;
+  return `<section class="work-group work-group-ongoing" aria-labelledby="ongoing-works-title"><div class="work-group-header"><div><h3 id="ongoing-works-title">Works in progress</h3><p>Manuscripts under review and ongoing research · ${total} work${total === 1 ? '' : 's'}</p></div>${groupToolbar('ongoing', 'Works in progress', total, expanded)}</div>${expanded ? `<div class="forthcoming-grid">${items.map(work => `<article id="forthcoming-${escapeHtml(work.key)}" class="forthcoming-card"><div class="forthcoming-card-head"><span class="work-id" aria-label="Work in progress reference ${work.citationId}">${work.citationId}</span><span class="forthcoming-status">${escapeHtml(work.status || 'In preparation')}</span></div><h3>${escapeHtml(work.title)}</h3><p class="forthcoming-journal">${escapeHtml(work.journal || 'Planned venue to be confirmed')}</p><p>${escapeHtml(work.summary || 'Research summary to be added.')}</p></article>`).join('')}</div>` : ''}</section>`;
+}
 function render() {
-  const items = orderedWorks();
-  grid.innerHTML = items.map(work => `<button id="work-${escapeHtml(work.key)}" class="card" type="button" data-key="${escapeHtml(work.key)}" aria-label="View details: ${escapeHtml(work.title)}"><span class="card-meta"><span class="card-meta-left"><span class="work-id" aria-label="CV reference ${work.citationId}">${work.citationId}</span><span class="type">${role(work)}</span></span><span class="year">${escapeHtml(work.year)}</span></span><h3>${escapeHtml(work.title)}</h3><p class="venue">${escapeHtml(citationLine(work))}</p><p class="authors">${formattedAuthors(work)}</p><p class="author-role">${authorRole(work)}</p></button>`).join('');
+  const items = works;
+  grid.innerHTML = `${groupMarkup('main', 'Lead works', 'First-author and corresponding-author contributions')}${groupMarkup('collaborative', 'Collaborative works', 'Collaborative publications')}${forthcomingGroupMarkup()}`;
+  renderPublicationChart();
+  decorateForthcomingLinks();
   const firstAuthorWorks = works.filter(work => /^Shengda Zhao$/i.test(displayName(work.authors.split(/\s+and\s+/i)[0]))).length;
   const correspondingWorks = works.filter(work => work.keywords.includes('corresponding')).length;
   const collaborativeWorks = works.filter(work => !work.keywords.includes('mainwork')).length;
@@ -42,8 +96,22 @@ function openDetail(key) {
   dialog.showModal();
 }
 function decorateResearchLinks() { document.querySelectorAll('.theme-citations a[href^="#work-"]').forEach(link => { const key = link.getAttribute('href').replace('#work-', ''); const work = works.find(item => item.key === key); if (work) link.textContent = `[${work.citationId}]`; }); }
+function decorateForthcomingLinks() { document.querySelectorAll('.theme-citations a[href^="#forthcoming-"]').forEach(link => { const key = link.getAttribute('href').replace('#forthcoming-', ''); const work = forthcomingWorks.find(item => item.key === key); if (work) link.textContent = `[${work.citationId}]`; }); }
 fetch('data/publications.bib').then(response => { if (!response.ok) throw new Error('not found'); return response.text(); }).then(text => { works = parseBibtex(text); assignCitationIds(); render(); decorateResearchLinks(); }).catch(() => { statusLine.textContent = 'Publication data could not be loaded. Please confirm data/publications.bib is present.'; grid.innerHTML = '<p class="empty">No BibTeX data available.</p>'; });
-sortControl.addEventListener('change', render);
+fetch('data/forthcoming.bib').then(response => response.ok ? response.text() : '').then(text => { forthcomingWorks = parseForthcomingBibtex(text); render(); }).catch(() => { forthcomingWorks = []; render(); });
+document.addEventListener('change', event => { const group = event.target.dataset.pageSize; if (group) { pageSizeState[group] = event.target.value === 'all' ? 'all' : Number(event.target.value); pageState[group] = 1; render(); return; } const sortGroup = event.target.dataset.groupSort; if (sortGroup) { sortState[sortGroup] = event.target.value; pageState[sortGroup] = 1; render(); } });
+document.addEventListener('click', event => {
+  const toggle = event.target.closest('[data-toggle-group]');
+  if (toggle) { const group = toggle.dataset.toggleGroup; expandedState[group] = !expandedState[group]; render(); return; }
+  const pageButton = event.target.closest('[data-page-group]');
+  if (!pageButton) return;
+  const group = pageButton.dataset.pageGroup;
+  const direction = pageButton.dataset.pageDirection;
+  const total = works.filter(work => group === 'main' ? work.keywords.includes('mainwork') : !work.keywords.includes('mainwork')).length;
+  const pages = pageSizeState[group] === 'all' ? 1 : Math.ceil(total / pageSizeState[group]);
+  pageState[group] = Math.max(1, Math.min(pages, pageState[group] + (direction === 'next' ? 1 : -1)));
+  render();
+});
 grid.addEventListener('click', event => { const card = event.target.closest('[data-key]'); if (card) openDetail(card.dataset.key); });
 document.addEventListener('click', event => { const link = event.target.closest('.theme-citations a[href^="#work-"]'); if (!link) return; const key = link.getAttribute('href').replace('#work-', ''); event.preventDefault(); history.replaceState(null, '', link.getAttribute('href')); openDetail(key); });
 document.querySelector('#closeDialog').addEventListener('click', () => dialog.close());
