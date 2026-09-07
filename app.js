@@ -13,7 +13,7 @@ const expandedState = { main: true, collaborative: false, ongoing: false };
 let alignmentFrame;
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-function clean(value = '') { return value.replace(/[{}]/g, '').replace(/\s+/g, ' ').trim(); }
+function clean(value = '') { return value.replace(/\\&/g, '&').replace(/[{}]/g, '').replace(/\s+/g, ' ').trim(); }
 function field(body, name) { const match = body.match(new RegExp(`\\b${name}\\s*=\\s*[{\"]([\\s\\S]*?)[}\"]\\s*(?:,|$)`, 'i')); return match ? clean(match[1]) : ''; }
 function parseBibtex(text) {
   const entries = []; const starts = [...text.matchAll(/@(article|online|inproceedings|patent)\s*\{\s*([^,]+)/gi)];
@@ -48,7 +48,7 @@ function assignCitationIds() { ['mainwork', 'collaborative'].forEach((group, ind
 function orderedWorks(items = works, group = 'main') { const option = sortState[group] || 'curated'; return [...items].sort((a, b) => { if (option === 'newest') return (+b.year || 0) - (+a.year || 0) || fixedCitationOrder(a, b); if (option === 'oldest') return (+a.year || 0) - (+b.year || 0) || fixedCitationOrder(a, b); return (a.citationRank || 0) - (b.citationRank || 0); }); }
 function cardMarkup(work) { return `<button id="work-${escapeHtml(work.key)}" class="card" type="button" data-key="${escapeHtml(work.key)}" aria-label="View details: ${escapeHtml(work.title)}"><span class="card-meta"><span class="card-meta-left"><span class="work-id" aria-label="CV reference ${work.citationId}">${work.citationId}</span><span class="type">${role(work)}</span></span><span class="year">${escapeHtml(work.year)}</span></span><h3><span class="card-title-text">${escapeHtml(work.title)}</span></h3><p class="venue"><span class="card-venue-text">${escapeHtml(citationLine(work))}</span></p><p class="authors">${formattedAuthors(work)}</p><p class="author-role">${authorRole(work)}</p></button>`; }
 function pageSizeOptions(group) { const selected = pageSizeState[group]; return [10, 20, 'all'].map(size => `<option value="${size}"${selected === size || selected === Number(size) ? ' selected' : ''}>${size === 'all' ? 'All' : size}</option>`).join(''); }
-function sortOptions(group) { const selected = sortState[group]; return [['curated', 'Bib order'], ['newest', 'Newest first'], ['oldest', 'Oldest first']].map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${label}</option>`).join(''); }
+function sortOptions(group) { const selected = sortState[group]; return [['curated', 'Default'], ['newest', 'Newest first'], ['oldest', 'Oldest first']].map(([value, label]) => `<option value="${value}"${selected === value ? ' selected' : ''}>${label}</option>`).join(''); }
 function groupToolbar(group, title, total, expanded, paginated = false) { const pageSize = paginated && expanded && total > 10 ? `<label class="page-size-control">Per page<select data-page-size="${group}" aria-label="Works per page for ${title}">${pageSizeOptions(group)}</select></label>` : ''; return `<div class="group-actions"><label class="group-sort-control">Order<select data-group-sort="${group}" aria-label="Sort ${title}">${sortOptions(group)}</select></label>${pageSize}<button type="button" class="group-toggle" data-toggle-group="${group}" aria-expanded="${expanded}">${expanded ? 'Hide' : `Show ${total} works`}</button></div>`; }
 function paginationMarkup(group, total) {
   const size = pageSizeState[group];
