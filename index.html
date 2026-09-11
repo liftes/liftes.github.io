@@ -6,17 +6,21 @@
     <meta name="description" content="Academic profile and publications of Shengda Zhao." />
     <title>Shengda Zhao | Research</title>
     <link rel="icon" type="image/png" href="assets/sz-monogram.png" />
-    <link rel="stylesheet" href="styles.css?v=20260906-12" />
-    <link rel="stylesheet" href="research.css?v=20260906-9" />
-    <link rel="stylesheet" href="brand.css?v=20260906" />
+    <link rel="stylesheet" href="styles.css?v=20260906-15" />
+    <link rel="stylesheet" href="research.css?v=20260906-14" />
+    <link rel="stylesheet" href="brand.css?v=20260906-3" />
   </head>
   <body id="top">
     <nav class="floating-nav" aria-label="Page navigation">
       <a class="back-to-top" href="#top" aria-label="Back to top"><span aria-hidden="true"></span></a>
-      <a href="#profile">Profile</a>
-      <a href="#record">Academic record</a>
-      <a href="#research">Research</a>
-      <a href="#publication-title">Publications</a>
+      <span class="nav-current" aria-live="polite">Profile</span>
+      <button class="nav-toggle" type="button" aria-label="Open page navigation" aria-expanded="false" aria-controls="primary-nav-links"><span class="nav-toggle-mark" aria-hidden="true"></span></button>
+      <div class="nav-links" id="primary-nav-links">
+        <a href="#profile">Research profile</a>
+        <a href="#record">Academic background</a>
+        <a href="#research">Research themes</a>
+        <a href="#publication-title">Publications</a>
+      </div>
     </nav>
     <main>
       <section class="hero" aria-labelledby="name">
@@ -36,8 +40,8 @@
       </section>
 
       <section id="profile" class="overview" aria-label="Research overview">
-        <div><p class="section-kicker">RESEARCH PROFILE</p><h2>From soft-matter theory to complex systems.</h2></div>
-        <p class="theme-citations">
+        <div class="overview-heading"><p class="section-kicker">RESEARCH PROFILE</p><h2>Statistical physics across soft matter and complex systems.</h2></div>
+        <div class="overview-copy"><p class="theme-citations">
           I am a theoretical physicist working across soft condensed matter and complex systems.
           My research combines analytical theory and computational modeling to understand how
           structure, interactions, and constraints give rise to collective behaviour.
@@ -46,8 +50,8 @@
           and phase behaviour using statistical field theory and fluctuation methods
           <a href="#work-zhao2024phase" aria-label="Open topology-transformable polymer work">[work]</a>
           <a href="#work-qin2024ring" aria-label="Open ring diblock copolymer work">[work]</a>
-          <a href="#work-liu2024nonadditive" aria-label="Open nonadditive interaction work">[work]</a>.
-          <a href="#forthcoming-zhao2026slidingtopology" aria-label="Open sliding topology self-consistent field work">[work]</a>
+          <a href="#work-liu2024nonadditive" aria-label="Open nonadditive interaction work">[work]</a>
+          <a href="#forthcoming-zhao2026slidingtopology" aria-label="Open sliding topology self-consistent field work">[work]</a>.
 
           I also study diffusion, phase behaviour, and collective dynamics in heterogeneous
           and nonequilibrium systems
@@ -64,17 +68,17 @@
           <a href="#work-sun2025ridesharing" aria-label="Open ride sharing work">[work]</a>,
           and in exploring neural networks and artificial intelligence as complementary tools
           for physical modeling and optimization.
-        </p>
+        </p></div>
       </section>
 
       <section id="record" class="academic-record" aria-labelledby="record-title">
-        <div class="record-heading"><p class="section-kicker">ACADEMIC RECORD</p><h2 id="record-title">Education and research skills.</h2><p>Trained in theoretical derivation, with foundations in calculus, matrix analysis, discrete mathematics, and theoretical statistical physics.</p><div class="profile-links"><a href="https://scholar.google.com/citations?user=BkVINFYAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a><a href="https://orcid.org/0009-0000-1347-0587" target="_blank" rel="noreferrer">ORCID ↗</a><a href="https://github.com/liftes" target="_blank" rel="noreferrer">GitHub ↗</a></div><ul class="skill-list" aria-label="Programming languages"><li><strong>Programming languages</strong><span>Python · C/C++ · Fortran</span></li></ul></div>
+        <div class="record-heading"><p class="section-kicker">ACADEMIC BACKGROUND</p><h2 id="record-title">Academic training, research skills, and scholarly record.</h2><p>Trained in theoretical derivation, with foundations in calculus, matrix analysis, discrete mathematics, and theoretical statistical physics.</p><div class="profile-links"><a href="https://scholar.google.com/citations?user=BkVINFYAAAAJ" target="_blank" rel="noreferrer">Google Scholar ↗</a><a href="https://orcid.org/0009-0000-1347-0587" target="_blank" rel="noreferrer">ORCID ↗</a><a href="https://github.com/liftes" target="_blank" rel="noreferrer">GitHub ↗</a></div><ul class="skill-list" aria-label="Programming languages"><li><strong>Programming languages</strong><span>Python · C/C++ · Fortran</span></li></ul></div>
         <div class="record-content">
           <div class="metric-grid" aria-label="Scholar metrics">
-            <div class="metric"><span>48</span><small>Citations</small></div><div class="metric"><span>4</span><small>h-index</small></div><p class="metric-note">Data from Google Scholar · updated September 2026.</p>
+            <div class="metric"><span>49</span><small>Citations</small></div><div class="metric"><span>4</span><small>h-index</small></div><p class="metric-note">Data from Google Scholar · updated September 2026.</p>
           </div>
           <ol class="education-list" aria-label="Education">
-            <li><span class="education-date">2024—present</span><div><strong>Ph.D. Candidate, Physics</strong><p>Beijing Jiaotong University · Condensed Matter and Complex Systems</p></div></li>
+            <li><span class="education-date">2024—Present</span><div><strong>Ph.D. Candidate, Physics</strong><p>Beijing Jiaotong University · Condensed Matter and Complex Systems</p></div></li>
             <li><span class="education-date">2021—2024</span><div><strong>M.Sc., Physics</strong><p>Beijing Jiaotong University · Condensed Matter</p></div></li>
             <li>
               <span class="education-date">2017—2021</span>
@@ -95,7 +99,7 @@
       </section>
 
       <section id="research" class="research-themes" aria-labelledby="research-title">
-        <div class="theme-intro"><p class="section-kicker">RESEARCH THEMES</p><h2 id="research-title">Theory connecting structure, topology, transport, and complex systems.</h2></div>
+        <div class="theme-intro"><p class="section-kicker">RESEARCH THEMES</p><h2 id="research-title">Structure, topology, transport, and collective dynamics.</h2></div>
         <div class="theme-grid">
 
         <article class="theme-card">
@@ -115,7 +119,7 @@
 
         <article class="theme-card">
           <p class="theme-number">02</p>
-          <h3>Thermodynamics &amp; dynamics in porous media</h3>
+          <h3>Hyperuniformity and transport in porous media</h3>
           <p class="theme-citations">
             Develop statistical theories for hyperuniform structure formation under attractive interactions
             <a href="#forthcoming-zhao2026attractivehyperuniform" aria-label="Open attraction induced hyperuniformity work">[work]</a>
@@ -142,7 +146,7 @@
 
         <article class="theme-card">
           <p class="theme-number">04</p>
-          <h3>Selected collaborative studies</h3>
+          <h3>Collaborative studies in transport and materials</h3>
           <p class="theme-citations">
             Contribute theoretical analysis to entropy effects in exciton dissociation and charge transport
             <a href="#work-yan2023exciton" aria-label="Open exciton separation work">[work]</a>
@@ -163,8 +167,8 @@
       <section class="publications" aria-labelledby="publication-title">
         <div class="section-topline">
           <div class="publication-intro">
-            <p class="section-kicker">SELECTED &amp; COMPLETE RECORD</p>
-            <h2 id="publication-title">Publications</h2>
+            <p class="section-kicker">PUBLICATION RECORD</p>
+            <h2 id="publication-title">Publications and works in progress.</h2>
           </div>
           <div id="publicationChart" class="publication-chart" aria-live="polite"></div>
         </div>
@@ -181,6 +185,6 @@
     </dialog>
     <footer><span>© <span id="year"></span> Shengda Zhao</span><span>Built from a BibTeX source</span></footer>
     <script src="data/work-notes.js"></script>
-    <script src="app.js?v=20260907-2"></script>
+    <script src="app.js?v=20260907-4"></script>
   </body>
 </html>

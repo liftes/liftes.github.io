@@ -4,6 +4,10 @@ const dialog = document.querySelector('#workDialog');
 const dialogMeta = document.querySelector('#dialogMeta');
 const dialogContent = document.querySelector('#dialogContent');
 const publicationChart = document.querySelector('#publicationChart');
+const floatingNav = document.querySelector('.floating-nav');
+const navToggle = document.querySelector('.nav-toggle');
+const navCurrent = document.querySelector('.nav-current');
+const navigationLinks = [...document.querySelectorAll('.nav-links a')];
 let works = [];
 let forthcomingWorks = [];
 const pageState = { main: 1, collaborative: 1 };
@@ -87,7 +91,7 @@ function forthcomingGroupMarkup() {
 }
 function render() {
   const items = works;
-  grid.innerHTML = `${groupMarkup('main', 'Lead works', 'First-author and corresponding-author contributions')}${groupMarkup('collaborative', 'Collaborative works', 'Collaborative publications')}${forthcomingGroupMarkup()}`;
+  grid.innerHTML = `${groupMarkup('main', 'Lead publications', 'First-author and corresponding-author contributions')}${groupMarkup('collaborative', 'Collaborative publications', 'Collaborative publications')}${forthcomingGroupMarkup()}`;
   renderPublicationChart();
   decorateForthcomingLinks();
   const firstAuthorWorks = works.filter(work => /^Shengda Zhao$/i.test(displayName(work.authors.split(/\s+and\s+/i)[0]))).length;
@@ -152,3 +156,44 @@ document.addEventListener('click', event => { const link = event.target.closest(
 document.querySelector('#closeDialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
 window.addEventListener('resize', scheduleCardAlignment);
+
+function setCurrentNavigation(link) {
+  navigationLinks.forEach(item => {
+    if (item === link) item.setAttribute('aria-current', 'location');
+    else item.removeAttribute('aria-current');
+  });
+  if (navCurrent && link) navCurrent.textContent = link.textContent.trim();
+}
+function updateCurrentNavigation() {
+  const offset = window.scrollY + 112;
+  const active = [...navigationLinks].reverse().find(link => {
+    const target = document.querySelector(link.getAttribute('href'));
+    return target && target.offsetTop <= offset;
+  }) || navigationLinks[0];
+  if (active) setCurrentNavigation(active);
+}
+function closeNavigation() {
+  if (!floatingNav || !navToggle) return;
+  floatingNav.classList.remove('is-open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-label', 'Open page navigation');
+}
+if (floatingNav && navToggle) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = floatingNav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.setAttribute('aria-label', isOpen ? 'Close page navigation' : 'Open page navigation');
+  });
+  navigationLinks.forEach(link => link.addEventListener('click', () => {
+    setCurrentNavigation(link);
+    closeNavigation();
+  }));
+  document.addEventListener('click', event => {
+    if (floatingNav.classList.contains('is-open') && !floatingNav.contains(event.target)) closeNavigation();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeNavigation();
+  });
+  window.addEventListener('scroll', updateCurrentNavigation, { passive: true });
+  updateCurrentNavigation();
+}
