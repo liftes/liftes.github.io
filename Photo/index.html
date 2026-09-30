@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Norfe</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <!-- Important Owl stylesheet -->
+        <link rel="stylesheet" href="owl-carousel/owl.carousel.css">
+         
+        <!-- Default Theme -->
+        <link rel="stylesheet" href="owl-carousel/owl.theme.css">
+        <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        <style>
+            .notice-section {
+                text-align: center;
+                font-size: 18px; /* 减小字号 */
+            }
+            .notice-section h2 {
+                color: #000a58; /* 标题颜色 */
+                font-size: 48px; /* 适当增大标题的字号以区分 */
+                /* 行高，调整行间距 */
+                line-height: 1.6;
+            }
+            .notice-section p {
+                color: #000; /* 普通文本颜色 */
+                margin: 7px 0; /* 添加上下边距 */
+                /* 行高，调整行间距 */
+                line-height: 1.25;
+            }
+            .notice-section .important-text {
+                color: #0456d2; /* 强调文本颜色 */
+                font-weight: bold; /* 加粗 */
+            }
+
+            .social-header {
+                margin-top: 40px; /* 增加下边距，根据需要可以调整这个值 */
+                text-align: center; /* 保持文本居中 */
+                /* 字号 */
+                font-size: 18px;
+                /* 行高，调整行间距 */
+            }
+
+            .hexagon a {
+                color: #ffffff; /* 文本颜色 */
+                font-size: 22px; /* 文本大小 */
+                text-decoration: none; /* 移除下划线 */
+            }
+            .hexagon a:hover {
+                color: #ffffff; /* 鼠标悬停时的文本颜色 */
+                text-decoration: none; /* 鼠标悬停时添加下划线 */
+            }
+            .hexagon a {
+                display: block; /* 使链接填充整个六边形容器 */
+                text-align: center; /* 文本水平居中 */
+                padding: 12px 0; /* 调整这个值直到文本看起来垂直居中 */
+            }
+
+            #about .content-block-cyan .container .row .col-md-6 {
+                /* 调整内间距 */
+                padding: 20px;
+            }
+
+            #about h2 {
+                /* 标题颜色 */
+                color: #333333;
+                /* 字号 */
+                font-size: 62px;
+                /* 行高，调整行间距 */
+                line-height: 1.2;
+                /* 字体粗细 */
+                font-weight: bold;
+                /* 文本对齐方式 */
+                text-align: center;
+                /* 文本阴影（可选） */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+                /* 字间距（可选） */
+                letter-spacing: 1px;
+            }
+
+            #about p {
+                /* 段落文本颜色 */
+                color: #666666;
+                /* 字号 */
+                font-size: 18px;
+                /* 行高，调整行间距 */
+                line-height: 1.0;
+                /* 文本对齐方式 */
+                text-align: center;
+                /* 段落间距，上下间距 */
+                margin: 10px 0;
+            }
+
+            .block-body .blog-post .date {
+                font-size: 16px; /* 设置您希望的字号大小 */
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            .notice-section-img {
+                color: #000a58; /* 标题颜色 */
+                font-size: 48px; /* 适当增大标题的字号以区分 */
+                /* 行高，调整行间距 */
+                line-height: 1.6;
+                /* 文本对齐方式 */
+                text-align: center;
+            }
+
+        </style>
+
+    </head>
+
+
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="top" class="navbar navbar-dark navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars fa-2x"></i>
+                    </button>
+                    <a class="navbar-brand" href="#"><strong>PHOTOS @ </strong>Norfe</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#carousel-header">主页</a></li>
+                        <li><a href="#about">个人信息</a></li>
+                        <li><a href="#projects">最近照片</a></li>
+                        <li><a href="#blog">约拍须知（含毕业照）</a></li>
+                        <li><a href="#social">社交平台</a></li>
+                    </ul>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </div>
+
+
+
+        <div id="carousel-header" class="carousel slide" data-ride="carousel" data-interval="8000">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <!-- <div class="camera-icon hidden-sm hidden-xs">
+                    <div class="circle">
+                        <div class="hexagon">
+                            <i class="fa  fa-camera"></i>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="item active">
+                    <img src="img-Norfe/slide1.jpeg" alt="">
+                </div>
+
+                <div class="item">
+                    <img src="img-Norfe/slide2.jpeg" alt="">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-header" role="button" data-slide="next">
+                <img src="img/left.png" alt="Previous">
+            </a>
+            <a class="right carousel-control" href="#carousel-header" role="button" data-slide="next">
+                <img src="img/right.png" alt="Next">
+            </a>
+        </div>
+
+
+
+
+        <div id="about" class="content-block content-block-cyan">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h2>Hi, I am Norfe</h2>
+                      	<p>个人设计师、摄影师</p>
+                        <p>500px（视觉中国）签约摄影师</p>
+                        <p>微信号：_Norfe_ </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="social" class="content-block">
+            <div class="container text-center">
+                <!-- Instagram Link -->
+                <div class="hexagon"><a href="https://www.instagram.com/norfezhao/">Ins</a></div>
+                <!-- Xiaohongshu (RED) Link -->
+                <div class="hexagon"><a href="https://www.xiaohongshu.com/user/profile/65fb8d8f000000000b00e2ce?xhsshare=CopyLink&appuid=65fb8d8f000000000b00e2ce&apptime=1711600609">小红书</a></div>
+                <!-- Tuchong Link -->
+                <div class="hexagon"><a href="https://tuchong.com/10023616/">图虫</a></div>
+                <div class="hexagon"><a href="https://500px.com.cn/community/user-details/d4a2166274ace8f37063954823e5a4148">500px</a></div>
+            </div>
+            <h2 class="social-header"> 点击进入查看更多 </h2>
+        </div>
+
+        <div id="projects" class="recent-projects">
+            <div class="recent-projects-title">
+                Recent Projects
+            </div>
+
+            <div class="recent-projects-content content-block-gray">
+                <div id="owl-example" class="owl-carousel">               
+                    <div>
+                        <img src="img-Norfe/Recent/Recent5.jpeg" alt="">
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent2.jpeg" alt="">
+                        <!-- <a href="#">In to the snow</a> -->
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent3.jpeg" alt="">
+                        <!-- <a href="#">girl in sunset</a> -->
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent4.jpeg" alt="">
+                        <!-- <a href="#">Tools</a> -->
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent1.jpeg" alt="">
+                        <!-- <a href="#">Sunrise in west</a> -->
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent6.jpeg" alt="">
+                        <!-- <a href="#">girl in sunset</a> -->
+                    </div>
+                    <div>
+                        <img src="img-Norfe/Recent/Recent7.jpeg" alt="">
+                        <!-- <a href="#">Lorem Ipsum</a> -->
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.recent-projects -->
+
+
+
+        <div id="blog" class="content-block content-block-gray">
+            <div class="container">
+                <header class="block-heading cleafix">
+                    <!-- <a href="#" class="btn btn-o btn-lg pull-right">View All</a> -->
+                    <!-- <h1>From the Blog</h1>
+                    <p>Keep up with the latest happenings.</p> -->
+                    <!-- <h2>
+                        <center><font color="#000a58">付款须知</font></center>
+                    </h2> -->
+              
+                    <div class="notice-section">
+                        <h2>约拍须知</h2>
+                        <!-- <br> -->
+                        <p>请确保交易达成前认真阅读以下内容</p>
+                        <!-- <br> -->
+                        <p><span class="important-text">请提前微信咨询本人可提供的拍摄风格，满意再进行后续沟通；</p>
+                        <p>约定时间后不接受更改，不接受因晴天阴天问题的档期调整；</p>
+                        <p>晴天阴天都可户外拍摄，各自风格不同特色不同，后期不接受阴天换晴天；</p>
+                        <p>极端天气（雨天、大风等）无法进行户外拍摄，可沟通进行档期调整；</p>
+                        <p>确定拍摄后，需提供近期生活照片及拍摄当天着装照片，以便构图和摄影风格统一；</p>
+                        <p>精修9-12张，加一张30元，全部底片另收100元，一般情况下拍摄后一周内成片；</p>
+                        <p>无特殊说明情况下精修不大幅度调整人像五官和身材比例，如需要请特别注明；</p>
+                        <p>班级等大团体合照需另外沟通成片数量及价格（价格按成片数量计算）；</p>
+                                            
+                        <h2>毕业照须知</h2>
+                        <p><span class="important-text">建议室外拍摄时间为日落前两小时(夏季17时-19时)，阴天可提前；</span></p>
+                        <p>建议女生学士服内搭短裤、短裙，男生学士服内搭短裤或黑色长裤；</p>
+                        <p>拍摄往往涉及跑坐蹲跳躺趴等动作，请注意着装上的方便性；</p>
+                        <p>一般建议化妆风格为裸妆或淡妆，可选择不化妆，具体风格具体沟通；</p>
+                        <p>拍摄时可自带一些小道具，如笔，书本，饮料杯，伞等，需要自备。</p>
+                        
+                    </div>
+                    
+                </header>
+
+                <section class="block-body">
+                    <h2 class="notice-section-img">毕业照样例</h2>
+                    <div class="notice-section">
+                        <p>（点击查看更多）</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 blog-post">
+                            <a href="SubSites/single.html">
+                            <img src="img-Norfe\Card\single.jpeg" alt="Design Your Mind">
+                            </a>
+                            <a href="SubSites/single.html"><h2>单人</h2></a>
+                            <div class="date">298元</div>
+                        </div>
+                        <div class="col-sm-4 blog-post">
+                            <a href="SubSites/double.html">
+                            <img src="img-Norfe\Card\double.jpeg" alt="Winter Is Comming">
+                            </a>
+                            <a href="SubSites/double.html"><h2>情侣/双人</h2></a>
+                            <div class="date">398元</div>
+                        </div>
+                        <div class="col-sm-4 blog-post">
+                            <a href="SubSites/more.html">
+                            <img src="img-Norfe\Card\more.jpeg" alt="The Illustration">
+                            </a>
+                            <a href="SubSites/more.html"><h2>团体</h2></a>
+                            <div class="date">598元</div>
+                        </div>
+                    </div>
+
+                </section>
+            </div><!--/container-->
+        </div><!-- /.content-block content-blog-gray -->
+
+
+        <!-- <div id="social" class="content-block">
+            <div class="container text-center">
+                <div class="hexagon"><a href="#"><i class="fa fa-facebook"></i></a></div>
+                <div class="hexagon"><a href="#"><i class="fa fa-twitter"></i></a></div>
+                <div class="hexagon"><a href="#"><i class="fa fa-google-plus"></i></a></div>
+                <div class="hexagon"><a href="#"><i class="fa fa-instagram"></i></a></div>
+                <div class="hexagon"><a href="#"><i class="fa fa-pinterest"></i></a></div>
+                <div class="hexagon"><a href="#"><i class="fa fa-envelope"></i></a></div>
+            </div>
+        </div> -->
+
+
+        <footer class="content-block content-block-dark">
+            <!-- <p>&copy; Copyright Photographer. <a target="_blank" href="http://www.mobanwang.com/" title="网页模板"></a></p> -->
+        </footer>     
+
+        <script src="js/jquery-2.1.3.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <!-- Include js plugin -->
+        <script src="owl-carousel/owl.carousel.js"></script>
+
+        <script src="js/main.js"></script>
+
+    </body>
+</html>
