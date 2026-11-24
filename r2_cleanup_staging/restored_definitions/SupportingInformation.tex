@@ -1,0 +1,1114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is a (brief) model paper using the achemso class
+%% The document class accepts keyval options, which should include
+%% the target journal and optionally the manuscript type. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[journal=mamobx,manuscript=article]{achemso}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional packages needed here.  Only include packages
+%% which are essential, to avoid problems later. Do NOT use any
+%% packages which require e-TeX (for example etoolbox): the e-TeX
+%% extensions are not currently available on the ACS conversion
+%% servers.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[version=3]{mhchem} % Formula subscripts using \ce{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If issues arise when submitting your manuscript, you may want to
+%% un-comment the next line.  This provides information on the
+%% version of every file you have used.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage{subfiles}
+\usepackage{bm}
+\usepackage[
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksnumbered=false,
+  bookmarksdepth=2
+]{hyperref}
+
+\usepackage{bookmark}
+\bookmarksetup{
+	open=true,
+	depth=2
+}
+
+% ============================================================
+% Supporting Information numbering
+% ============================================================
+
+\SectionNumbersOn
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+
+\newcounter{PdfSectionCounter}
+\newcounter{PdfSubsectionCounter}
+
+\newcommand{\PDFsection}[1]{%
+  \stepcounter{PdfSectionCounter}%
+  \hypertarget{pdfsection-\thePdfSectionCounter}{}%
+  \bookmark[dest=pdfsection-\thePdfSectionCounter,level=1]{#1}%
+  \section{#1}%
+}
+
+\newcommand{\PDFsubsection}[1]{%
+  \stepcounter{PdfSubsectionCounter}%
+  \hypertarget{pdfsubsection-\thePdfSubsectionCounter}{}%
+  \bookmark[dest=pdfsubsection-\thePdfSubsectionCounter,level=2]{#1}%
+  \subsection{#1}%
+}
+
+% 中文批注
+% \usepackage[utf8]{inputenc}
+% \usepackage{CJKutf8}
+% \usepackage{xcolor}
+% \usepackage[colorinlistoftodos,textsize=tiny]{todonotes}
+
+% \newif\ifshowcomments
+% % \showcommentstrue
+% \showcommentsfalse
+
+% \newcommand{\ctodo}[1]{%
+%   \ifshowcomments
+%     \todo[color=blue!15]{%
+%       \begin{CJK*}{UTF8}{gbsn}%
+%       \fontsize{7pt}{3pt}\selectfont #1%
+%       \end{CJK*}%
+%     }%
+%   \fi
+% }
+
+\usepackage{lineno}
+
+\newcommand*\mycommand[1]{\texttt{\emph{#1}}}
+
+% ============================================================
+% NT revision colors
+% ============================================================
+
+\usepackage{xcolor}
+\usepackage{xparse}
+
+% ---------- Color definitions ----------
+\definecolor{ntBlue}{HTML}{326DB6}
+\definecolor{ntRed}{HTML}{C44438}
+\definecolor{ntOrange}{HTML}{F7842D}
+\definecolor{ntGreen}{HTML}{4D7E54}
+\definecolor{ntPurple}{HTML}{865A96}
+\definecolor{ntTeal}{HTML}{008C8C}
+
+% ---------- Line-number appearance ----------
+\renewcommand{\linenumberfont}{%
+  \normalfont
+  \tiny
+  \color{black}%
+}
+
+% ---------- Switch ----------
+\newif\ifntshowcolor
+% \ntshowcolortrue
+\ntshowcolorfalse
+
+% ---------- Core command ----------
+\NewDocumentCommand{\ntc}{m m}{%
+  \ifntshowcolor
+    {\color{nt#1}#2}%
+  \else
+    #2%
+  \fi
+}
+
+% ---------- Shortcuts ----------
+\NewDocumentCommand{\ntr}{m}{\ntc{Red}{#1}}
+\NewDocumentCommand{\ntb}{m}{\ntc{Blue}{#1}}
+\NewDocumentCommand{\nto}{m}{\ntc{Orange}{#1}}
+\NewDocumentCommand{\ntg}{m}{\ntc{Green}{#1}}
+\NewDocumentCommand{\ntp}{m}{\ntc{Purple}{#1}}
+\NewDocumentCommand{\ntt}{m}{\ntc{Teal}{#1}}
+
+% ============================================================
+% Revised text with automatic page and line labels
+% ============================================================
+
+% Label convention:
+%   R1AQ1       Reviewer 1, group A, question 1
+%   R1AQ1-a     First of several non-contiguous revisions
+%   R2BQ3-b     Second revision for Reviewer 2, group B, question 3
+%
+% Usage:
+% \ntq{R1AQ1-a}{
+%   Revised manuscript text ...
+% }
+%
+% Automatically creates:
+%   rev:R1AQ1-a:start
+%   rev:R1AQ1-a:end
+%
+% The labels remain active when revision colors are switched off.
+\NewDocumentCommand{\ntq}{m +m}{%
+  \leavevmode
+  \phantomsection
+  \label{rev:#1:StartAnchor}%
+  \linelabel{rev:#1:start}%
+  {\ntr{#2}}%
+  \phantomsection
+  \label{rev:#1:EndAnchor}%
+  \linelabel{rev:#1:end}%
+  \ignorespaces
+}
+
+% Location-only anchor: no color and no visible output.
+% Use this at the beginning of a long or extensively reorganized passage.
+% Usage: \ntqpoint{R1AQ1-b}
+% Automatically creates: rev:R1AQ1-b:point
+\NewDocumentCommand{\ntqpoint}{m}{%
+  \phantomsection
+  \label{rev:#1:PointAnchor}%
+  \linelabel{rev:#1:point}%
+}
+
+\usepackage{silence}
+\WarningFilter{hyperref}{Invalid page number}
+\usepackage{xr-hyper}
+\input{CrossPdfLinks.tex}
+\externaldocument[M-]{./build/Manuscript}[Manuscript.pdf]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Meta-data block
+%% ---------------
+%% Each author should be given as a separate \author command.
+%%
+%% Corresponding authors should have an e-mail given after the author
+%% name as an \email command. Phone and fax numbers can be given
+%% using \phone and \fax, respectively; this information is optional.
+%%
+%% The affiliation of authors is given after the authors; each
+%% \affiliation command applies to all preceding authors not already
+%% assigned an affiliation.
+%%
+%% The affiliation takes an option argument for the short name.  This
+%% will typically be something like "University of Somewhere".
+%%
+%% The \altaffiliation macro should be used for new address, etc.
+%% On the other hand, \alsoaffiliation is used on a per author basis
+%% when authors are associated with multiple institutions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Shengda Zhao}
+\author{Jiaxin Yu}
+\affiliation[Beijing JiaoTong University]
+{School of Physical Science and Engineering, Beijing JiaoTong University, Beijing 100044, PR China}
+\author{Qiuju Chen}
+\affiliation[Beijing Normal University]
+{School of Physics and Astronomy, Beijing Normal University, Beijing 100875, PR China}
+% \author{Yangjun Yan}
+% \affiliation[Xihua University]
+% {School of Science, Xihua University, Chengdu 610039, PR China}
+\author{Quanxiao Dong}
+\affiliation[Academy of Railway Sciences Corporation Limited Beijing]
+{Railway Engineering Research Institute, China Academy of Railway Sciences Corporation Limited Beijing 100081, PR China}
+\email{dongquanxiaotjs@163.com}
+% \author{An-Chang Shi}
+% \affiliation[McMaster University]
+% {Department of Physics and Astronomy, McMaster University, Hamilton, Ontario L8S 4M1, Canada}
+% \email{shi@mcmaster.ca}
+\author{Xinghua Zhang}
+\affiliation[Beihang University]
+{School of Physics, Beihang University, Beijing, 100191, China}
+\email{zhangxinghua@buaa.edu.cn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The document title should be given as usual. Some journals require
+%% a running title from the author: this should be supplied as an
+%% optional argument to \title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[SI]{Supporting Information}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Some journals require a list of abbreviations or keywords to be
+%% supplied. These should be set up here, and will be printed after
+%% the title and author information, if needed.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abbreviations{SCFT, ODT, BCC, FCC}
+\keywords{topology-transformable copolymers, sliding topology, self-consistent field theory, microphase separation, packing frustration}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The manuscript does not need to include \maketitle, which is
+%% executed automatically.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "tocentry" environment can be used to create an entry for the
+%% graphical table of contents. It is given here as some journals
+%% require that it is printed as part of the abstract page. It will
+%% be automatically moved as appropriate.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{tocentry}
+% \centering
+% \includegraphics[]{../figure/TOC-v2.png}
+% % Some journals require a graphical entry for the Table of Contents.
+% % This should be laid out ``print ready'' so that the sizing of the
+% % text is correct.
+
+% % Inside the \texttt{tocentry} environment, the font used is Helvetica
+% % 8\,pt, as required by \emph{Journal of the American Chemical
+% % Society}.
+
+% % The surrounding frame is 9\,cm by 3.5\,cm, which is the maximum
+% % permitted for  \emph{Journal of the American Chemical Society}
+% % graphical table of content entries. The box will not resize if the
+% % content is too big: instead it will overflow the edge of the box.
+
+% % This box and the associated title will always be printed on a
+% % separate page at the end of the document.
+
+% % 8.25 cm × 4.45 cm。
+% \end{tocentry}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The same is true for Supporting Information, which should use the
+%% suppinfo environment.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\linenumbers
+
+\section{Self-Consistent Field-Theory Propagator Formulation and Boundary Conditions}\label{sec:Propagator}
+	In the main text, we introduced the forward propagator $q_m(\bm r,s_m)$ and the backward propagator $q_m^\dagger(\bm r,s^\dagger_m)$ for each block to numerically solve the self-consistent field theory (SCFT) equations of the linear--star topology-transformable (L--S TT) system, where $m\in\{\mathrm{A1},\mathrm{A2},\mathrm{A3},\mathrm{B}\}$ corresponds to the sliding side-chain, tail, trunk, and B blocks, respectively.
+	For each block, the block-local contour variable $s_m$ is measured from the end with the smaller reference contour coordinate $s$, with $s_m, s^\dagger_m \in [0,\ell_m]$ and $s_m+s^\dagger_m=\ell_m$.
+	The initial conditions of the propagators are determined by the free ends of the copolymer and by the topological connections between blocks, as follows:
+	\begin{equation}
+		q_{\mathrm{A1}}(\bm r,0)=1,
+	\end{equation}
+	\begin{equation}
+		q_{\mathrm{A2}}(\bm r,0)=1,
+	\end{equation}
+	\begin{equation}
+		q_{\mathrm{A3}}(\bm r,0)=
+		q_{\mathrm{A1}}(\bm r,\ell_{\mathrm{A1}})
+		q_{\mathrm{A2}}(\bm r,\ell_{\mathrm{A2}}),
+	\end{equation}
+	\begin{equation}
+		q_{\mathrm{B}}(\bm r,0)=q_{\mathrm{A3}}(\bm r, \ell_{\mathrm{A3}}),
+	\end{equation}
+	\begin{equation}
+		q^\dagger_{\mathrm{A1}}(\bm r,0)=
+		q_{\mathrm{A2}}(\bm r,\ell_{\mathrm{A2}})
+		q^\dagger_{\mathrm{A3}}(\bm r,\ell_{\mathrm{A3}}),
+	\end{equation}
+	\begin{equation}
+		q^\dagger_{\mathrm{A2}}(\bm r,0)=
+		q_{\mathrm{A1}}(\bm r,\ell_{\mathrm{A1}})
+		q^\dagger_{\mathrm{A3}}(\bm r,\ell_{\mathrm{A3}}),
+	\end{equation}
+	\begin{equation}
+		q^\dagger_{\mathrm{A3}}(\bm r,0)=
+		q^\dagger_{\mathrm B}(\bm r,\ell_{\mathrm{B}}),
+	\end{equation}
+	\begin{equation}
+		q^\dagger_{\mathrm{B}}(\bm r,0)=1.
+	\end{equation}
+	Here, propagators initiated at the three free ends have unit initial weight, whereas the remaining initial conditions follow from the corresponding topological connections.
+
+
+\section{Random Phase Approximation of L--S TT Copolymers}\label{sec:RPA}
+
+	The random phase approximation (RPA) is a Gaussian fluctuation theory obtained by expanding the free-energy functional to second order around a reference saddle point.
+	When the reference state is chosen as the homogeneous saddle point, RPA describes the stability of the disordered phase and determines the corresponding spinodal condition.
+	Unlike SCFT, which minimizes the full nonlinear free energy and determines the equilibrium ordered phases, RPA retains only the quadratic fluctuation contribution and therefore captures the onset of instability from the reference state.
+	Therefore, the comparison between the RPA spinodal and the SCFT order--disorder transition (ODT) provides a measure of whether the transition behavior is mainly governed by molecular correlations near the homogeneous state or by nonlinear effects in the ordered phase\cite{Wang2008Microphase,Li2020Largely,Li2021Simplicity}.
+
+	The reference saddle point is chosen as the SCFT solution $\{\phi_\alpha^\ast,\omega_\alpha^\ast\}$, and the fields are expanded around this solution as $\phi_\alpha(\bm r)=\phi_\alpha^\ast+\delta\phi_\alpha(\bm r)$ and $\omega_\alpha(\bm r)=\omega_\alpha^\ast+\delta\omega_\alpha(\bm r)$.
+	The second-order expansion of the free energy gives the Landau form
+	\begin{equation}
+		\frac{\mathcal F^{(2)}}{N\rho_0}
+		=
+		\frac12
+		\int
+		\frac{\mathrm d\bm k}{(2\pi)^3}
+		\delta\phi(\bm k)
+		\Gamma_2(\bm k)
+		\delta\phi(-\bm k),
+		\label{eq:Gamma2}
+	\end{equation}
+	where $\Gamma_2(\bm k)$ is the quadratic fluctuation kernel.
+	For an incompressible two-component system,
+	\begin{equation}
+		\Gamma_2(\bm k)
+		=
+		\widetilde C^{-1}(\bm k)
+		-
+		\frac{\chi N}{2},
+		\label{eq:Gamma2Def}
+	\end{equation}
+	where $\widetilde C^{-1}(\bm k)$ represents the single-chain correlation contribution associated with conformational entropy, whereas $\chi N/2$ represents the enthalpic contribution from A--B interactions.
+	The most unstable fluctuation mode is obtained by minimizing the quadratic kernel with respect to the wave vector,
+	\begin{equation}
+		\left.
+		\frac{\partial \Gamma_2(k)}
+		{\partial k}
+		\right|_{k=k^\ast}
+		=
+		\left.
+		\frac{\partial \widetilde C^{-1}(k)}
+		{\partial k}
+		\right|_{k=k^\ast}
+		=
+		0.
+		\label{eq:RPAWavevector}
+	\end{equation}
+	The spinodal interaction strength is subsequently determined by the instability condition
+	\begin{equation}
+		\Gamma_2(k^\ast)=0.
+		\label{eq:RPASpinodal}
+	\end{equation}
+
+
+	For L--S TT copolymers, the single-chain correlation functions depend on the sliding degree of freedom.
+	For a fixed topology $f$, the corresponding correlation function is denoted as
+	$\widetilde C_{\alpha\beta}^{\mathrm{Fix}}(\bm k,f)$.\cite{Zhao2024Phase}
+	The correlation functions entering the RPA kernel are obtained by averaging over the accessible sliding configurations,
+	\begin{equation}
+		\widetilde C_{\alpha\beta}(\bm k)
+		=
+		\int_0^1
+		P_{\mathrm{RPA}}(f)
+		\widetilde C_{\alpha\beta}^{\mathrm{Fix}}(\bm k,f)
+		\mathrm df,
+		\label{eq:RPACorrelation}
+	\end{equation}
+	where $P_{\mathrm{RPA}}(f)=Q_f[\omega_\alpha^\ast]/Q[\omega_\alpha^\ast]$ is the topology probability density evaluated at the homogeneous saddle point.
+	The inverse correlation kernel is constructed as
+	\begin{equation}
+		\widetilde C^{-1}(\bm k)
+		=
+		\frac{
+			\widetilde C_{\mathrm{AA}}(\bm k)
+			+2\widetilde C_{\mathrm{AB}}(\bm k)
+			+\widetilde C_{\mathrm{BB}}(\bm k)
+		}
+		{
+			4\widetilde C_{\mathrm{AA}}(\bm k)
+			\widetilde C_{\mathrm{BB}}(\bm k)
+			-
+			4\widetilde C_{\mathrm{AB}}^2(\bm k)
+		} .
+		\label{eq:RPACorrelationInverse}
+	\end{equation}
+	The choice of $P_{\mathrm{RPA}}(f)$ determines how the sliding degree of freedom modifies the molecular correlations and therefore changes the quadratic fluctuation free energy.
+
+
+	For the freely sliding system, the RPA expansion is performed around the homogeneous saddle point.
+	Because the homogeneous fields are spatially uniform, different sliding positions are statistically equivalent.
+	Changing $f$ only redistributes the connectivity among the A1, A2, and A3 blocks without changing the total contour lengths of the A and B components.
+	Therefore, $Q_f[\omega_\alpha^\ast]$ is independent of $f$, giving
+	\begin{equation}
+		P_{\mathrm{RPA}}(f)=1,
+		\qquad
+		0\leq f\leq1.
+	\end{equation}
+	We denote this complete annealed treatment as RPA--Slide.
+	In this case, the sliding degree of freedom is averaged before constructing the fluctuation kernel, and the unstable wave vector is determined by
+	\begin{equation}
+		\left.
+		\frac{\partial
+		\widetilde C_{\mathrm{Slide}}^{-1}(k)}
+		{\partial k}
+		\right|_{k=k_{\mathrm{RPA\text{-}Slide}}^\ast}
+		=
+		0.
+	\end{equation}
+	The corresponding spinodal value satisfies
+	\begin{equation}
+		\widetilde C_{\mathrm{Slide}}^{-1}(k^\ast)
+		-
+		\frac{\chi N_{\mathrm{sp}}}{2}
+		=
+		0.
+	\end{equation}
+
+
+	For comparison, our previous treatment~\cite{Zhao2024Phase} employed the most-unstable-topology approximation, denoted as RPA--MUT.
+	Instead of averaging over the complete topology ensemble, this approximation selects a single fixed-topology fluctuation channel by $P_{\mathrm{RPA}}(f)\rightarrow\delta(f-f_0)$.
+	Substituting this approximation into Eq.~\eqref{eq:RPACorrelation} gives
+	\begin{equation}
+		\widetilde C_{\alpha\beta}(\bm k)
+		=
+		\widetilde C_{\alpha\beta}^{\mathrm{Fix}}
+		(\bm k,f_0),
+	\end{equation}
+	where $f_0$ denotes a candidate fixed-topology channel.
+	Substitution into Eq.~\eqref{eq:RPACorrelationInverse} therefore gives a topology-dependent fluctuation kernel,
+	\begin{equation}
+		\widetilde C_{\mathrm{MUT}}^{-1}(k,f_0)
+		=
+		\frac{
+			\widetilde C_{\mathrm{AA}}^{\mathrm{Fix}}(k,f_0)
+			+2\widetilde C_{\mathrm{AB}}^{\mathrm{Fix}}(k,f_0)
+			+\widetilde C_{\mathrm{BB}}^{\mathrm{Fix}}(k,f_0)
+		}
+		{
+			4\widetilde C_{\mathrm{AA}}^{\mathrm{Fix}}(k,f_0)
+			\widetilde C_{\mathrm{BB}}^{\mathrm{Fix}}(k,f_0)
+			-
+			4[\widetilde C_{\mathrm{AB}}^{\mathrm{Fix}}(k,f_0)]^2
+		} .
+	\end{equation}
+	Because $f_0$ represents a family of candidate fixed-topology channels rather than a prescribed parameter, the most unstable topology and wave vector are determined by
+	\begin{equation}
+		(k_{\mathrm{RPA\text{-}MUT}}^\ast,
+		f_{\mathrm{RPA\text{-}MUT}}^\ast)
+		=
+		\operatorname*{arg\,min}_{k,f_0\in[0,1]}
+		\widetilde C_{\mathrm{MUT}}^{-1}(k,f_0).
+	\end{equation}
+	Here, because $f_0$ is bounded within $[0,1]$, the most unstable channel may occur at either an interior minimum or the limiting cases $f_0=0$ and $1$.
+	Therefore, the global minimization is used instead of a stationary condition with respect to $f_0$.
+
+	The two choices of $P_{\mathrm{RPA}}(f)$ serve different purposes in characterizing the instability of L--S TT copolymers.
+	RPA--Slide retains the complete annealed sliding ensemble and therefore provides the RPA description of the actual freely sliding system.
+	Its spinodal condition reflects the instability of the homogeneous phase after averaging over all accessible topological configurations.
+	By contrast, RPA--MUT is introduced to identify the most unstable fluctuation mode within the family of fixed-topology channels.
+	It does not represent the full annealed sliding ensemble, but instead reveals which topology becomes dominant when the homogeneous phase first loses stability and initiates the formation of ordered structures.
+
+
+\section{Gauss--Legendre Discretization and Numerical Convergence}\label{sec:GaussLegendre}
+
+	The SCFT formulation of L--S TT copolymers contains a continuous sliding degree of freedom $f\in[0,1]$.
+	In particular, the total single-chain partition function is obtained by integrating the fixed-$f$ partition function $Q_f$ over all accessible sliding configurations,
+	\begin{equation}
+		Q
+		=
+		\int_0^1 Q_f\,\mathrm df,
+		\label{eq:ContinuousPartition}
+	\end{equation}
+	and the density of block $m$ is obtained from the corresponding topology-resolved density $\psi_m(\bm r;f)$ as
+	\begin{equation}
+		\phi_m(\bm r)
+		=
+		\int_0^1
+		\psi_m(\bm r;f)\,\mathrm df.
+		\label{eq:ContinuousDensity}
+	\end{equation}
+	For the equilibrium states considered here, the statistical quantities vary smoothly with the continuous sliding degree of freedom $f$.
+	We therefore evaluate these integrals using an $N_{\mathrm f}$-point Gauss--Legendre quadrature, a numerical method that has also been used in SCFT calculations involving continuous molecular distributions~\cite{Koski2013Field,Sides2004Continuous}.
+
+
+	For the standard Gauss--Legendre rule on $[-1,1]$, the integral of an arbitrary function $F(t)$ is approximated by
+	\begin{equation}
+		\int_{-1}^{1}F(t)\,\mathrm dt
+		\simeq
+		\sum_{j=1}^{N_{\mathrm f}}
+		w_jF(t_j),
+		\label{eq:GaussLegendre}
+	\end{equation}
+	where $t_j$ and $w_j$ are the Gauss--Legendre nodes and weights, respectively.
+	For the sliding degree of freedom $f\in[0,1]$, the standard nodes are mapped according to
+	\begin{equation}
+		f_j=\frac{1+t_j}{2}.
+		\label{eq:GaussLegendreNodes}
+	\end{equation}
+	 
+	Under this mapping, the Gauss--Legendre weights on $[0,1]$ are defined as $\bar w_j\equiv w_j/2$, with $\sum_{j=1}^{N_{\mathrm f}}\bar w_j=1$.
+	These mapped weights are purely numerical quadrature weights used to approximate integrals over the sliding degree of freedom $f$.
+	Thus, for an arbitrary function defined on $[0,1]$,
+	\begin{equation}
+		\int_0^1F(f)\,\mathrm df
+		\simeq
+		\sum_{j=1}^{N_{\mathrm f}}
+		\bar{w}_j F(f_j).
+		\label{eq:GaussLegendreMap}
+	\end{equation}
+
+
+	Applying the same numerical integration to Eq.~\eqref{eq:ContinuousPartition} gives
+	\begin{equation}
+		
+			Q
+			\simeq
+			\sum_{j=1}^{N_{\mathrm f}}
+			\bar w_j Q_{f_j}.
+		
+		\label{eq:QuadraturePartition}
+	\end{equation}
+	Similarly, the block density in Eq.~\eqref{eq:ContinuousDensity} is evaluated as
+	\begin{equation}
+		
+			\phi_m(\bm r)
+			\simeq
+			\sum_{j=1}^{N_{\mathrm f}}
+			\bar w_j \psi_m(\bm r;f_j).
+		
+		\label{eq:QuadratureDensity}
+	\end{equation}
+	For the A component, the topology-resolved density at each quadrature node is
+	\begin{equation}
+		\psi_{\mathrm A}(\bm r;f_j)
+		=
+		\psi_{\mathrm{A1}}(\bm r;f_j)
+		+
+		\psi_{\mathrm{A2}}(\bm r;f_j)
+		+
+		\psi_{\mathrm{A3}}(\bm r;f_j),
+		\label{eq:QuadratureTopologyDensity}
+	\end{equation}
+	and therefore
+	\begin{equation}
+		
+			\phi_{\mathrm A}(\bm r)
+			\simeq
+			\sum_{j=1}^{N_{\mathrm f}}
+			\bar{w}_j \psi_{\mathrm A}(\bm r;f_j).
+		
+		\label{eq:QuadratureADensity}
+	\end{equation}
+
+
+	
+	The probability density $P_X(f)$ defined in the main text is a continuous physical quantity and is independent of the numerical quadrature.
+	At a Gauss--Legendre node $f_j$, its value is therefore evaluated directly as
+	\begin{equation}
+		P_X(f_j)
+		=
+		\frac{
+			\displaystyle
+			\int_X
+			\psi_{\mathrm A}(\bm r;f_j)\,
+			\mathrm d\bm r
+		}{
+			\displaystyle
+			\int_X
+			\phi_{\mathrm A}(\bm r)\,
+			\mathrm d\bm r
+		}.
+		\label{eq:DiscreteProbability}
+	\end{equation}
+	The mapped quadrature weight $\bar w_j$ does not enter the definition of $P_X(f_j)$ itself, but only the numerical integration over $f$.
+	Accordingly, using the same Gauss--Legendre discretization for $\phi_{\mathrm A}(\bm r)$ gives
+	\begin{equation}
+		\sum_{j=1}^{N_{\mathrm f}}
+		\bar w_j P_X(f_j)
+		=
+		\frac{
+			\displaystyle
+			\int_X
+			\sum_{j=1}^{N_{\mathrm f}}
+			\bar w_j
+			\psi_{\mathrm A}(\bm r;f_j)\,
+			\mathrm d\bm r
+		}{
+			\displaystyle
+			\int_X
+			\phi_{\mathrm A}(\bm r)\,
+			\mathrm d\bm r
+		}
+		\\
+		= 1.
+		\label{eq:ProbabilityNorm}
+	\end{equation}
+	Thus, $\bar w_jP_X(f_j)$ represents the discrete probability mass associated with the quadrature node $f_j$, whereas $P_X(f_j)$ itself remains the value of the continuous probability density sampled at that node.
+	
+
+	% Because $P_X(f)$ is constructed from the topology-resolved A-component density, it describes the distribution of chain topologies associated with A segments sampled within the spatial region $X$.
+	% It does not represent the spatial distribution of grafting points, and the sliding degree of freedom $f$ remains an internal molecular variable rather than a spatial field.
+	% The same numerical expression applies to the full computational domain, density layers, and local sampling regions defined in the main text.
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[]{./Figure/SI/Points.png}
+		\caption{
+			Convergence of the SCFT free energy with respect to the number of Gauss--Legendre points $N_{\mathrm f}$.
+			The vertical axis gives the free-energy difference between adjacent discretizations, $\Delta\mathcal F(N_{\mathrm f})=|\mathcal F(N_{\mathrm f})-\mathcal F(N_{\mathrm f}-1)|$.
+			Green and orange markers denote the lamellar phase ($\bar{\phi}_{\mathrm A}=0.50$, $\phi_{\mathrm a}=0.50$, $N\chi=20.0$) and cylindrical phase ($\bar{\phi}_{\mathrm A}=0.60$, $\phi_{\mathrm a}=0.50$, $N\chi=30.0$), respectively.
+			The gray dashed line marks $\Delta\mathcal F=2\varepsilon$, with $\varepsilon=10^{-6}$ being the SCFT convergence criterion for the field variables.
+		}
+		\label{fig:GLConvergence}
+	\end{figure}
+
+	Increasing $N_{\mathrm f}$ rapidly reduces the numerical integration error, whereas the computational cost increases approximately linearly.
+	As shown in Fig.~\ref{fig:GLConvergence}, the free-energy difference is generally reduced to the order of the field-iteration convergence tolerance when $N_{\mathrm f}\geq5$, indicating that the discretization of the sliding degree of freedom is no longer the dominant source of numerical error.
+	For the topology-distribution and spatially resolved analyses reported in this work, we use $N_{\mathrm f}=16$ to provide sufficient resolution of $P_X(f)$ at an acceptable computational cost. 
+	As a representative computational reference, a typical SCFT calculation on a $64^3$ spatial grid with $N_{\mathrm f}=16$ requires approximately 2~h on a single CPU core of an Intel Core i9-14900K processor, with a resident-memory usage of approximately 33~GB.
+	Both the computational time and memory requirement increase approximately linearly with $N_{\mathrm f}$, because the propagators and topology-resolved quantities must be evaluated and stored for each additional quadrature node.
+	
+
+\section{Bayesian Phase-Space Search and Candidate Structures}\label{sec:BayesianSearch}
+
+	The search of possible ordered structures follows the Bayesian optimization method of Dong \textit{et al.}~\cite{Dong2024Automated}.
+	For each prescribed space group, the initial SCFT fields are constructed from a finite set of basis functions adapted to the corresponding symmetry, and Bayesian optimization is used to search the coefficients of these basis functions.
+	The number of optimized basis functions, $n_{\mathrm{basis}}$, was selected according to the complexity of the prescribed symmetry.
+	For more complex Frank--Kasper candidates, we used up to $n_{\mathrm{basis}}=32$ to provide a sufficiently flexible representation of the initial fields.
+	The prescribed space group is used only to generate the initial fields and does not constrain the symmetry of the final SCFT solution.
+
+
+	Each initial field selected by Bayesian optimization was subsequently relaxed by a full SCFT calculation.
+	If the SCFT calculation failed to converge, we used the same penalty treatment as Ref.~\cite{Dong2024Automated},
+	\begin{equation}
+		F_{\mathrm{fail}}
+		=
+		F_{\max}
+		+0.2\left(F_{\max}-F_{\min}\right),
+	\end{equation}
+	where $F_{\max}$ and $F_{\min}$ are the maximum and minimum free energies among the successfully evaluated points.
+	For regions with strong competition between different structures, several independent Bayesian searches were performed rather than relying on a single search.
+
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=\linewidth]{./Figure/SI/Bayesian.png}
+		\caption{
+			Representative Bayesian optimization histories for selected space groups and parameter points.
+			The points and their colors indicate the free energies encountered during the searches for (a) BCC, (b) O$^{70}$, (c) C15, (d) A15, (e) C14, and (f) $\sigma$.
+			The red line marks the lowest free energy identified in each search.
+		}
+		\label{fig:BayesianSearch}
+	\end{figure}
+
+
+	Fig.~\ref{fig:BayesianSearch} shows several representative examples rather than the complete search.
+	The BCC and O$^{70}$ cases illustrate the behavior of phases that appear in the equilibrium phase diagrams, while C15, A15, C14, and $\sigma$ illustrate the searches for Frank--Kasper candidates.
+	The pale yellow points correspond to failed SCFT calculations and therefore do not represent additional converged structures.
+	Among these candidates, the $\sigma$ phase was particularly difficult to obtain, even with $n_{\mathrm{basis}}=32$.
+	This difficulty may be related to the equal Kuhn lengths of the A and B segments in the present model, which provide no additional conformational asymmetry to favor complex sphere packing.
+	Consequently, initial conditions leading to a converged $\sigma$ structure are more difficult to locate than those leading to the conventional sphere phases.
+	Even when a well-developed $\sigma$ structure was used directly as the initial condition, the SCFT iteration in the present L--S TT system still rarely converged to a reliable solution satisfying $\epsilon<10^{-4}$.
+	This provides additional numerical evidence that the $\sigma$ state is difficult to stabilize in the present model, rather than being missed solely because of the Bayesian initialization.
+	
+
+	The actual search used to construct the phase diagrams covered a much broader range of parameters and prescribed symmetries than the examples shown in Fig.~\ref{fig:BayesianSearch}.
+	In addition to L, C, G, O$^{70}$, BCC, and FCC, the Frank--Kasper candidates A15, C14, C15, and $\sigma$ were examined at several values of $\phi_{\mathrm a}$ and $N\chi$.
+	We carried out additional independent searches in the BCC and FCC regions and near their phase boundaries, where different sphere packing structures are expected to compete most strongly.
+	Metastable Frank--Kasper solutions were obtained in these searches, but their free energies remained above those of BCC or FCC at the corresponding state points.
+	Therefore, no Frank--Kasper structure was identified as the lowest free energy state within the parameter range considered here, and the equilibrium phase diagrams in the main text contain only L, C, G, O$^{70}$, BCC, and FCC.
+
+
+\section{Numerical Determination of the ODT}\label{sec:ODT}
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[]{./Figure/SI/ODT-dissymmetry.png}
+		\caption{
+		Representative SCFT free-energy comparisons between the disordered phase and candidate ordered phases for $\phi_{\mathrm a}=0.50$ at $\bar{\phi}_{\mathrm A}=0.47$ (a) and $\bar{\phi}_{\mathrm A}=0.51$ (b).
+		The ODT point is determined from the free-energy crossing between the disordered phase and the ordered phase with the lowest free energy.
+		(c) Variation of $N\chi_{\mathrm{ODT}}$ with $\bar{\phi}_{\mathrm A}$ for different $\phi_{\mathrm a}$, where the ODT points are determined from the interpolated free-energy crossings at $\Delta \mathcal{F}=0$; $|\Delta \mathcal{F}|\leq 1\times10^{-4}$ is used only as a practical numerical tolerance.
+		}
+		\label{fig:ODTDissymmetry}
+	\end{figure}
+
+
+	To examine whether the minimum of the SCFT ODT is located at $\bar{\phi}_{\mathrm A}=0.50$, we performed a local scan around this composition, using $\bar{\phi}_{\mathrm A}=0.47$, $0.49$, $0.50$, $0.51$, and $0.53$.
+	For each pair of $(\phi_{\mathrm a},\bar{\phi}_{\mathrm A})$, the free energies of the disordered phase and candidate ordered phases were calculated as functions of $N\chi$ with a step size of $0.02$.
+	The free-energy difference was defined as
+	\begin{equation}
+		\Delta \mathcal{F} =
+		\mathcal{F}_{\mathrm{Dis}} - \mathcal{F}_{\mathrm{ord}}^{\min},
+	\end{equation}
+	and the ODT was determined by interpolating the crossing point at which $\Delta \mathcal{F}=0$.
+	Here, $\mathcal{F}_{\mathrm{ord}}^{\min}$ is the lowest free energy among the candidate ordered phases, including the lamellar phase (L) and the cylindrical phase (C).
+	For the representative cases $\bar{\phi}_{\mathrm A}=0.47$ and $0.51$ at $\phi_{\mathrm a}=0.50$, shown in Fig.~\ref{fig:ODTDissymmetry}(a,b), the lowest ordered phase is L, so the ODT is determined by the Dis--L free-energy crossing.
+	All data points in Fig.~\ref{fig:ODTDissymmetry}(c) were obtained using the same procedure.
+	Near the ODT, the field-iteration convergence tolerance is set to $5\times10^{-5}$, while the ODT itself is determined from the interpolated free-energy crossing at $\Delta \mathcal{F}=0$.
+	In practice, we use $|\Delta \mathcal{F}|\leq 1\times10^{-4}$ as an auxiliary numerical tolerance to avoid overinterpreting free-energy differences that are comparable to the numerical convergence accuracy.
+
+
+	As shown in Fig.~\ref{fig:ODTDissymmetry}(c), the minimum of $N\chi_{\mathrm{ODT}}$ remains located near $\bar{\phi}_{\mathrm A}=0.50$ for all examined values of $\phi_{\mathrm a}$.
+	Although small apparent shifts to either side of $\bar{\phi}_{\mathrm A}=0.50$ can be observed, their magnitude is comparable to the numerical uncertainty associated with the $N\chi$ scanning step, the interpolation procedure, and the SCFT convergence accuracy.
+	Therefore, within the present numerical resolution, the SCFT ODT minimum does not show a significant shift away from $\bar{\phi}_{\mathrm A}=0.50$.
+	This conclusion is consistent with the RPA prediction that the most unstable composition occurs at $\bar{\phi}_{\mathrm A}=0.50$, and supports the use of $\bar{\phi}_{\mathrm A}=0.50$ as a representative composition for analyzing the ODT and the associated conformational response in the main text\cite{Zhao2024Phase}.
+
+
+\section{Entropy Measures for Conformational Stabilization and Topology Selection}\label{sec:Entropy}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\linewidth]{./Figure/SI/Entropy.png}
+\caption{
+    Schematic illustration of the two entropy-related measures used for the L--S TT system.
+    (a) Effective conformational-entropy scale $\Delta S_{\mathrm{conf}}$, defined by the RPA spinodal difference between the freely sliding ensemble and the most unstable fixed-topology reference, and sliding-distribution entropy loss $\Delta S_{\mathrm{Slide}}$, calculated from the normalized local topology distribution $P_{\mathcal R(\bm r)}(f)$ relative to the uniform reference $P_{\mathrm{hom}}(f)=1$.
+    Fixed topologies are represented schematically by $P(f)=\delta(f-f_0)$.
+    (b) Schematic morphology and representative slice illustrating spatially resolved topology selection.
+	(c) $\Delta S_{\mathrm{Slide}}/k_{\mathrm B}$ and $\Delta S_\Lambda/k_{\mathrm B}$ as functions of $\phi_{\mathrm a}$.
+}
+\label{fig:EntropyMeasures}
+\end{figure}
+
+
+The sliding degree of freedom enters the single-chain statistics through $Q=\int_0^1 Q_f\,\mathrm df$, where each $Q_f$ includes the chain conformations accessible at a prescribed sliding configuration.
+The conformational statistics and the redistribution of topology weights are coupled through the self-consistent fields.
+We examine this response using two complementary measures, summarized in Fig.~\ref{fig:EntropyMeasures}: the effective conformational-entropy scale $\Delta S_{\mathrm{conf}}$ for the homogeneous instability and the sliding-distribution entropy loss $\Delta S_{\mathrm{Slide}}$ for local topology selection in the ordered phase.
+We therefore use these two quantities as complementary measures of the coupled conformational and topological responses associated with the sliding degree of freedom, rather than as independent additive contributions to the thermodynamic entropy or as a decomposition of the SCFT free energy.
+
+
+
+As discussed in Sec.~\ref{sec:RPA}, the RPA kernel in Eq.~\eqref{eq:Gamma2Def} separates the quadratic free-energy cost into the single-chain contribution $\widetilde C^{-1}(k)$ and the enthalpic contribution $N\chi/2$.
+Together with Eqs.~\eqref{eq:RPAWavevector} and \eqref{eq:RPASpinodal}, the instability condition gives
+\begin{equation}
+    N\chi_{\mathrm{sp}}
+    =
+    2\widetilde C^{-1}(k^\ast).
+\end{equation}
+Because $\widetilde C^{-1}(k)$ represents the single-chain restoring contribution associated with conformational entropy, differences in $N\chi_{\mathrm{sp}}$ obtained within the same RPA framework measure differences in the conformational-entropic penalty of the unstable composition mode.\cite{Matsen1996Unifying,Sides2004Continuous,Wang2008Microphase}
+
+This interpretation concerns the quadratic response to composition fluctuations, with each spinodal evaluated at its own critical wavevector, and provides an effective measure of the conformational-entropic response near the instability.
+
+This measure also helps rationalize entropy-related differences between molecular architectures.
+For example, it explains the reduced spinodal of the fixed-topology small-Y A$_2$AB architecture relative to the linear AB diblock.\cite{Zhao2024Phase}
+When the side chain and the tail of the main chain have comparable contour lengths, the two A branches can respond on similar length scales to the emerging composition modulation, reducing the conformational-entropic restoring penalty.
+The decrease in $N\chi_{\mathrm{sp}}$ therefore reflects a smaller entropy-related cost of the unstable mode rather than a direct counting of molecular conformations.
+
+
+RPA--MUT identifies the most unstable fixed-topology channel, corresponding to the minimum spinodal among all prescribed topologies, whereas RPA--Slide retains the full distribution of sliding topologies through Eq.~\eqref{eq:RPACorrelation}.
+At the homogeneous instability, the sliding distribution remains uniform, $P_{\mathrm{hom}}(f)=1$, so the freely sliding ensemble is statistically equivalent to the equal-weight Blend at the quadratic level.
+Their distinction emerges only after ordering, when the sliding system can redistribute its topology weights self-consistently.
+The minimum RPA--MUT spinodal therefore provides the natural fixed-topology reference for the smallest conformational-entropic cost required to trigger the unstable composition mode.
+By contrast, the full sliding ensemble is more resistant to this instability in the present system, giving $N\chi_{\mathrm{sp}}^{\mathrm{Slide}}>N\chi_{\mathrm{sp}}^{\mathrm{MUT}}$.
+We accordingly define the effective conformational-entropy scale as
+\begin{equation}
+    \frac{\Delta S_{\mathrm{conf}}}{k_{\mathrm B}}
+    \equiv
+    N\chi_{\mathrm{sp}}^{\mathrm{Slide}}
+    -
+    N\chi_{\mathrm{sp}}^{\mathrm{MUT}}.
+    \label{eq:ConfEntropy}
+\end{equation}
+
+Eq.~\eqref{eq:ConfEntropy} defines an effective conformational-entropy scale derived from the single-chain contribution to the RPA kernel.
+A larger $\Delta S_{\mathrm{conf}}$ indicates a higher instability threshold and stronger conformational resistance to composition fluctuations relative to the most unstable fixed-topology reference.
+The definition characterizes this response within the present RPA comparison; it is not a calculation of the complete conformational entropy change.
+
+
+
+
+The conformational effect associated with sliding cannot be uniquely isolated as an independent entropy term from the present SCFT free-energy functional.
+In the SCFT, the sliding configurations enter the single-chain contribution through $-\ln Q$, with $Q=\int_0^1 Q_f\,\mathrm df$, so the conformational statistics within each fixed-$f$ state and their annealed statistical weights are combined within the single-chain free-energy contribution.
+The topology weights are further redistributed self-consistently by the same fields that govern the chain conformations, so the present SCFT formulation does not yield a unique additive decomposition into conformational and topology-distribution entropy contributions.
+Accordingly, the topology distribution $P(f)$ alone does not determine the effective conformational-entropy scale $\Delta S_{\mathrm{conf}}$, and an integral of the form $\int P(f)\ln P(f)\,\mathrm df$ characterizes only the redistribution of topology weights rather than the full conformational response.
+
+The topology-dependent conformational response is instead contained in the intramolecular statistics of each fixed-$f$ state, such as $\widetilde C_{\alpha\beta}^{\mathrm{Fix}}(k,f)$, which enter together with the topology weights in the RPA--Slide average of Eq.~\eqref{eq:RPACorrelation}.
+This distinction motivates treating the distribution-based entropy separately as a measure of topology selection, as defined below.
+
+
+
+The entropy loss of the topology distribution is evaluated relative to the homogeneous sliding state, whose distribution is denoted by $P_{\mathrm{hom}}(f)=1$ on $[0,1]$.
+In the present model, this uniform reference coincides with $P_{\mathrm{RPA}}(f)$ for RPA--Slide and with the global SCFT distribution $P_\Lambda(f)$ in the homogeneous state.
+The notation $P_{\mathrm{hom}}$ is used here to identify this reference in the entropy analysis.
+
+The departure of a normalized topology distribution $P_X(f)$ from the homogeneous reference is measured by the Kullback--Leibler (KL) divergence,\cite{Kullback1951Information}
+\begin{equation}
+    D_X
+    \left[P_X\Vert P_{\mathrm{hom}}\right]
+    =
+    \int_0^1
+    P_X(f)\ln P_X(f)\,
+    \mathrm df.
+    \label{eq:KLDivergence}
+\end{equation}
+This quantity vanishes for the homogeneous sliding state and becomes positive as topology selection makes $P_X(f)$ nonuniform, thereby measuring the loss of sliding-distribution entropy relative to the uniform reference.
+
+
+To retain the spatial variation of topology selection in the ordered phase, we evaluate the sliding-distribution entropy loss from the local topology distribution $P_{\mathcal R(\bm r)}(f)$ rather than from the global distribution alone.
+We therefore define
+\begin{equation}
+    \frac{\Delta S_{\mathrm{Slide}}}{k_{\mathrm B}}
+    =
+    \frac{1}{V \bar{\phi}_{\mathrm A}}
+    \int_\Lambda
+    \phi_{\mathrm A}(\bm r) D_{\mathcal R}(\bm r) \ \mathrm d\bm r.
+    \label{eq:SlideEntropyKL}
+\end{equation}
+Here, $\phi_{\mathrm A}(\bm r)$ weights the local entropy loss by the sampled A-segment population, and $\bar{\phi}_{\mathrm A}=V^{-1}\int_\Lambda\phi_{\mathrm A}(\bm r)\,\mathrm d\bm r$ provides the normalization.
+For the entropy evaluation, $\mathcal R(\bm r)$ is understood in the local limit $\Delta r\to 0$, so that $P_{\mathcal R(\bm r)}(f)$ approaches the pointwise conditional topology distribution at $\bm r$.
+
+Thus, $\Delta S_{\mathrm{Slide}}\geq 0$ denotes the magnitude of the sliding-distribution entropy loss, while the corresponding change in the distribution entropy relative to the homogeneous state is $-\Delta S_{\mathrm{Slide}}$.
+A larger $\Delta S_{\mathrm{Slide}}$ therefore indicates a greater average departure of the local topology distributions from the uniform reference, under the stated A-segment weighting and spatial sampling.
+This measure concerns the entropy of the sliding-topology distribution and does not represent the complete thermodynamic entropy change accompanying microphase separation.
+Because $\Delta S_{\mathrm{conf}}$ and $\Delta S_{\mathrm{Slide}}$ characterize different responses and reference comparisons, their numerical magnitudes are not used to infer the fraction of total entropy retained or lost.
+
+
+
+
+Because $\Delta S_{\mathrm{Slide}}$ is intended to retain the spatial variation of topology selection, its evaluation requires the spatially resolved distribution $P_{\mathcal R(\bm r)}(f)$ rather than the global distribution $P_\Lambda(f)$ alone.
+The global topology distribution $P_\Lambda(f)$ describes the topology weights averaged over the entire computational domain.
+Different regions can favor different topologies, so this spatial averaging can smooth out local preferences even when local topology selection is appreciable.
+If the entropy loss is evaluated only from the global distribution,
+\begin{equation}
+    \frac{\Delta S_\Lambda}{k_{\mathrm B}}
+    =
+    D_\Lambda,
+\end{equation}
+this local information is not retained.
+For reference, we denote the difference between the locally evaluated and global measures by
+\begin{equation}
+    I_{f;\mathcal R}
+    =
+    (\Delta S_{\mathrm{Slide}}-\Delta S_\Lambda)/k_{\mathrm B},
+\end{equation}
+which is used here only as an auxiliary comparison of the two descriptions.
+No independent thermodynamic entropy contribution or quantitative measure of spatial correlation is assigned to $I_{f;\mathcal R}$.
+Because spatial averaging smooths out local topology selection, the entropy loss obtained from $P_\Lambda(f)$ is smaller than that from the spatially resolved distribution, giving $\Delta S_\Lambda\leq\Delta S_{\mathrm{Slide}}$.
+Thus, evaluating the entropy loss from $P_\Lambda(f)$ alone removes part of the spatially heterogeneous topology-selection information and consequently underestimates the sliding-distribution entropy loss.
+We therefore evaluate $\Delta S_{\mathrm{Slide}}$ from the spatially resolved distribution $P_{\mathcal R(\bm r)}(f)$ according to Eq.~\eqref{eq:SlideEntropyKL}.
+The resulting $\Delta S_{\mathrm{Slide}}$ and $\Delta S_\Lambda$ near the ODT are summarized in Fig.~\ref{fig:EntropyMeasures}c as functions of $\phi_{\mathrm a}$.
+Their difference directly reflects the entropy-loss contribution that is obscured by spatial averaging in the global topology distribution.
+
+
+
+In summary, $\Delta S_{\mathrm{conf}}$ is an effective conformational-entropy scale defined from the RPA--Slide and RPA--MUT spinodal difference, characterizing how the full sliding ensemble modifies the conformational-entropic resistance of the homogeneous phase to composition fluctuations.
+By contrast, $\Delta S_{\mathrm{Slide}}$ is the positive magnitude of the sliding-distribution entropy loss in the ordered phase, evaluated from the spatially resolved topology distribution relative to the homogeneous reference $P_{\mathrm{hom}}(f)=1$.
+They characterize, respectively, the conformational response near the instability and the loss of sliding freedom associated with local topology selection, and therefore serve as complementary rather than additive entropy-related measures.
+
+
+\section{Global and Local Statistics of Sliding Topology Selection}\label{sec:TopologyStatistics}
+
+	The preferred topology $f_\Lambda^\ast$ identifies the maximum of the sliding topology distribution, whereas the full distribution describes the relative contributions of the accessible topologies.
+	We characterize these contributions through the global distribution $P_\Lambda(f)$, the distribution $P_\Omega(f)$ on an isodensity layer, and the local distribution $P_{\mathcal R(\bm r)}(f)$.
+	Each distribution is constructed from the A-segment density resolved by topology and normalized by the total A-segment population within the sampled region.
+	For a normalized distribution $P_X(f)$, where $X$ denotes $\Lambda$, $\Omega$, or $\mathcal R(\bm r)$, the preferred topology is
+	\begin{equation}
+		f_X^\ast
+		=
+		\underset{f\in[0,1]}{\operatorname{arg\,max}}\,
+		P_X(f).
+	\end{equation}
+	The corresponding mean topology is
+	\begin{equation}
+		\bar f_X
+		=
+		\int_0^1
+		f P_X(f)\,
+		\mathrm df.
+	\end{equation}
+	The departure of the full topology distribution from uniform sliding is quantified by the KL divergence defined in Eq.~\eqref{eq:KLDivergence}.
+	
+	The quantities $f_X^\ast$, $\bar f_X$, and $D_X$ therefore characterize the position of the distribution maximum, its average sliding position, and its departure from uniform sliding, respectively.
+	Their combined use distinguishes a change in the preferred topology from a redistribution of the full sliding ensemble.
+	
+	We first examine these statistics globally near the ODT and then compare their spatial variation in representative ordered phases.
+
+
+	\subsection{Global Topology Statistics near the ODT}\label{subsec:TopologyStatisticsGlobal}
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[]{./Figure/SI/fbarODT.png}
+		\caption{
+		Global topology statistics as functions of $\phi_{\mathrm a}$ at fixed $\bar{\phi}_{\mathrm A}=0.50$, evaluated from the same $P_\Lambda(f)$ data as Fig.~\ntxref{M-fig:ODT}b of the main text at $N\chi=N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}+0.5$.
+		(a) Preferred topology $f_\Lambda^\ast$.
+		(b) Mean topology $\bar f_\Lambda$.
+		The gray dashed line in (b) indicates the uniform-distribution reference $\bar f=1/2$.
+		}
+		\label{fig:ODTTopology}
+	\end{figure}
+
+
+	Fig.~\ref{fig:ODTTopology} shows that $f_\Lambda^\ast$ decreases toward the linear limit as $\phi_{\mathrm a}$ increases, whereas $\bar f_\Lambda$ remains close to $1/2$.
+	Together with the broad $P_\Lambda(f)$ distributions in Fig.~\ntxref{M-fig:ODT}b of the main text, this shows that the displacement of the distribution maximum is accompanied by only a modest redistribution of the full sliding ensemble.
+	
+	Thus, the approach of $f_\Lambda^\ast$ to zero identifies an increasing preference for the AB linear diblock topology rather than a concentration of the entire topology distribution at $f=0$.
+	
+	The topology statistics are reported only for $0<\phi_{\mathrm a}<1$.
+	At the limiting architectures $\phi_{\mathrm a}=0$ and $1$, the corresponding sliding branch vanishes and the system reduces to a linear AB diblock, so $f$ no longer represents a physical sliding topology degree of freedom.
+
+
+	For comparison, the sliding-distribution entropy loss $\Delta S_{\mathrm{Slide}}/k_{\mathrm B}$, shown in Fig.~\ref{fig:EntropyMeasures}c using the same data as Fig.~\ntxref{M-fig:ODT}f of the main text, has a magnitude of approximately $10^{-4}$ near the ODT.
+	The spatially resolved topology distributions therefore remain close to uniform sliding on average in this regime, consistent with the approach of the global distribution toward $P_{\mathrm{hom}}(f)=1$.
+
+
+	\subsection{Spatial Topology Selection in Ordered Phases}
+	\label{subsec:TopologyStatisticsSpatial}
+
+	The spatial dependence of topology selection is described by the local conditional distribution $P_{\mathcal R(\bm r)}(f)$, while $f$ remains an internal sliding coordinate rather than a spatial field.
+	The local preferred topology $f_{\mathcal R}^\ast(\bm r)$, mean topology $\bar f_{\mathcal R}(\bm r)$, and KL divergence $D_{\mathcal R}(\bm r)$ are spatially resolved statistics derived from this distribution.
+	Here, $D_{\mathcal R}=0$ corresponds to the uniform reference, while larger values quantify a stronger local departure of $P_{\mathcal R(\bm r)}(f)$ from that reference.
+	This local KL divergence enters $\Delta S_{\mathrm{Slide}}$ through the A-segment-weighted spatial average in Eq.~\eqref{eq:SlideEntropyKL}.
+
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[]{./Figure/SI/fbarPhase.png}
+		\caption{
+		Spatial topology statistics in representative Gyroid, O$^{70}$, BCC, and FCC phases.
+		(a) Gyroid phase at $\bar{\phi}_{\mathrm A}=0.30$, $N\chi=30$, and $\phi_{\mathrm a}=0.50$.
+		(b) O$^{70}$ phase at $\bar{\phi}_{\mathrm A}=0.55$, $N\chi=13$, and $\phi_{\mathrm a}=0.50$.
+		(c,d) BCC phase at $\bar{\phi}_{\mathrm A}=0.85$ and $N\chi=45$ for $\phi_{\mathrm a}=0.25$ and $0.50$, respectively.
+		(e,f) FCC phase at $\bar{\phi}_{\mathrm A}=0.885$ and $N\chi=45$ for $\phi_{\mathrm a}=0.25$ and $0.50$, respectively.
+		From left to right, the columns show the A-segment density $\phi_{\mathrm A}(\bm r)$, local preferred topology $f_{\mathcal R}^\ast(\bm r)$, local mean topology $\bar f_{\mathcal R}(\bm r)$, and local KL divergence $D_{\mathcal R}(\bm r)$.
+		Orange contours mark $\phi_{\mathrm A}=0.5$; points I--III denote the representative BCC and FCC positions used in Fig.~\ref{fig:SphereTopologyProfiles}.
+		All panels show representative two-dimensional cross sections of the corresponding three-dimensional solutions, with a common color scale within each column for comparison among the phases.
+		}
+		\label{fig:PhaseTopology}
+	\end{figure}
+
+
+	\paragraph{Network phases.}
+	The Gyroid and O$^{70}$ examples first illustrate how local topology selection is organized within network structures.
+	In both phases, $f_{\mathcal R}^\ast(\bm r)$ varies appreciably across the morphology, whereas $\bar f_{\mathcal R}(\bm r)$ changes much less.
+	The corresponding $D_{\mathcal R}(\bm r)$ maps directly quantify how strongly these local distributions depart from uniform sliding.
+	
+	The principal spatial variations of the topology statistics follow the A-segment density contours, indicating that topology selection in these network phases is primarily organized across density layers.
+	This correspondence supports the use of $P_\Omega(f)$ to summarize the dominant features of topology selection on an isodensity layer.
+	It does not imply, however, that the local topology distribution $P_{\mathcal R(\bm r)}(f)$ is determined by the local density alone, because averaging over an isodensity layer can obscure variations among individual spatial positions.
+	The two representations are therefore complementary: $P_\Omega(f)$ summarizes the topology weights over the selected density layer, whereas the spatially resolved statistics derived from $P_{\mathcal R(\bm r)}(f)$ identify the local topology preferences and their variation within the ordered structure.
+	
+	This correspondence is consistent with Fig.~\ntxref{M-fig:O70Topology}e,f of the main text, where the O$^{70}$ distribution evolves from a single preferred topology in the A-rich region to a U-shaped distribution in the B-rich region.
+
+
+	The U-shaped distribution enhances the relative contributions of the two limiting topologies while retaining appreciable contributions from intermediate sliding configurations.
+	Consequently, the preferred topology can approach an endpoint while the mean remains near the middle of the sliding range.
+	
+	This behavior does not indicate macrophase separation into distinct topology populations.
+	The sliding coordinate $f$ is an annealed internal degree of freedom rather than a conserved label of different molecular species, and the A-segment density remains spatially continuous across the ordered structure.
+	Consistently, the U-shaped $P_\Omega(f)$ in Fig.~\ntxref{M-fig:O70Topology}e,f of the main text remains broad, with its minimum remaining above $0.8$ rather than being depleted between two isolated populations. 
+	The near-zero values of $D_{\mathcal R}(\bm r)$ in Fig.~\ref{fig:PhaseTopology}b likewise support this conclusion, indicating that the local topology distributions remain close to the uniform sliding reference.
+	Rather, as described in the main text, the enhanced relative contributions of the two limiting topologies in the B-rich region reflect a redistribution of topology weights within the relatively small A-segment population extending into that region: AB-like and A$_2$B-like configurations contribute more strongly, while intermediate sliding states remain populated.
+	
+
+
+	\paragraph{Spherical phases.}
+
+	The BCC and FCC phases show a qualitatively different spatial response.
+	In the A-rich regions, $f_{\mathcal R}^\ast(\bm r)$ varies strongly among different local environments, whereas $\bar f_{\mathcal R}(\bm r)$ remains close to the midpoint of the sliding range, with only a slight bias toward smaller $f$ values.
+	The spatially heterogeneous topology preference is observed for both $\phi_{\mathrm a}=0.25$ and $0.50$.
+	The $\phi_{\mathrm a}=0.25$ maps extend the representative spatial analysis beyond the $\phi_{\mathrm a}=0.50$ case shown in the main text.
+
+
+	A contrast between these two statistics is evident in $D_{\mathcal R}$.
+	Although $f_{\mathcal R}^\ast(\bm r)$ varies across the sampled local environments, $D_{\mathcal R}(\bm r)$ remains relatively small throughout much of the A-rich material in the BCC and FCC phases.
+	Thus, the preferred topology can vary substantially in space without the full local topology distribution becoming strongly concentrated around that value.
+	
+	The strong spatial variation of $f_{\mathcal R}^\ast$ in the spherical phases therefore need not be accompanied by a comparable displacement of $\bar f_{\mathcal R}$ or a strong increase in $D_{\mathcal R}$.
+	The local environment primarily changes the relative weighting and location of maxima within a broadly sampled sliding ensemble.
+	
+
+
+	For comparison among the representative ordered states, we focus primarily on the A-rich material away from the $\phi_{\mathrm A}=0.5$ contours.
+	The maps in Fig.~\ref{fig:PhaseTopology} show representative two-dimensional cross sections, so this comparison concerns the spatial patterns displayed on those sections rather than the complete range of values throughout the three-dimensional unit cell.
+
+	Relatively large $D_{\mathcal R}(\bm r)$ values also occur in the B-rich regions of the displayed BCC and FCC sections.
+	Because $P_{\mathcal R(\bm r)}(f)$ is conditioned on the local A-segment population, these values describe a redistribution of topology weights among the relatively few A segments extending into those regions.
+	Their contribution to $\Delta S_{\mathrm{Slide}}$ is governed by the product $\phi_{\mathrm A}(\bm r)D_{\mathcal R}(\bm r)$ in Eq.~\eqref{eq:SlideEntropyKL}, rather than by $D_{\mathcal R}(\bm r)$ alone.
+	The low A-segment density therefore reduces their local statistical weight; a large local divergence does not by itself imply a large contribution to the spatially averaged entropy-loss measure.
+	The total contribution of a region depends on the integral of this weighted quantity over that region and cannot be inferred from the extrema on a representative section alone.
+
+	On the common color scale, $D_{\mathcal R}$ remains closer to zero over much of the A-rich material in the displayed BCC and FCC sections than in the Gyroid example.
+	This relative behavior, rather than the extrema on an individual section, is used below to characterize topology homogenization.
+
+
+	This comparison highlights a distinctive response of the spherical phases, which we refer to as topology homogenization: even in strongly ordered states, the local conditional distribution $P_{\mathcal R(\bm r)}(f)$ can remain broad and close to the uniform reference $P_{\mathrm{hom}}(f)=1$, rather than becoming concentrated around a single topology.
+	Locally, this behavior is characterized by small $D_{\mathcal R}$ and can coexist with substantial spatial variation of the preferred topology $f_{\mathcal R}^\ast(\bm r)$.
+	The overall departure from uniform sliding is quantified by the A-segment-weighted entropy loss $\Delta S_{\mathrm{Slide}}$, with smaller values indicating greater topology homogenization.
+	In the representative BCC and FCC sections at $N\chi=45$, $f_{\mathcal R}^\ast(\bm r)$ varies substantially among local environments while $D_{\mathcal R}(\bm r)$ remains small over much of the A-rich material, showing that spatial variation of topology preference does not require strong localization of the full sliding ensemble.
+	Because the representative phases differ in composition and segregation strength, these observations characterize the states shown in Fig.~\ref{fig:PhaseTopology} rather than establishing a universal ranking among morphologies.
+
+
+\section{Origin of Topology Homogenization in Spherical Phases}\label{sec:TopologyHomogenization}
+
+	In the BCC and FCC phases, the preferred topology $f_{\mathcal R}^\ast$ varies substantially across local environments, while the corresponding local topology distributions remain broad over much of the A-rich material.
+	This coexistence of spatially varying topology preference with weak localization of the full sliding ensemble is referred to here as topology homogenization.
+	As quantified in the main text, a smaller A-segment-weighted sliding-distribution entropy loss $\Delta S_{\mathrm{Slide}}$ indicates a smaller overall departure from uniform sliding and hence greater topology homogenization.
+	Here, we provide a possible qualitative interpretation of its origin based on the direction-dependent local environments of the spherical phases.
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[width=\linewidth]{./Figure/SI/SpherePRLine.png}
+		\caption{
+		Directional topology response in the BCC and FCC phases under the same conditions as Fig.~\ref{fig:PhaseTopology}c--f.
+		(a,b) Spatial distributions of $P_{\mathcal R(\bm r)}(f)$ in the BCC (a) and FCC (b) phases.
+		The left and right panels correspond to the [110] and [111] directions, respectively.
+		In the corresponding $f$--$R$ plots, the red and green curves show the profiles of $\phi_{\mathrm A}$ and the local preferred topology $f_{\mathcal R}^\ast$ along these directions.
+		(c--e) Schematic geometric interpretations of compressed (c), matched (d), and stretched (e) local chain extension relative to micelle spacing.
+		These schematics provide a qualitative geometric picture and are not a quantitative decomposition of the free-energy contributions.
+		}
+		\label{fig:DirectionalTopology}
+	\end{figure}
+
+	To develop this picture, we first examine the directional profiles in Fig.~\ref{fig:DirectionalTopology}.
+	They provide one possible geometric interpretation of how spatially heterogeneous topology preference can coexist with a broadly distributed sliding ensemble.
+	Different crystallographic directions correspond to different local filling environments between neighboring B-rich micelles and therefore favor different values of $f_{\mathcal R}^\ast$.
+	In BCC, the [111] direction contains a region where $f_{\mathcal{R}}^\ast$ approaches approximately $0.5$, whereas smaller preferred values occur along [110].
+	Analogous directional differences are observed between the [110] and [111] directions in FCC.
+	Importantly, the corresponding local topology distributions remain broad over a substantial range of $f$.
+	Thus, the local environment can shift the position of the preferred topology without forcing the full sliding ensemble to concentrate around that value.
+	This provides a natural geometric picture for topology homogenization: different local environments redistribute the relative topology weights within a broadly accessible sliding ensemble.
+
+
+	Together with the direction-dependent topology response in Fig.~\ref{fig:DirectionalTopology}, the A1 and A2 block density distributions in Fig.~\ntxref{M-fig:SphereFStar}a,b of the main text suggest complementary spatial roles of the sliding side-chain block A1 and the A-containing portion of the main chain.
+	The main-chain blocks A2 and A3 primarily accommodate the connection and density continuity between neighboring B-rich domains, whereas the A1 block adjusts its spatial contribution to fill the intervening regions.
+	Because sliding continuously redistributes the contour length between the A2 and A3 blocks, these spatial roles can adapt to variations in local micelle spacing and filling constraints.
+	This adaptive redistribution provides a possible microscopic origin of topology homogenization, whereby the local geometry changes the relative statistical weights of different sliding configurations without strongly localizing the full topology distribution.
+	Figs.~\ref{fig:DirectionalTopology}c--e illustrate this picture through representative compressed, matched, and stretched local filling environments.
+	Within this interpretation, the BCC [111] direction corresponds to a matched environment, the FCC [110] direction to a compressed environment, and the BCC [110] and FCC [111] directions to stretched environments.
+	These cases illustrate how variations in local micelle spacing and chain extension can redistribute topology weights while retaining a broadly accessible sliding ensemble.
+
+
+	\begin{figure}[!htb]
+		\centering
+		\includegraphics[]{./Figure/SI/fbarSphereLine.png}
+		\caption{
+		Local and isodensity-layer topology distributions for the BCC and FCC phases in Fig.~\ref{fig:PhaseTopology}.
+		(a--d) BCC phase and (e--h) FCC phase.
+		Panels (a,c,e,g) show the local distributions $P_{\mathcal R(\bm r)}(f)$ at the representative positions I--III, while panels (b,d,f,h) show the distributions over the selected isodensity layers $P_\Omega(f)$.
+		The left and right pairs correspond to $\phi_{\mathrm a}=0.25$ and $0.50$, respectively.
+		}
+		\label{fig:SphereTopologyProfiles}
+	\end{figure}
+
+	The representative local distributions in Fig.~\ref{fig:SphereTopologyProfiles} provide a direct distribution-level test of this picture.
+	Points I and III are located in A-rich regions with similar local A densities but at different spatial positions, whereas point II samples a lower A density.
+	The comparison between I and III therefore tests whether the local topology distribution is determined by the local A density alone.
+	For both BCC and FCC, points I and III favor different ranges of $f$ despite their similar values of $\phi_{\mathrm A}$.
+	Their distributions nevertheless remain broad and strongly overlapping.
+	Thus, local A density alone does not uniquely determine $P_{\mathcal R}(f)$ in the spherical phases.
+	Instead, the surrounding geometric environment redistributes the relative topology weights and shifts the position of a shallow maximum while retaining contributions from a broad range of sliding configurations.
+	The broad overlap of these local distributions explains how substantial spatial changes in $f_{\mathcal R}^\ast$ can coexist with small $D_{\mathcal R}$.
+	A change in the preferred topology therefore does not require the entire local sliding ensemble to move toward, or become localized around, the corresponding value of $f$.
+	This provides the distribution-level basis for the topology homogenization identified in the spatial maps.
+
+
+	The isodensity-layer distributions $P_\Omega(f)$ in Fig.~\ref{fig:SphereTopologyProfiles}b,d,f,h collect the A-segment contributions from all sampled positions on a given density layer.
+	For the high-density layer at $\phi_{\mathrm A}^{\mathrm{iso}}=0.95$, which samples the same A-rich interior represented by points I and III, the corresponding $P_\Omega(f)$ is noticeably smoother and exhibits weaker extrema than the local $P_{\mathcal R}(f)$, for both $\phi_{\mathrm a}=0.25$ and $0.50$.
+	This comparison shows directly that spatial averaging over the isodensity layer further reduces the contrast between local topology preferences.
+	Because different local environments can favor different $f_{\mathcal R}^\ast$ while retaining broad and overlapping $P_{\mathcal R}(f)$, their combined contribution produces a broader and more homogenized layer distribution, which may also develop more than one preferred range of $f$.
+	The local distributions therefore provide a microscopic picture consistent with the broad BCC distribution and the two-peaked FCC distribution shown in the main text.
+	They do not, however, establish that the FCC peaks arise uniquely from a particular spatial decomposition of the isodensity layer.
+
+
+	
+	The broad or multimodal $P_\Omega(f)$ observed here remains continuously populated over the sliding coordinate, with intermediate values of $f$ appreciably represented.
+	Because $f$ is an annealed internal degree of freedom, these features are more naturally interpreted as a redistribution of topology weights within the same sliding ensemble than as distinct topology populations or macrophase separation.
+	
+	Taken together, the directional, local, and isodensity-layer analyses provide a consistent microscopic picture of topology homogenization in the spherical phases.
+	Different local environments shift the preferred topology and redistribute the relative weights of sliding configurations, while the underlying local distributions remain broad and strongly overlapping.
+	Their spatial combination can therefore produce broad or multimodal $P_\Omega(f)$ without strong localization of the sliding ensemble.
+	Topology homogenization thus reflects spatially heterogeneous topology preference superimposed on a broadly accessible sliding ensemble, providing a microscopic interpretation of the overall departure from uniform sliding quantified by $\Delta S_{\mathrm{Slide}}$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The appropriate \bibliography command should be placed here.
+%% Notice that the class file automatically sets \bibliographystyle
+%% and also names the section correctly.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \bibliography{achemso-demo}
+% \bibliography{C:/Users/79323/OneDrive/Working/DailyRead/biblib}
+\bibliography{cleaned}
+
+\end{document}

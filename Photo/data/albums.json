@@ -1,0 +1,14 @@
+{
+  "landscape": {
+    "folder": "img-Norfe/Collections/landscape",
+    "images": ["img-Norfe/slide1.jpeg", "img-Norfe/slide2.jpeg"]
+  },
+  "portrait": {
+    "folder": "img-Norfe/Collections/portrait",
+    "images": ["img-Norfe/Recent/Recent1.jpeg", "img-Norfe/Recent/Recent3.jpeg", "img-Norfe/Recent/Recent5.jpeg", "img-Norfe/Recent/Recent6.jpeg"]
+  },
+  "nature": {
+    "folder": "img-Norfe/Collections/nature",
+    "images": ["img-Norfe/Recent/Recent2.jpeg", "img-Norfe/Recent/Recent4.jpeg", "img-Norfe/Recent/Recent7.jpeg"]
+  }
+}

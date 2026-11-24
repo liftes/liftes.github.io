@@ -1,0 +1,25 @@
+The three-dimensional SCFT calculations in this work were implemented by modifying and extending the open-source \texttt{pscfpp} framework~\cite{Cheong2020Opensource}.
+The self-consistent field equations were solved using Anderson mixing to accelerate iterative convergence, combined with a pseudospectral algorithm and fast Fourier transform to efficiently solve the modified diffusion equation.
+This implementation improves the numerical stability and computational efficiency of the three-dimensional calculations.
+In the simulations, the spatial domain was discretized on a uniform $64^3$ grid, and the contour step size was set to $\delta s = 10^{-3}$.
+The A and B components were assumed to have the same Kuhn length, which was used as the characteristic length unit, $b=1$.
+
+
+To more efficiently explore the possible structural space under a given set of system parameters, we employed Bayesian optimization to select initial field configurations, thereby avoiding an exhaustive search over initial structures and reducing the risk of missing potential ordered phases due to trapping in local minima~\cite{Dong2024Automated}.
+The number of variables used in the Bayesian optimization, $n_{\text{basis}}$, was chosen according to the symmetry of the prescribed space group.
+ Specifically, the conventional candidate phases L ($\text{P1}$), C ($\text{P6mm}$), G ($\text{Ia}\bar{3}\text{d}$), O$^{70}$ ($\text{Fddd}$), body-centered cubic (BCC; $\text{Im}\bar{3}\text{m}$), and face-centered cubic (FCC; $\text{Fm}\bar{3}\text{m}$) were included in the search, together with the Frank--Kasper candidates A15 ($\text{Pm}\bar{3}\text{n}$), C14 ($\text{P6}_3/\text{mmc}$), C15 ($\text{Fd}\bar{3}\text{m}$), and $\sigma$ ($\text{P4}_2/\text{mnm}$).
+For the conventional symmetry spaces, $n_{\mathrm{basis}}=8$ was used to represent the dominant initial-field modes, whereas the more complex Frank--Kasper searches employed $n_{\mathrm{basis}}=32$ to provide a higher-dimensional initial-field representation.
+For each prescribed symmetry, the Bayesian search generated multiple converged SCFT solutions, including metastable states, which were compared by their free energies.
+Within the parameter range examined here, the stable phases were L, C, G, O$^{70}$, BCC, and FCC, which are therefore shown in the equilibrium phase diagrams.
+Representative Bayesian search results and further details are provided in Sec.~\ntxref{SI-sec:BayesianSearch} of the Supporting Information.
+
+% For space groups such as Im$\bar{3}$m, Fm$\bar{3}$m, Ia$\bar{3}$d, and P6mm, we set $n_{\text{basis}}=8$ to cover the dominant mode space.
+% For space groups that may host more complex Frank--Kasper structures, such as Pm$\bar{3}$m, a higher-dimensional representation with $n_{\text{basis}}=32$ was used to enhance the expressive capability of the initial fields~\cite{Dong2024Automated}.
+
+
+On the other hand, the L--S TT formulation involves integrations over the sliding degree of freedom $f\in[0,1]$, including those in the single-chain partition function and block-density expressions.
+These integrations therefore require numerical discretization in the SCFT calculations.
+Under the equilibrium assumption that the statistical distribution over the continuous sliding degree of freedom $f$ varies smoothly with $f$, we employ an $N_{\text f}$-point Gauss--Legendre quadrature, in which the integrals over $f\in[0,1]$ are approximated using $N_{\text f}$ quadrature nodes and their corresponding numerical weights.
+This numerical method has also been used in SCFT calculations involving continuous molecular distributions, such as polydisperse copolymer systems~\cite{Sides2004Continuous}.
+The detailed Gauss--Legendre discretization of the SCFT expressions and the probability density $P_X(f)$, together with the corresponding convergence tests, is provided in Supporting Information Sec.~\ntxref{SI-sec:GaussLegendre}.
+For the topology-distribution and spatially resolved analyses, we use $N_{\text f}=16$ to provide sufficient resolution of $P_X(f)$ at an acceptable computational cost.

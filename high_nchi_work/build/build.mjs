@@ -1,0 +1,34 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { FileBlob, SpreadsheetFile, Workbook } from '@oai/artifact-tool';
+
+const dir = path.dirname(fileURLToPath(import.meta.url));
+const data = JSON.parse(await fs.readFile(path.join(dir, 'data.json'), 'utf8'));
+const template = await SpreadsheetFile.importXlsx(await FileBlob.load('Y:/2024-SCFT/pscfpp_Norfe/copolymer/triblock_slide/Excels/BlocksForODT.xlsx'));
+console.log((await template.inspect({kind:'region',sheetId:'ODT',range:'A1:M3',maxChars:2500,tableMaxRows:3,tableMaxCols:13})).ndjson);
+
+const workbook = Workbook.create();
+const sheet = workbook.worksheets.add(data.sheet);
+sheet.getRange('A1:N9').values = [data.headers, ...data.rows];
+const area = sheet.getRange('A1:N9');
+area.format.font = { name:'Calibri', size:11, bold:false, color:'#000000' };
+area.format.horizontalAlignment = 'left';
+area.format.verticalAlignment = 'center';
+area.format.wrapText = false;
+area.format.numberFormat = 'General';
+area.format.rowHeight = 16;
+const widths = [9,10,15,16,18,11,10,11,107,9,19,19,11,12];
+for (let c=0;c<widths.length;c++) sheet.getRangeByIndexes(0,c,9,1).format.columnWidth=widths[c];
+sheet.getRange('F2:F9').setNumberFormat('0.00');
+sheet.getRange('H2:H9').setNumberFormat('0.00');
+sheet.getRange('M2:M9').setNumberFormat('0.000');
+sheet.getRange('N2:N9').setNumberFormat('0.0E+00');
+workbook.recalculate();
+console.log((await workbook.inspect({kind:'region',sheetId:data.sheet,range:'A1:N9',maxChars:5500,tableMaxRows:9,tableMaxCols:14})).ndjson);
+console.log((await workbook.inspect({kind:'match',searchTerm:'#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A|#NUM!',options:{useRegex:true,maxResults:10},maxChars:1500})).ndjson);
+const image = await workbook.render({sheetName:data.sheet,range:'A1:N9',scale:1,format:'png'});
+await fs.writeFile(path.join(dir,'preview.png'),new Uint8Array(await image.arrayBuffer()));
+const output = path.join(dir,data.output_name);
+await (await SpreadsheetFile.exportXlsx(workbook)).save(output);
+console.log(`EXPORTED ${output}`);

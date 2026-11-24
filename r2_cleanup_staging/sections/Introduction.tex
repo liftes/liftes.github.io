@@ -1,0 +1,52 @@
+Polymer self-assembly, in which structurally simple macromolecules undergo microphase separation to form complex ordered structures, provides an ideal platform for studying how many-body interactions, geometric constraints, interfacial curvature, and entropic effects jointly govern ordered-structure formation.
+Such self-assembled systems therefore offer a useful physical framework for understanding the emergence of ordered structures in soft matter and serve as important platforms for designing functional polymer materials.
+Since the discovery of Frank--Kasper phases in copolymer systems~\cite{Lee2010Discovery}, stabilizing ordered structures with complex geometric features through molecular design has become one of the frontier problems in this field~\cite{Chang2024FrankKasperlike, Lai2025Effects, Su2019Identification, Zhao2019Laves}.
+For conventional block copolymers, the molecular structure is fixed by covalent connectivity during synthesis, and their microphase separation is well described by statistical field-theoretic approaches, particularly the random phase approximation (RPA) and self-consistent field theory (SCFT)~\cite{Borsali1996Scattering, Leibler1980Theory, Read1998Mean, XinghuaZhang2013Effects, Huang1998SelfConsistent, Bates1999Block, Whitmore1990Selfconsistent, Arora2016Broadly, Li2024Effect, Liu2024Nonadditive, Liu2025Orientation}.
+Guided by these theories, complex ordered structures formed by microphase separation can be predesigned by tailoring molecular and compositional parameters, including the Kuhn length ratio~\cite{AbhiramReddy2018Stable, Gillard2016Dodecagonal}, 
+component volume fraction~\cite{Qin2024Microphase, Chu2024Simulation, Xie2023Phase, Wang2023Enantiomers}, 
+grafting architecture and sequence~\cite{Chu2024Simulation, Li2021Effect, Xie2020Synergistic, Jiang2018Effects, Li2017Nonclassical}, 
+and blending with homopolymers~\cite{Xie2024Phase, Xie2021Formation, Kim2018Origins, ZhengpingZhou2018Preferred, Sides2004Continuous}, 
+thereby regulating spontaneous interfacial curvature and mitigating packing frustration, as widely validated in both theory and experiment\cite{Xu2024Architectural}.
+
+
+Despite recent progress in molecular design and phase-diagram prediction, our understanding of how molecular topology regulates spontaneous interfacial curvature and mitigates packing frustration under strong geometric constraints remains primarily phenomenological, lacking a quantitative method for characterizing packing frustration in high-curvature ordered structures such as Frank--Kasper phases~\cite{Xu2024Architectural, Zhao2025Laves}.
+This limitation stems from the fact that, in conventional copolymers, molecular topology is prescribed by covalent connectivity and remains invariant during self-assembly, lacking the ability to adapt to local interfacial geometry or geometric constraints.
+At the same time, the possible connectivity patterns among different blocks generate an exponentially growing topological space, making systematic enumeration in theory or simulation computationally prohibitive and further limiting a quantitative understanding of topology effects~\cite{Khadilkar2017Inverse, Dong2024Automated, Zhao2025Optimization, Case2021Opensource}.
+Therefore, a controlled theoretical framework is needed to introduce and quantify topological degrees of freedom, thereby clarifying the role of molecular topology in copolymer microphase separation.
+
+
+Experimentally, recent advances in synthesis have opened new possibilities for introducing controllable topological degrees of freedom at the molecular scale.
+Mechanically interlocked rotaxane and slide-ring architectures provide a direct chemical route to mobile molecular junctions, because cyclic components are mechanically rather than covalently connected to the polymer axle and can therefore move along it while preserving molecular connectivity.
+In particular, slide-ring systems without discrete binding stations can support nearly free sliding along the axle, while related macromolecular rotaxanes can carry polymer side chains on the movable ring, thereby realizing movable grafting points~\cite{Aoki2014Mechanically,Ando2025Recent,Ghiassinejad2024Dynamics,ToshikazuTakata2018Topologytransformable,ToshikazuTakata2019StimuliResponsive,Wei-JianLi2020RotaxaneBranched}.
+
+Building on these mechanically interlocked structures, chemical modification can further regulate the position or mobility of the sliding junction, enabling topology reconfiguration under external stimuli such as light or pH changes~\cite{HirokiSato2021Topologytransformable,ToshikazuTakata2020Switchable,Chak-ShingKwan2020Development,Sun2019Architecturetransformable}.
+Based on this mechanism, we refer to such systems as topology-transformable copolymers (TT copolymers).
+Their essential feature is that the side-chain grafting position is converted from a fixed topological parameter into a sliding degree of freedom, allowing the chain connectivity to be continuously adjusted and thereby enabling smooth and reversible transformations between different topological configurations.
+Accordingly, we consider the idealized equilibrium limit in which positional biases along the axle are negligible, so that the sliding coordinate can be treated as an effectively $f$-independent continuous degree of freedom~\cite{Ando2025Recent, Ghiassinejad2024Dynamics}.
+
+Within this framework, Sato and co-workers successfully synthesized copolymers capable of reversible transformations between multiple topological configurations, such as from an AB-type to an $\mathrm{A}_2\mathrm{B}_2$-type architecture, and observed bulk phase-separation behavior distinct from that of conventional block copolymers~\cite{HirokiSato2021Topologytransformable}.
+
+
+To develop a minimal yet representative theory, we use linear--star topology-transformable (L--S TT) copolymers as a model system, in which the position of a sliding grafting point along the main chain is described by a continuous sliding degree of freedom, $f\in[0,1]$.
+As illustrated in Fig.~\ref{fig:Architecture}, varying $f$ continuously transforms the molecular topology among AB, A\textsubscript{2}AB and A\textsubscript{2}B configurations~\cite{ToshikazuTakata2020Switchable, HirokiSato2021Topologytransformable, Zhao2024Phase}.
+Our previous RPA treatment employed a most-unstable-topology approximation (RPA--MUT) and optimized the RPA correlation function with respect to both the wave vector $k$ and the sliding degree of freedom $f$, yielding the most unstable fluctuation mode $k^\ast$ and reducing the topological space to a single most unstable topology, $f_{\mathrm{RPA\text{-}MUT}}^\ast$~\cite{Zhao2024Phase, Bu2019Bistable}.
+This approach predicted the topology locking effect near the spinodal and clarified the global role of sliding topology in the entropy--enthalpy balance of microphase separation. 
+However, by selecting a single most unstable topology, $f_{\mathrm{RPA\text{-}MUT}}^\ast$, the RPA--MUT approximation does not retain the statistical distribution of the sliding degree of freedom or the spatial variation in the relative contributions of different topologies to the local A-segment density.
+In ordered phases, spatial variations in interfacial curvature, density gradients, and chain-stretching penalties can favor different sliding configurations in different regions, leading to local topological adaptation that responds to interfacial geometry and heterogeneous packing constraints.
+Quantifying this mechanism requires a self-consistent field theory for L--S TT copolymers that retains the spatially resolved conditional topology distribution and its coupling to the density fields.
+
+
+In this article, we extend the self-consistent field theory to sliding-topology copolymers and apply it to L--S TT copolymers.
+Here, $\phi_{\mathrm a}$ denotes the side-chain fraction, defined as the fraction of the total A segments that are contained in the sliding side chain, and is externally prescribed by the molecular architecture.
+By contrast, $f$ is an internal statistical variable that describes the normalized grafting position along the slidable A block, while the statistical weights of different $f$ respond to the local environment.
+
+By incorporating $f$ into the free-energy functional, the theory describes how sliding modifies the conformational response and the self-consistent distribution of topology weights, and how these coupled effects influence the order--disorder transition and phase behavior.
+
+Beyond this global thermodynamic effect, the SCFT solution also provides the spatially resolved topology distribution $P_{\mathcal R(\bm r)}(f)$, which characterizes the relative contributions of chains with different topology states $f$ to the local A-segment density at position $\bm r$.
+This distribution acts as a statistical probe of local geometric and packing requirements, allowing us to characterize how sliding topology responds to interfacial geometry and local packing constraints through topology redistribution.
+Our results further show that such topology regulation enhances the stability of spherical phases and is accompanied by distinct spatial roles of the constituent blocks.
+
+Thus, the present theory connects molecular architecture and phase behavior with spatially resolved topology statistics, providing a basis for interpreting the role of conformational constraints and for designing topology-transformable copolymers.
+
+More broadly, by introducing sliding topology as a responsive probe, this framework offers a route to characterize how local interfacial geometry and packing constraints are reflected in topology redistribution, thereby helping to understand and design complex ordered phases as well as micelles formed in blend systems with fixed molecular topology.
+

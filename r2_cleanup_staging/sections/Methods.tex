@@ -1,0 +1,394 @@
+\PDFsubsection{SCFT of L--S TT Copolymers}
+
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[]{./Figure/Illustrate.png}
+        \caption{
+            (a) Illustration of an L--S TT copolymer, in which a sliding side chain is grafted onto the A block of the main chain at the sliding point through a rotaxane structure.
+            The black dashed line denotes the chain contour coordinate, and the red and blue regions represent the A and B components, respectively.
+            (b--d) Topological states at different $f$: linear AB diblock at $f=0$, intermediate A$_2$AB topology for $0<f<1$, and three-arm A$_2$B star topology at $f=1$.
+        }
+        \label{fig:Architecture}
+    \end{figure}
+
+    We consider a melt of $n$ L--S TT block copolymers in a three-dimensional volume $V$.
+    As shown in Fig.~\ref{fig:Architecture}a, each copolymer contains a total number of segments
+    $N = N_{\mathrm{A1}} + N_{\mathrm{A2}} + N_{\mathrm{A3}} + N_{\mathrm{B}}$.
+    Here, A1 denotes the side chain composed of A segments, which is grafted onto the main chain through a rotaxane unit and can freely slide along the A block of the main chain; its number of segments is $N_{\mathrm{A1}}$.
+    The main chain consists of an A block and a B block, and the position of the rotaxane sliding point further divides the A block into two sub-blocks, A2 and A3.
+    The A block between the free end of the main chain and the grafting point is referred to as the tail, denoted by A2, with $N_{\mathrm{A2}}$ segments.
+    The A block between the grafting point and the junction with the B block is referred to as the trunk, denoted by A3, with $N_{\mathrm{A3}}$ segments.
+    The B block is denoted by B and contains $N_{\mathrm{B}}$ segments.
+    Therefore, the total number of A segments on the main chain is $N_{\mathrm{A2}} + N_{\mathrm{A3}}$.
+    The overall volume fraction of the A component is defined as
+    $\bar{\phi}_{\mathrm{A}} = 1 - \bar{\phi}_{\mathrm{B}}$, where
+    $\bar{\phi}_{\mathrm{B}} = N_{\mathrm{B}}/N$ is the volume fraction of the B component.
+    The side-chain fraction is defined as
+    $\phi_{\mathrm a} = N_{\mathrm{A1}}/(N_{\mathrm{A1}} + N_{\mathrm{A2}} + N_{\mathrm{A3}})$,
+    which characterizes the fraction of A segments contained in the side chain.
+    To describe the motion of the sliding point along the main chain, we introduce a sliding variable $\kappa \in [0, N_{\mathrm{A2}} + N_{\mathrm{A3}}]$, which denotes the number of segments from the free end of the main chain to the grafting point.
+    The corresponding dimensionless sliding degree of freedom is defined as
+    \begin{equation}
+        f = \frac{\kappa}{N_{\mathrm{A2}} + N_{\mathrm{A3}}},
+    \end{equation}
+    where $N_{\mathrm{A2}} + N_{\mathrm{A3}}$ is the total length of the slidable A block on the main chain.
+    As $f$ varies from 0 to 1, the copolymer can continuously transform among the AB linear topology (Fig.~\ref{fig:Architecture}b), the A$_2$AB intermediate star-like topology (Fig.~\ref{fig:Architecture}c), and the A$_2$B star topology (Fig.~\ref{fig:Architecture}d).
+    Accordingly, the physical interpretation of $f$ as a sliding-topology variable applies only for $0<\phi_{\mathrm a}<1$; at $\phi_{\mathrm a}=0$ and $1$, the corresponding sliding branch vanishes, and the architecture reduces to a linear AB diblock.
+    
+
+    
+    To describe the connectivity between different blocks, we introduce a reference contour coordinate $s\in[0,1]$ based on the limiting topology at $f=0$, following the black dashed line in Fig.~\ref{fig:Architecture}a.
+    In this parametrization, $s$ is assigned to increase from the free end of the A1 side chain to the free end of the B block.
+    For notational convenience in constructing the propagators, each block $m\in\{\mathrm{A1},\mathrm{A2},\mathrm{A3},\mathrm{B}\}$ is further described by a block-local contour variable $s_m$, measured along the increasing direction of the reference coordinate $s$, as indicated by the green markers in Fig.~\ref{fig:Architecture}a.
+    The corresponding backward contour variable $s_m^\dagger$ is measured from the opposite end of the same block, along the decreasing direction of $s$, with $s_m+s_m^\dagger=\ell_m(f)$.
+    Thus, $s_m,s_m^\dagger\in[0,\ell_m(f)]$, where $\ell_m(f)$ denotes the normalized contour length of block $m$, with $\ell_{\mathrm{A1}}=\phi_{\mathrm a}\bar{\phi}_{\mathrm A}$, $\ell_{\mathrm{A2}}(f)=f(1-\phi_{\mathrm a})\bar{\phi}_{\mathrm A}$, $\ell_{\mathrm{A3}}(f)=(1-f)(1-\phi_{\mathrm a})\bar{\phi}_{\mathrm A}$, and $\ell_{\mathrm{B}}=\bar{\phi}_{\mathrm B}$.
+        
+
+    L--S TT copolymers possess a sliding degree of freedom, and the topology $f$ of each chain is spontaneously adjusted under thermal fluctuations and intermolecular interactions.
+    We denote the instantaneous topological configuration of the $i$-th chain by $f_i$.
+    An integration over $f_i$ is therefore introduced into the partition function~\cite{Zhao2024Phase}:
+    \begin{equation}
+        \begin{split}
+            Z = & \prod_{i=1}^n \int \mathcal{D}[\bm{R}_i(s)] \int_0^1 \mathrm{d}f_i\, \bigg\{ e^{-\beta(\mathcal{H}_0 + \mathcal{H}_1)} 
+            \times \delta[\hat{\phi}_{\mathrm{A}}(\bm{r}) + \hat{\phi}_{\mathrm{B}}(\bm{r}) - 1]\\
+            & \times \delta[\bm{R}_i(s=\phi_{\mathrm{a}}\bar{\phi}_{\mathrm{A}}+f_i(1-\phi_{\mathrm{a}})\bar{\phi}_{\mathrm{A}}) 
+            - \bm{R}_i(s=\phi_{\mathrm{a}}\bar{\phi}_{\mathrm{A}})] \bigg\}.
+        \end{split}
+    \end{equation}
+    Here, no additional intrinsic sliding potential is assigned to $f_i$, corresponding to the idealized limit in which the bare statistical weight along the sliding coordinate is uniform.
+    
+    The parameter $\beta$ is defined as $(k_{\mathrm B}T)^{-1}$, where $k_{\mathrm B}$ is the Boltzmann constant and $T$ is the temperature.
+    The vector $\bm{R}_{i}(s)$ denotes the position of the $i$-th chain at the contour variable $s$.
+    The first $\delta$ function enforces the incompressibility of the system, and the second $\delta$ function constrains one end of the sliding side chain, at $s=\phi_{\mathrm{a}}\bar{\phi}_{\mathrm{A}}$, to be connected to the main chain.
+    $\mathcal{H}_0$ represents the bonded interactions of all ideal chain segments, and $\mathcal{H}_1$ represents the nonbonded interactions.
+    Their specific forms are:
+    \begin{equation}
+        \beta \mathcal{H}_0 = 
+        \frac{3}{2 N b^2} 
+        \sum_{i=1}^n \int_0^{1} \mathrm{d}s 
+        \left[ \frac{\mathrm{d} \bm{R}_{i}(s)}{\mathrm{d}s} \right]^2,
+    \end{equation}
+    \begin{equation}
+        \beta \mathcal{H}_1 = 
+        \chi \rho_0 \int \mathrm{d}\bm{r} \, \hat{\phi}_{\mathrm{A}}(\bm{r}) \hat{\phi}_{\mathrm{B}}(\bm{r}),
+    \end{equation}
+    where $b$ is the Kuhn length, $\chi$ is the Flory--Huggins interaction parameter, and $\rho_0 = nN/V$ is the average segment density.
+    The quantities $\hat{\phi}_{\mathrm{A}}(\bm{r})$ and $\hat{\phi}_{\mathrm{B}}(\bm{r})$ are the local volume-fraction operators of the A and B components at position $\bm{r}$, respectively.
+    They are defined by
+    \begin{equation}
+        \rho_0 \hat{\phi}_{\mathrm A}(\bm{r})
+        \equiv
+        N \sum_{i=1}^n \int_0^{\bar{\phi}_{\mathrm A}} \mathrm{d}s\,
+        \delta[\bm{r} - \bm{R}_i(s)],
+    \end{equation}
+    \begin{equation}
+        \rho_0 \hat{\phi}_{\mathrm B}(\bm{r})
+        \equiv
+        N \sum_{i=1}^n \int_{\bar{\phi}_{\mathrm A}}^{1} \mathrm{d}s\,
+        \delta[\bm{r} - \bm{R}_i(s)].
+    \end{equation}
+
+
+    According to the Hubbard--Stratonovich transformation\cite{Helfand1975Theorya, Leibler1980Theory}, the partition function can be rewritten by introducing the density fields $\phi_\alpha(\bm{r})$, their conjugate fields $\omega_\alpha(\bm{r})$, and the dimensionless Lagrange-multiplier pressure field $\eta(\bm r)$ that enforces local incompressibility:
+    \begin{equation}
+        Z = \int \mathcal{D}[\phi_\alpha, \omega_\alpha, \eta]\, e^{-\mathcal{F}[\phi_\alpha, \omega_\alpha, \eta]}.
+        \label{eq:Z}
+    \end{equation}
+    The corresponding dimensionless free-energy functional is given by
+    \begin{equation}
+        \begin{split}
+            \frac{N \mathcal{F}}{\rho_0 V} 
+            = &\, \frac{1}{V} \int N \chi \phi_{\mathrm{A}}(\bm{r}) \phi_{\mathrm{B}}(\bm{r})\, \mathrm{d}\bm{r} \\
+            & - \frac{1}{V} \int \left[ \omega_{\mathrm{A}}(\bm{r}) \phi_{\mathrm{A}}(\bm{r}) 
+            + \omega_{\mathrm{B}}(\bm{r}) \phi_{\mathrm{B}}(\bm{r}) \right] \mathrm{d}\bm{r} \\
+            & + \frac{1}{V} \int \eta(\bm r)
+            \left[\phi_{\mathrm A}(\bm r)+\phi_{\mathrm B}(\bm r)-1\right] \mathrm d\bm r \\
+            & - \ln Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}],
+        \end{split}
+        \label{eq:FreeEnergy}
+    \end{equation}
+    where $V$ is the system volume.
+    Here, $Q$ is the single-chain partition function of the L--S TT copolymer: 
+    \begin{equation}
+        Q[\omega_{\mathrm{A}}, \omega_{\mathrm{B}}]
+        = \int_{0}^{1} \mathrm{d} f Q_f,
+        \label{eq:Partition}
+    \end{equation}
+    where $Q_f$ denotes the single-chain partition function for a copolymer with the grafting position fixed at a given value of $f$.
+
+
+    Under the saddle-point approximation~\cite{Leibler1980Theory, Huang1998SelfConsistent, XinghuaZhang2013Effects, Zhao2024Phase}, the SCFT equations are obtained by requiring the free-energy functional $\mathcal{F}[\phi_\alpha,\omega_\alpha,\eta]$ to be stationary with respect to the density fields $\phi_\alpha(\bm r)$, their conjugate fields $\omega_\alpha(\bm r)$, and the pressure field $\eta(\bm r)$:
+    \begin{equation}
+        \frac{\delta \mathcal{F}}{\delta \omega_\alpha(\bm{r})} 
+        = \frac{\delta \mathcal{F}}{\delta \phi_\alpha(\bm{r})} 
+        = \frac{\delta \mathcal{F}}{\delta \eta(\bm{r})}
+        = 0.
+    \end{equation}
+    This gives the self-consistent field equations:
+    \begin{equation}
+        \phi_\alpha(\bm{r}) = - \frac{V}{Q[\omega_\alpha]} \frac{\delta Q[\omega_\alpha]}{\delta \omega_\alpha(\bm{r})};
+        \label{eq:DensityField}
+    \end{equation}
+    \begin{equation}
+        \omega_\alpha(\bm{r}) = N \chi \, \phi_{\overline{\alpha} }(\bm{r}) + \eta(\bm r),
+        \label{eq:ConjugateField}
+    \end{equation}
+    \begin{equation}
+        \phi_{\mathrm A}(\bm r)+\phi_{\mathrm B}(\bm r)=1,
+        \label{eq:Incompressibility}
+    \end{equation}
+    where $\alpha, \overline{\alpha} \in \{\mathrm{A}, \mathrm{B}\}$ and $\overline{\alpha} \neq \alpha$.
+    In the canonical ensemble, $\eta(\bm r)$ is defined only up to an additive spatially uniform constant.
+    Consistent with the convention used by \texttt{pscfpp}, this gauge freedom is removed for the periodic calculations by requiring its spatial average to vanish, $V^{-1}\int \eta(\bm r)\,\mathrm d\bm r=0$.
+    
+
+    To solve the above equations, we define the forward propagator $q_m(\bm r,s_m)$ and the backward propagator $q_m^\dagger(\bm r,s_m^\dagger)$.
+    Here, $q_m(\bm r,s_m)$ represents the path integral weight for a segment to be located at $\bm r$ after propagating a contour length $s_m$ from the end of block $m$ with the smaller value of $s$.
+    Similarly, $q_m^\dagger(\bm r,s_m^\dagger)$ represents the statistical weight for a segment to be located at $\bm r$ after propagating backward a contour length $s_m^\dagger$ from the other end of the block, with $s_m+s_m^\dagger=\ell_m$.
+    For notational simplicity, the chain contour variable is denoted uniformly by $s$ below.
+    Under this parametrization, both $q_m$ and $q_m^\dagger$ satisfy the same modified diffusion equation:
+    \begin{equation}
+        \frac{\partial q_m(\bm r, s)}{\partial s}
+        =
+        \left[
+            \frac{N b^2}{6}\nabla^2 - \omega_m(\bm r)
+        \right]
+        q_m(\bm r, s).
+    \end{equation}
+    The external field $\omega_m(\bm r)$ is determined by the segment type:
+    \begin{equation}
+        \omega_m(\bm r)=
+            \begin{cases}
+                \omega_{\mathrm A}(\bm r),
+                & m \in \{\mathrm{A1},\mathrm{A2},\mathrm{A3}\}, \\
+                \omega_{\mathrm B}(\bm r),
+                & m \in \{\mathrm{B}\}.
+            \end{cases}
+    \end{equation}
+    The initial conditions of the propagators are determined by the block free ends and the topological connectivity between blocks.
+    For the three free ends of the L--S TT copolymer, the corresponding propagators are assigned unit initial weights:
+    \begin{equation}
+        q_{\mathrm{A1}}(\bm r,0)=1,\quad
+        q_{\mathrm{A2}}(\bm r,0)=1,\quad
+        q_{\mathrm B}^\dagger(\bm r,0)=1.
+    \end{equation}
+    The initial conditions for the remaining blocks are determined by the chain-connectivity constraints and are given in Supporting Information Sec.~\ntxref{SI-sec:Propagator}.
+
+
+    The single-chain partition function of the L--S TT copolymer can then be expressed in terms of the propagators as
+    \begin{equation}
+        Q_f = \frac{1}{V}
+        \int \mathrm d\bm r_f \,
+        q_{\mathrm{A1}}(\bm r_f,\ell_{\mathrm{A1}})
+        \,q_{\mathrm{A2}}(\bm r_f,\ell_{\mathrm{A2}})
+        \,q_{\mathrm{A3}}^\dagger(\bm r_f,\ell_{\mathrm{A3}}),
+        \label{eq:FixedPartition}
+    \end{equation}
+    where $\bm r_f$ is the position of the grafting point of the $\mathrm{A_2(AB)}$ molecule in three-dimensional space.
+    The first two propagators in $Q_f$ correspond to the statistical weights of the A1 side-chain and A2 tail blocks propagating from their free ends to the grafting point, respectively, whereas $q^\dagger_{\mathrm{A3}}$ represents the statistical weight of propagation from the free end of the B block, through the B block to the A/B junction, and then along the trunk block to the grafting point.
+    Therefore,
+    \begin{equation}
+        q_{\mathrm{A3}}^\dagger(\bm r, 0) = q_{\mathrm{B}}^\dagger(\bm r, \ell_{\mathrm{B}}).
+    \end{equation}
+
+
+    Combining Eqs.~\eqref{eq:Partition} and \eqref{eq:DensityField}, the density of block $m$ at position $\bm r$ can be written as
+    \begin{equation}
+        \phi_m(\bm r)
+        =
+        \int_0^1
+        \psi_m(\bm r;f)\,\mathrm df,
+        \label{eq:BlockDensity}
+    \end{equation}
+    
+    where $\psi_m(\bm r;f)$ denotes the topology-resolved density of block $m$ at position $\bm r$ for a given sliding configuration $f$. 
+    It is obtained from the corresponding propagators as
+    \begin{equation}
+        \begin{aligned}
+            \psi_m(\bm r;f)
+            &=
+            -\frac{V}{Q}
+            \frac{\delta Q_f}{\delta\omega_m(\bm r)}
+            \\
+            &=
+            \frac{1}{Q}
+            \int_0^{\ell_m(f)}
+            \mathrm ds_m\,
+            q_m(\bm r,s_m)
+            q_m^\dagger
+            \left(
+                \bm r,\ell_m(f)-s_m
+            \right).
+        \end{aligned}
+        \label{eq:TopologyDensity}
+    \end{equation}
+    Thus, $\phi_m(\bm r)$ contains the statistical contributions from all accessible sliding configurations.
+    
+
+
+    For the A component, the topology-resolved density is obtained by summing the contributions from $\mathrm{A1}$, $\mathrm{A2}$, and $\mathrm{A3}$,
+    \begin{equation}
+        \psi_{\mathrm A}(\bm r;f)
+        =
+        \psi_{\mathrm{A1}}(\bm r;f)
+        +
+        \psi_{\mathrm{A2}}(\bm r;f)
+        +
+        \psi_{\mathrm{A3}}(\bm r;f),
+        \label{eq:ATopologyDensity}
+    \end{equation}
+    and the corresponding total density is
+    \begin{equation}
+        \phi_{\mathrm A}(\bm r)
+        =
+        \phi_{\mathrm{A1}}(\bm r)
+        +
+        \phi_{\mathrm{A2}}(\bm r)
+        +
+        \phi_{\mathrm{A3}}(\bm r)
+        =
+        \int_0^1
+        \psi_{\mathrm A}(\bm r;f)\,\mathrm df.
+        \label{eq:ADensity}
+    \end{equation}
+    The B component is contributed only by the B block; therefore, $\phi_{\mathrm B}(\bm r)$ is obtained from Eq.~(\ref{eq:BlockDensity}) by setting $m=\mathrm B$. 
+
+
+\PDFsubsection{Probability Density of the Sliding Degree of Freedom}
+\label{sec:ProbabilityDensity}
+
+    As follows from Eq.~(\ref{eq:ADensity}), the A-component density is obtained by integrating the topology-resolved density $\psi_{\mathrm A}(\bm r;f)$ over all accessible $f$.
+    Since $\psi_{\mathrm A}(\bm r;f)$ is defined with the total single-chain partition function $Q=\int_0^1 Q_f\,\mathrm df$, the relative contributions of different $f$ are determined self-consistently by the equilibrium SCFT fields.
+    Unlike a blend of fixed-topology copolymers, in which the overall populations of different topologies are prescribed by the blend composition, the distribution over $f$ in an L--S TT system is itself annealed and emerges self-consistently at equilibrium.
+
+
+    
+    Accordingly, for a finite spatial region $X$, we define the probability density of the sliding degree of freedom as
+    \begin{equation}
+        P_X(f)
+        =
+        \frac{
+            \displaystyle
+            \int_X
+            \psi_{\mathrm A}(\bm r;f) \mathrm d\bm r
+        }{
+            \displaystyle
+            \int_X
+            \phi_{\mathrm A}(\bm r) \mathrm d\bm r
+        },
+        \label{eq:Probability}
+    \end{equation}
+    which satisfies $\int_0^1 P_X(f) \mathrm df=1$ according to Eq.~(\ref{eq:ADensity}).
+    
+    
+    Here, $P_X(f)$ represents the probability density of chain topologies associated with A segments sampled within region $X$. 
+    Because these A segments belong to chains characterized by different sliding configurations $f$, variations of $P_X(f)$ among different regions provide a spatially resolved statistical measure of how different topological configurations contribute to and redistribute within the ordered structure.
+    
+    The preferred topology associated with a region $X$ is defined as the location of the maximum of its topology distribution, $f_X^\ast=\arg\max_{f\in[0,1]}P_X(f)$.
+    
+
+
+    In this work, we consider three spatial regions $X\in\{\Lambda,\Omega(\phi_{\mathrm A}^{\mathrm{iso}}),\mathcal R(\bm r)\}$ to characterize the topology statistics at global, density-layer, and local spatial scales, respectively.
+    The full-space region $\Lambda$ denotes the entire computational domain of the system.
+    A finite-thickness density layer of the A component is defined as
+    \begin{equation}
+        \Omega(\phi_{\mathrm A}^{\mathrm{iso}})
+        =
+        \left\{
+            \bm r\in\Lambda
+            \,\middle|\,
+            \left|\phi_{\mathrm A}(\bm r)-\phi_{\mathrm A}^{\mathrm{iso}}\right|
+            <
+            \Delta\,\phi_{\mathrm A}^{\mathrm{iso}}
+        \right\}.
+        \label{eq:IsodensityRegion}
+    \end{equation}
+    Here, $\phi_{\mathrm A}^{\mathrm{iso}}$ specifies the sampled A-component density level, and $\Delta$ specifies the relative half-width of the density layer.
+    A local sampling region centered at position $\bm r$ is defined as
+    \begin{equation}
+        \mathcal R(\bm r)
+        =
+        \left\{
+            \bm r'\in\Lambda
+            \,\middle|\,
+            \left|\bm r'-\bm r\right|
+            \leq \Delta r
+        \right\}.
+        \label{eq:LocalRegion}
+    \end{equation}
+    The local topology distribution is understood in the limit $\Delta r\to0$.
+    Provided that $\phi_{\mathrm A}(\bm r)>0$, this gives $P_{\mathcal R(\bm r)}(f)=\psi_{\mathrm A}(\bm r;f)/\phi_{\mathrm A}(\bm r)$, corresponding to the conditional topology distribution of A segments sampled at position $\bm r$.
+    In numerical calculations, a small finite $\Delta r$ can be used as a spatial sampling tolerance to account for the discretization of the density field.
+    The sliding degree of freedom $f$ itself remains an internal molecular variable rather than a spatial field.
+
+
+\PDFsubsection{RPA Theory of L--S TT Copolymers}
+
+    The RPA is a Gaussian fluctuation theory that describes phase stability through a second-order expansion of the free-energy functional.
+    When applied around the homogeneous saddle point, it identifies the fluctuation mode that first destabilizes the disordered phase and determines the corresponding spinodal condition.\cite{Matsen1996Unifying, Wang2008Microphase, Li2020Largely}
+    The comparison between the RPA spinodal and the SCFT order--disorder transition (ODT) provides a reference for assessing whether the transition behavior is mainly controlled by molecular correlations in the homogeneous state or by nonlinear effects in the ordered phase.\cite{Li2021Simplicity, Sides2004Continuous}
+    For L--S TT copolymers, the topology-resolved RPA analysis additionally reveals the most unstable topology mode at the onset of instability, providing a microscopic reference for understanding the topology selection of ordered phases near the ODT.\cite{Zhao2024Phase}
+
+
+    The saddle-point fields are denoted as $\{\phi_\alpha^\ast,\omega_\alpha^\ast\}$, and the density fluctuation is defined as $\delta\phi_\alpha(\bm r)=\phi_\alpha(\bm r)-\phi_\alpha^\ast$.
+    Introducing these fluctuations in Fourier space gives the quadratic free-energy contribution:
+    \begin{equation}
+        \frac{\mathcal F^{(2)}}{N\rho_0}
+        =
+        \frac12
+        \int
+        \frac{\mathrm d\bm k}{(2\pi)^3}
+        \delta\phi(\bm k)
+        \Gamma_2(\bm k)
+        \delta\phi(-\bm k),
+        \label{eq:RPAKernel}
+    \end{equation}
+    where $\Gamma_2(\bm k)$ is the quadratic fluctuation kernel.
+    For an incompressible two-component system, it can be expressed as $\Gamma_2(\bm k)=\widetilde C^{-1}(\bm k)-\chi N/2$, where $\widetilde C^{-1}(\bm k)$ originates from the single-chain correlation functions and represents the conformational entropy contribution, while $\chi N/2$ represents the enthalpic driving force for A--B segregation.
+    Therefore, the RPA instability is determined by the competition between the conformational entropy encoded in the chain correlation functions and the enthalpic driving force for phase separation.
+
+
+    For L--S TT copolymers, the single-chain correlations depend on the sliding degree of freedom.
+    The component correlation functions entering the RPA kernel are obtained by averaging the fixed-topology correlations over the accessible topology ensemble:
+    \begin{equation}
+        \widetilde C_{\alpha\beta}(\bm k)
+        =
+        \int_0^1
+        P_{\mathrm{RPA}}(f)
+        \widetilde C_{\alpha\beta}^{\mathrm{Fix}}(\bm k,f)
+        \mathrm df,
+        \label{eq:RPACorrelation}
+    \end{equation}
+    where $\widetilde C_{\alpha\beta}^{\mathrm{Fix}}(\bm k,f)$ denotes the correlation function of a fixed topology $f$, and $P_{\mathrm{RPA}}(f)=Q_f[\omega_\alpha^\ast]/Q[\omega_\alpha^\ast]$ is determined by the saddle-point fields and describes the statistical weight of different sliding configurations.
+    The inverse fluctuation kernel $\widetilde C^{-1}(\bm k)$ is subsequently constructed from these component correlations, and its detailed expression is provided in Supporting Information Sec.~\ntxref{SI-sec:RPA}.
+    Therefore, the choice of $P_{\mathrm{RPA}}(f)$ determines how the sliding degree of freedom modifies the single-chain correlations and consequently the conformational entropy contribution to the fluctuation free energy.
+
+
+    When RPA is used to determine the spinodal of the freely sliding system, the expansion is performed around the homogeneous saddle point.
+    Because the homogeneous fields do not distinguish different sliding positions and changing $f$ only redistributes the connectivity among the A1, A2, and A3 blocks without changing the total A and B compositions, $Q_f[\omega_\alpha^\ast]$ is independent of $f$, giving $P_{\mathrm{RPA}}(f)=1$ over $[0,1]$.
+    We denote this formulation as RPA--Slide, which describes the actual freely sliding L--S TT system, with the corresponding fluctuation kernel $\widetilde C_{\mathrm{Slide}}^{-1}(\bm k)$ constructed from the averaged component correlations.
+    The unstable fluctuation wavelength is determined by
+    \begin{equation}
+        \left.
+        \frac{\partial
+        \widetilde C_{\mathrm{Slide}}^{-1}(k)}
+        {\partial k}
+        \right|_{k=k_{\mathrm{RPA\text{-}Slide}}^\ast}
+        =
+        0.
+    \end{equation}
+    The corresponding spinodal value is obtained from the instability condition $\widetilde C_{\mathrm{Slide}}^{-1}(k_{\mathrm{RPA\text{-}Slide}}^\ast)-N\chi^{\text{Slide}}_{\mathrm{sp}}/2=0$.
+
+
+    For comparison, our previous treatment~\cite{Zhao2024Phase} employed the most-unstable-topology approximation, denoted as RPA--MUT, to identify the fixed-topology fluctuation mode that becomes unstable first and is expected to dominate the initial formation of ordered phases near the ODT.
+    Instead of retaining the complete topology ensemble, this approximation replaces $P_{\mathrm{RPA}}(f)$ by $\delta(f-f_0)$ and evaluates each fixed-topology fluctuation channel separately.
+    The resulting kernel $\widetilde C_{\mathrm{MUT}}^{-1}(k,f_0)$ therefore depends on the candidate topology $f_0$, and the first unstable topology is identified by
+    \begin{equation}
+        (k_{\mathrm{RPA\text{-}MUT}}^\ast,
+        f_{\mathrm{RPA\text{-}MUT}}^\ast)
+        =
+        \operatorname*{arg\,min}_{k,f_0\in[0,1]}
+        \widetilde C_{\mathrm{MUT}}^{-1}(k,f_0).
+    \end{equation}
+    Here, the optimization over $f_0$ searches among all fixed-topology fluctuation channels because the topology degree of freedom is not averaged as in RPA--Slide.
+    

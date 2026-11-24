@@ -1,0 +1,145 @@
+% !TeX root = ../ResponsetoReviewers.tex
+\documentclass[../ResponsetoReviewers.tex]{subfiles}
+\begin{document}
+
+\begin{reviewersection}
+
+\begin{reviewercomment}
+    The authors have made a substantial and thoughtful revision.
+    Most of the concerns raised in my previous report have been addressed, including the restoration of the incompressibility pressure field, a clearer distinction among RPA–Slide, RPA–MUT, SCFT–Slide, and SCFT–Fix, the correction and normalization of the topology distributions, and a more careful interpretation of the entropy-related quantities.
+    The additional analyses of local curvature and topology statistics also improve the manuscript.
+
+
+    However, two important consistency issues remain in the comparison between RPA and SCFT.
+    These issues should be resolved before the central RPA–SCFT comparison and the conclusions based on it can be evaluated reliably.
+\end{reviewercomment}
+
+
+\begin{reviewergroup}{Major comments}
+
+\begin{qa}
+    The reported ordering of the RPA–Slide spinodal and SCFT–Slide ODT appears inconsistent for the same physical system.
+
+
+    In Table 1, RPA–Slide and SCFT–Slide are explicitly presented as descriptions of the same freely sliding L–S TT system at the spinodal and ODT levels, respectively.
+    In Fig. 2c, however, the SCFT–Slide ODT appears to lie slightly above the RPA–Slide spinodal over most, if not all, of the plotted range of $\phi_{\mathrm a}$:
+    \begin{equation*}
+        N\chi_{\text{ODT}}^{\text{Slide}} > N\chi_{\text{sp}}^{\text{Slide}}
+    \end{equation*}
+
+
+    The difference may be numerically small, but its sign is important.
+    For a given mean-field Hamiltonian and composition, the spinodal is the point at which the homogeneous saddle loses local stability.
+    The equilibrium ODT should therefore satisfy
+    \begin{equation*}
+        N\chi_{\text{ODT}} \leq N\chi_{\text{sp}}
+    \end{equation*}
+    with equality for a continuous transition and a lower ODT for a first-order transition.
+    This leaves two possible interpretations that should be distinguished carefully.
+    One possibility is that the quantities labeled RPA–Slide and SCFT–Slide do not in fact describe exactly the same physical or statistical system—for example, the topology ensemble, averaging procedure, or constraints may differ between the two calculations.
+    If they are intended to describe the same system, then the RPA spinodal calculation, or its connection to the SCFT free-energy functional, may contain an error.
+    Because this issue bears directly on the internal consistency of the revised RPA–SCFT framework, I regard it as serious, and a satisfactory explanation or correction should be provided before publication.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+
+\begin{qa}
+    The RPA spinodal boundaries shown in Fig. 3 appear to be RPA–MUT rather than RPA–Slide.
+
+
+    The revised manuscript makes an important distinction: RPA–Slide describes the actual freely sliding system, whereas RPA–MUT searches the family of fixed-topology channels and identifies the one that becomes unstable first.
+    However, the blue dashed curves in Fig. 3 are labeled only as “RPA spinodal boundaries,” and the accompanying text calls them the spinodal lines of the L–S TT system.
+    The curves are attributed to Ref. 48.
+    This behavior appears to correspond to the previous most-unstable-topology construction, now denoted RPA–MUT, rather than to the newly defined RPA–Slide spinodal of the full annealed ensemble.
+
+
+    Please state explicitly which RPA construction was used for each dashed curve in Fig. 3.
+    If these curves are RPA–MUT boundaries, they should be labeled and discussed as fixed-topology reference boundaries and should not be presented as the stability limit of the actual freely sliding system.
+    If they are intended to be RPA–Slide boundaries, the calculation should be documented and reconciled with Fig. 2c.
+    Again, an RPA spinodal lying below the corresponding SCFT ODT would indicate a serious problem.
+    This point is closely connected to Major Comment 1 but should be corrected independently in the phase-diagram presentation.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+\end{reviewergroup}
+
+
+\begin{reviewergroup}{More specific comments}
+
+\begin{qa}
+    The notation used for the effective conformational-entropy scale remains potentially misleading.
+
+
+    The revised manuscript now states clearly that $\Delta S_{\text{conf}}$ is not a thermodynamic entropy difference, which is an important improvement.
+    Nevertheless, the quantity is defined numerically as the difference between two RPA spinodal interaction parameters.
+    I recommend considering a notation such as $\Delta(N\chi)_{\text{conf}}$ or the term “conformational spinodal shift,” because this difference cannot be attributed solely to entropy.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+
+\begin{qa}
+    Convergence should be demonstrated for the topology statistics, not only for the SCFT free energy.
+
+
+    The use of the KL divergence relative to the uniform sliding reference is mathematically reasonable.
+    It directly measures the departure of the full topology distribution from uniform sliding and, for this reference, is equivalent to the loss of topology-distribution entropy.
+    It is not the only possible descriptor: a variance is also well defined for broad, asymmetric, or multimodal distributions, although it measures spread about the mean rather than departure from the uniform reference.
+    The manuscript should motivate the use of the KL divergence on this basis, rather than implying that it is needed because conventional distribution statistics are not well defined.
+
+
+    Supporting Information Fig. S1 shows convergence of the free energy with respect to the number of Gauss–Legendre points.
+    Several central conclusions, however, rely on the location of a shallow maximum in broad topology distributions, spline interpolation of that maximum, and KL-divergence-based quantities.
+    These observables may be more sensitive than the total free energy when the distribution is close to uniform.
+    A compact convergence check for representative values of the preferred topology and the KL-divergence-based entropy-loss measure at several values of $N_f$ would strengthen the numerical basis of the topology-locking and topology-homogenization analyses.
+    This could be provided briefly in the Supporting Information.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+
+\begin{qa}
+    The numerical details and interpretation of the new curvature analysis should be clarified.
+
+
+    The mean-curvature definition in Eq. (Re:29) is a standard level-set expression for an isodensity surface and appears appropriate.
+    My concern is therefore not with the formula itself, but with the numerical implementation and the scope of the physical interpretation.
+
+
+    The manuscript specifies only that a “weak Gaussian smoothing” is applied before evaluating the derivatives.
+    Because the curvature involves spatial derivatives and normalization by the density gradient, the smoothing width and kernel should be reported, and the qualitative correlation between curvature and preferred topology should be shown to be robust under a reasonable variation of this parameter.
+    The authors should also make clear that the curvature is evaluated and interpreted on the specified isodensity surfaces; values in nearly uniform bulk regions, where the density gradient is very small, need not have a reliable geometric meaning.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+
+\begin{qa}
+    The response concerning macrophase separation should distinguish absence of evidence from thermodynamic exclusion.
+
+
+    The additional analyses support the more limited conclusion that the U-shaped or bimodal topology distributions observed in the reported SCFT solutions should not, by themselves, be interpreted as evidence of macrophase separation.
+    The broad overlap of the local distributions, the appreciable population of intermediate sliding states, and the small local KL divergences make the authors’ redistribution interpretation plausible for the states examined.
+
+
+    However, the absence of strong localization in $P(f)$, or a small KL divergence from the uniform reference, is not a thermodynamic criterion that excludes phase coexistence.
+    Broad and overlapping topology distributions could in principle occur in two coexisting macroscopic states; the relevant test would be a free-energy or stability comparison against possible phase-separated states.
+    Because $f$ is an annealed internal coordinate rather than a conserved species label, the relevant question is whether two macroscopic states with different equilibrium topology distributions, possibly coupled to composition or morphology, can coexist at lower free energy.
+    A full coexistence analysis may be beyond the scope of this work, but the manuscript should limit its conclusion to stating that no evidence of macroscopic topology separation is observed in the SCFT solutions examined here, rather than claiming that such separation has been ruled out.
+\end{qa}
+\begin{reply}
+    Response to be added.
+\end{reply}
+
+\end{reviewergroup}
+
+\end{reviewersection}
+
+\end{document}

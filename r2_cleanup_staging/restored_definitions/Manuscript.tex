@@ -1,0 +1,347 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is a (brief) model paper using the achemso class
+%% The document class accepts keyval options, which should include
+%% the target journal and optionally the manuscript type. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[journal=mamobx,manuscript=article]{achemso}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional packages needed here.  Only include packages
+%% which are essential, to avoid problems later. Do NOT use any
+%% packages which require e-TeX (for example etoolbox): the e-TeX
+%% extensions are not currently available on the ACS conversion
+%% servers.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[version=3]{mhchem} % Formula subscripts using \ce{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If issues arise when submitting your manuscript, you may want to
+%% un-comment the next line.  This provides information on the
+%% version of every file you have used.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage{subfiles}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{booktabs}
+
+% \usepackage{xr-hyper}
+\usepackage[
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksnumbered=false,
+  bookmarksdepth=2
+]{hyperref}
+\usepackage{xr}
+\usepackage{silence}
+\WarningFilter{hyperref}{Invalid page number}
+
+\input{CrossPdfLinks.tex}
+% The URL is evaluated from build/Manuscript.pdf, not from this source file.
+\externaldocument[SI-]{./build/SupportingInformation}[SupportingInformation.pdf]
+
+\usepackage{bookmark}
+\bookmarksetup{
+	open=true,
+	depth=2
+}
+
+\newcounter{PdfSectionCounter}
+\newcounter{PdfSubsectionCounter}
+
+\newcommand{\PDFsection}[1]{%
+  \stepcounter{PdfSectionCounter}%
+  \hypertarget{pdfsection-\thePdfSectionCounter}{}%
+  \bookmark[dest=pdfsection-\thePdfSectionCounter,level=1]{#1}%
+  \section{#1}%
+}
+
+\newcommand{\PDFsubsection}[1]{%
+  \stepcounter{PdfSubsectionCounter}%
+  \hypertarget{pdfsubsection-\thePdfSubsectionCounter}{}%
+  \bookmark[dest=pdfsubsection-\thePdfSubsectionCounter,level=2]{#1}%
+  \subsection{#1}%
+}
+
+% 中文批注
+% \usepackage[utf8]{inputenc}
+% \usepackage{CJKutf8}
+% \usepackage{xcolor}
+% \usepackage[colorinlistoftodos,textsize=tiny]{todonotes}
+
+% \newif\ifshowcomments
+% % \showcommentstrue
+% \showcommentsfalse
+
+% \newcommand{\ctodo}[1]{%
+%   \ifshowcomments
+%     \todo[color=blue!15]{%
+%       \begin{CJK*}{UTF8}{gbsn}%
+%       \fontsize{7pt}{3pt}\selectfont #1%
+%       \end{CJK*}%
+%     }%
+%   \fi
+% }
+
+\usepackage{lineno}
+
+\newcommand*\mycommand[1]{\texttt{\emph{#1}}}
+
+% ============================================================
+% NT revision colors
+% ============================================================
+
+\usepackage{xcolor}
+\usepackage{xparse}
+
+% ---------- Color definitions ----------
+\definecolor{ntBlue}{HTML}{326DB6}
+\definecolor{ntRed}{HTML}{C44438}
+\definecolor{ntOrange}{HTML}{F7842D}
+\definecolor{ntGreen}{HTML}{4D7E54}
+\definecolor{ntPurple}{HTML}{865A96}
+\definecolor{ntTeal}{HTML}{008C8C}
+
+% ---------- Line-number appearance ----------
+\renewcommand{\linenumberfont}{%
+  \normalfont
+  \tiny
+  \color{black}%
+}
+
+% ---------- Switch ----------
+\newif\ifntshowcolor
+% \ntshowcolortrue
+\ntshowcolorfalse
+
+% ---------- Core command ----------
+\NewDocumentCommand{\ntc}{m m}{%
+  \ifntshowcolor
+    {\color{nt#1}#2}%
+  \else
+    #2%
+  \fi
+}
+
+% ---------- Shortcuts ----------
+\NewDocumentCommand{\ntr}{m}{\ntc{Red}{#1}}
+\NewDocumentCommand{\ntb}{m}{\ntc{Blue}{#1}}
+\NewDocumentCommand{\nto}{m}{\ntc{Orange}{#1}}
+\NewDocumentCommand{\ntg}{m}{\ntc{Green}{#1}}
+\NewDocumentCommand{\ntp}{m}{\ntc{Purple}{#1}}
+\NewDocumentCommand{\ntt}{m}{\ntc{Teal}{#1}}
+
+% ============================================================
+% Revised text with automatic page and line labels
+% ============================================================
+
+% Label convention:
+%   R1AQ1       Reviewer 1, group A, question 1
+%   R1AQ1-a     First of several non-contiguous revisions
+%   R2BQ3-b     Second revision for Reviewer 2, group B, question 3
+%
+% Usage:
+% \ntq{R1AQ1-a}{
+%   Revised manuscript text ...
+% }
+%
+% Automatically creates:
+%   rev:R1AQ1-a:start
+%   rev:R1AQ1-a:end
+%
+% The labels remain active when revision colors are switched off.
+\NewDocumentCommand{\ntq}{m +m}{%
+  \leavevmode
+  \phantomsection
+  \label{rev:#1:StartAnchor}%
+  \linelabel{rev:#1:start}%
+  {\ntr{#2}}%
+  \phantomsection
+  \label{rev:#1:EndAnchor}%
+  \linelabel{rev:#1:end}%
+  \ignorespaces
+}
+
+% Location-only anchor: no color and no visible output.
+% Use this at the beginning of a long or extensively reorganized passage.
+% Usage: \ntqpoint{R1AQ1-b}
+% Automatically creates: rev:R1AQ1-b:point
+\NewDocumentCommand{\ntqpoint}{m}{%
+  \phantomsection
+  \label{rev:#1:PointAnchor}%
+  \linelabel{rev:#1:point}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Meta-data block
+%% ---------------
+%% Each author should be given as a separate \author command.
+%%
+%% Corresponding authors should have an e-mail given after the author
+%% name as an \email command. Phone and fax numbers can be given
+%% using \phone and \fax, respectively; this information is optional.
+%%
+%% The affiliation of authors is given after the authors; each
+%% \affiliation command applies to all preceding authors not already
+%% assigned an affiliation.
+%%
+%% The affiliation takes an option argument for the short name.  This
+%% will typically be something like "University of Somewhere".
+%%
+%% The \altaffiliation macro should be used for new address, etc.
+%% On the other hand, \alsoaffiliation is used on a per author basis
+%% when authors are associated with multiple institutions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Shengda Zhao}
+\author{Jiaxin Yu}
+\affiliation[Beijing JiaoTong University]
+{School of Physical Science and Engineering, Beijing JiaoTong University, Beijing 100044, PR China}
+\author{Qiuju Chen}
+\affiliation[Beijing Normal University]
+{School of Physics and Astronomy, Beijing Normal University, Beijing 100875, PR China}
+% \author{Yangjun Yan}
+% \affiliation[Xihua University]
+% {School of Science, Xihua University, Chengdu 610039, PR China}
+\author{Quanxiao Dong}
+\affiliation[Academy of Railway Sciences Corporation Limited Beijing]
+{Railway Engineering Research Institute, China Academy of Railway Sciences Corporation Limited Beijing 100081, PR China}
+\email{dongquanxiaotjs@163.com}
+% \author{An-Chang Shi}
+% \affiliation[McMaster University]
+% {Department of Physics and Astronomy, McMaster University, Hamilton, Ontario L8S 4M1, Canada}
+% \email{shi@mcmaster.ca}
+\author{Xinghua Zhang}
+\affiliation[Beihang University]
+{School of Physics, Beihang University, Beijing, 100191, China}
+\email{zhangxinghua@buaa.edu.cn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The document title should be given as usual. Some journals require
+%% a running title from the author: this should be supplied as an
+%% optional argument to \title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Sliding Topology Regulates Microphase Separation]
+  {Sliding Topology Regulates Microphase Separation in Linear-Star Topology-Transformable Copolymers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Some journals require a list of abbreviations or keywords to be
+%% supplied. These should be set up here, and will be printed after
+%% the title and author information, if needed.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abbreviations{SCFT, ODT, BCC, FCC}
+\keywords{topology-transformable copolymers, sliding topology, self-consistent field theory, microphase separation, packing frustration}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The manuscript does not need to include \maketitle, which is
+%% executed automatically.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "tocentry" environment can be used to create an entry for the
+%% graphical table of contents. It is given here as some journals
+%% require that it is printed as part of the abstract page. It will
+%% be automatically moved as appropriate.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{tocentry}
+\centering
+\includegraphics[]{./Figure/TOC.png}
+% Some journals require a graphical entry for the Table of Contents.
+% This should be laid out ``print ready'' so that the sizing of the
+% text is correct.
+
+% Inside the \texttt{tocentry} environment, the font used is Helvetica
+% 8\,pt, as required by \emph{Journal of the American Chemical
+% Society}.
+
+% The surrounding frame is 9\,cm by 3.5\,cm, which is the maximum
+% permitted for  \emph{Journal of the American Chemical Society}
+% graphical table of content entries. The box will not resize if the
+% content is too big: instead it will overflow the edge of the box.
+
+% This box and the associated title will always be printed on a
+% separate page at the end of the document.
+
+% 8.25 cm × 4.45 cm。
+\end{tocentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The abstract environment will automatically gobble the contents
+%% if an abstract is not used by the target journal.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+	Self-assembled polymeric structures are often designed by predetermined molecular parameters, and studies that directly connect reconfigurable molecular topology to microphase-separated morphologies remain limited.
+	Here, we develop a self-consistent field theory (SCFT) for linear--star topology-transformable (L--S TT) copolymers, in which the grafting position is treated as a continuous sliding degree of freedom, $f$.
+   Numerical solutions of the SCFT equations yield a globally preferred topology, $f_\Lambda^\ast$, consistent with the most unstable fixed-topology RPA mode near the spinodal.
+  The corresponding RPA spinodal difference defines an effective conformational-entropy scale, $\Delta S_{\mathrm{conf}}$, while normalized local topology distributions quantify the sliding-distribution entropy loss, $\Delta S_{\mathrm{Slide}}$, relative to uniform sliding.
+  Moreover, the spatial redistribution of sliding configurations is obtained, revealing local topological adaptation to interfacial geometry and packing constraints.
+  The predicted phase diagrams further demonstrate that sliding topology enhances the stability of spherical phases.
+  More broadly, the theory can be generalized to diverse sliding-topology copolymers and provides a transferable quantitative framework for probing topology redistribution in response to curvature and packing constraints, offering guidance for the design of complex ordered phases and micelles in copolymer systems.
+\end{abstract}
+
+% TODO:关键词
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Start the main part of the manuscript here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\linenumbers
+
+\PDFsection{Introduction}
+	\input{sections/Introduction.tex}
+
+\PDFsection{Theory and Methods}
+	\input{sections/Methods.tex}
+
+\PDFsection{Numerical Methods}
+	\input{sections/NumericalMethods.tex}
+
+\PDFsection{Results and Discussion}
+	\input{sections/ResultsOverview.tex}
+
+\PDFsection{Conclusion}
+    \input{sections/Conclusion.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "Acknowledgement" section can be given in all manuscript
+%% classes.  This should be given within the "acknowledgement"
+%% environment, which will make the correct section or running title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{acknowledgement}
+	This work was supported by the National Natural Science Foundation of China (NSFC) 
+	(Nos. 22573005 and U22A20150) 
+	and the Fundamental Research Funds for the Central Universities 
+	(No. 2025JBZY027).
+    % This work was supported by 
+    % National Natural Science Foundation of China (NSFC) No. 22573005, 
+    % the Fundamental Research Funds for the Central Universities No. 2025JBZY027
+	% and National Natural Science Foundation of China (NSFC) No. U22A20150.
+
+\end{acknowledgement}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The same is true for Supporting Information, which should use the
+%% suppinfo environment.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{suppinfo}
+% \end{suppinfo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The appropriate \bibliography command should be placed here.
+%% Notice that the class file automatically sets \bibliographystyle
+%% and also names the section correctly.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \bibliography{achemso-demo}
+% \bibliography{C:/Users/79323/OneDrive/Working/DailyRead/biblib}
+\bibliography{cleaned}
+
+\end{document}

@@ -1,0 +1,87 @@
+Packing frustration refers to the inability of block copolymers to simultaneously produce uniform interfacial curvature for minimizing interfacial energy and domains of uniform thickness for minimizing chain-stretching energy in nonlamellar structures~\cite{Matsen1997Block,Xu2024Architectural}.
+A common mechanism for mitigating packing frustration is local segregation, where differences in block type, composition, architecture, or Kuhn length allow different chain blocks to occupy different regions of a micelle, thereby reducing local stretching inhomogeneity and curvature-induced strain~\cite{Xu2024Architectural}.
+
+
+L--S TT copolymers provide a topology-based route for responding to heterogeneous local filling environments associated with packing frustration by continuously adjusting among AB, A$_2$AB, and A$_2$B configurations through the sliding degree of freedom.
+This effect is particularly relevant in the spherical BCC and FCC phases, where the Wigner--Seitz cells contain heterogeneous local filling environments around each B-rich domain.
+At high $N\chi$, stronger segregation restricts chain conformations and amplifies the mismatch between local packing geometry and the characteristic chain extension favored by different regions of the cell.
+The sliding topology can respond to these heterogeneous constraints by redistributing its statistical weight according to the local environment.
+We therefore examine this adaptive topology redistribution in the strongly segregated BCC and FCC phases.
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[]{./Figure/Sphere-fstar.png}
+    \caption{
+        (a,b) Density distributions on the [110] section, $x=y$, for representative BCC (a, $\bar{\phi}_{\mathrm A}=0.85$) and FCC (b, $\bar{\phi}_{\mathrm A}=0.885$) phases at $N\chi=45.0$ and $\phi_{\mathrm a}=0.50$.
+        The upper and lower heat maps show $\phi_{\mathrm{A1}}(\bm r)$ and $\phi_{\mathrm{A2}}(\bm r)$, respectively; white dashed lines mark isodensity contours.
+        (c,d) Local A density $\phi_{\mathrm A}(\bm r)$ (c) and preferred topology $f_{\mathcal R}^{\ast}(\bm r)$ (d) resolved by the distance $l_{\mathrm B}$ to the nearest B-domain center.
+        Colored violins denote the BCC and FCC distributions within each $l_{\mathrm B}$ interval, with gray points showing sampled local values; only A-rich positions with $\phi_{\mathrm A}>0.5$ are included in (d).
+        (e) Spatial distributions of $f_{\mathcal R}^{\ast}(\bm r)$ on the BCC (left) and FCC (right) Wigner--Seitz cell sections, shown with a common color scale.
+        Blue spheres denote the centers of the B-component micelles, and gray frames denote the Wigner--Seitz cells.
+    }
+    \label{fig:SphereFStar}
+\end{figure}
+
+
+At $N\chi=45.0$, the systems with $\bar{\phi}_{\mathrm A}=0.85$ and $0.885$ form the BCC and FCC phases, respectively.
+For $\phi_{\mathrm a}=0.50$, the A1 sliding block and the A2 tail exhibit distinct spatial distributions in both BCC and FCC phases (Fig.~\ref{fig:SphereFStar}a,b), despite their otherwise interchangeable roles in the absence of sliding.
+To relate this topology response to the local geometry, we characterize each spatial position by its distance $l_{\mathrm B}$ from the nearest B-domain center.
+Specifically, we define
+\begin{equation}
+    l_{\mathrm B}(\bm r)
+    =
+    \min_j
+    \left|
+        \bm r-\bm r_{\mathrm B,j}
+    \right|,
+\end{equation}
+where $\bm r_{\mathrm B,j}$ denotes the center of the $j$th B-rich domain, and the distance is evaluated under periodic boundary conditions.
+As $l_{\mathrm B}/R_{\mathrm g}$ increases beyond approximately $1.2$, the sampled positions enter the A-rich interior and $\phi_{\mathrm A}(\bm r)$ approaches its high-density regime, whereas $f_{\mathcal R}^{\ast}(\bm r)$ continues to span a broad range of values (Fig.~\ref{fig:SphereFStar}c,d).
+Positions with similar $l_{\mathrm B}$ are not necessarily locally equivalent, because their orientations and neighboring packing environments within the Wigner--Seitz cell can differ.
+Accordingly, $f_{\mathcal R}^{\ast}$ cannot be characterized by $l_{\mathrm B}$ alone, but depends on the specific local geometry.
+The Wigner--Seitz cell maps in Fig.~\ref{fig:SphereFStar}e make this dependence on local geometry explicit.
+Even at comparable $l_{\mathrm B}$ within the A-rich region, different positions on the Wigner--Seitz cell section exhibit distinct $f_{\mathcal R}^{\ast}$ values, indicating that the preferred topology depends on the local packing environment rather than on the nearest-domain distance alone.
+The preferred topology is therefore determined by the specific local packing environment rather than by a single radial distance, consistent with the direction-dependent responses discussed further in Supporting Information Sec.~\ntxref{SI-sec:TopologyHomogenization}.
+
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[]{./Figure/Sphere-POmega.png}
+    \caption{
+        (a,b) Isodensity layer topology distributions $P_{\Omega}(f)$ at $\phi_{\mathrm A}^{\mathrm{iso}}=0.75$ for $\phi_{\mathrm a}=0.25$, $0.50$, and $0.75$ in the BCC (a) and FCC (b) phases at $N\chi=45$.
+        Stars mark the preferred topology $f_{\Omega}^{\ast}$, with dashed lines indicating the corresponding values of $f$.
+        (c) Distributions of the local KL divergence $D_{\mathcal R}(\bm r)$ in the A-rich regions, $\phi_{\mathrm A}(\bm r)>0.5$, for representative Gyroid, BCC, and FCC states at $N\chi=45$ and $\phi_{\mathrm a}=0.50$.
+        Red and orange violins denote the Core and Shell states, corresponding to the lower and higher $\bar{\phi}_{\mathrm A}$ branches of each morphology, respectively.
+        For G, BCC, and FCC, the corresponding Core/Shell pairs of $\bar{\phi}_{\mathrm A}$ are $(0.30,\,0.54)$, $(0.16,\,0.85)$, and $(0.14,\,0.885)$, respectively.
+        Gray points show sampled local values, and circles denote the corresponding sliding distribution entropy loss $\Delta S_{\mathrm{Slide}}/k_{\mathrm B}$.
+    }
+    \label{fig:SpherePOmega}
+\end{figure}
+
+The pronounced spatial variation of $f_{\mathcal R}^{\ast}$ does not imply a stronger localization of the full topology distribution.
+At individual spatial positions, the local distributions $P_{\mathcal R}(f)$ already remain broad and only weakly localized around their preferred topologies.
+At the same time, $f_{\mathcal R}^{\ast}$ varies among different local environments, so that spatial averaging over an isodensity layer combines local distributions centered at different preferred values of $f$.
+We refer to the combined effect of these two contributions as topology homogenization: the broad local accessibility of sliding configurations, together with the spatial redistribution of their preferred values, produces an overall topology distribution that is close to uniform sliding.
+
+Compared with the single-peaked distribution in Fig.~\ref{fig:Gyroid}c, the isodensity-layer distributions $P_{\Omega}(f)$ in the spherical phases remain broad over the accessible range of $f$ for different $\phi_{\mathrm a}$ (Fig.~\ref{fig:SpherePOmega}a,b).
+In the FCC phase, the separation between different local topology preferences is sufficiently pronounced that $P_{\Omega}(f)$ even develops a bimodal profile for some $\phi_{\mathrm a}$.
+The representative local distributions in Supporting Information Sec.~\ntxref{SI-sec:TopologyHomogenization} further show that different local environments can shift $f_{\mathcal R}^{\ast}$ while the $P_{\mathcal R}(f)$ remain broad.
+This provides a statistical basis for topology homogenization in the spherical phases.
+
+
+The degree of topology homogenization can be quantified by the local KL divergence $D_{\mathcal R}(\bm r)$ and the corresponding spatial average $\Delta S_{\mathrm{Slide}}$ weighted by the local A-segment population.
+They measure the local and overall departures from uniform sliding, respectively, as defined in Eqs.~\eqref{eq:LocalDivergence} and \eqref{eq:SlideEntropy}.
+For the representative states in Fig.~\ref{fig:SpherePOmega}c, $\Delta S_{\mathrm{Slide}}$ follows the same overall ordering, G $>$ BCC $>$ FCC, whether the A component forms the core or the shell.
+The persistence of this trend across the two structural roles of A indicates that the degree of topology homogenization is primarily associated with the different local filling constraints of these structures.
+
+Within each phase, $\Delta S_{\mathrm{Slide}}$ is consistently slightly smaller when A forms the shell than when it forms the core, indicating a modest curvature effect on topology homogenization.
+This effect is reflected more strongly in the width of the $D_{\mathcal R}$ distribution than in the value of $\Delta S_{\mathrm{Slide}}$ itself.
+This interpretation is further supported by the spatial distributions of $D_{\mathcal R}$ in Supporting Information Fig.~\ntxref{SI-fig:PhaseTopology} and by the discussion in Supporting Information Sec.~\ntxref{SI-sec:TopologyHomogenization}.
+Together with the directional topology distributions discussed in Supporting Information Sec.~\ntxref{SI-sec:TopologyHomogenization}, this homogenization suggests a microscopic picture in which the main chain primarily accommodates the connection between neighboring B-rich domains, while the sliding A1 branch adjusts its spatial contribution to fill the intervening regions.
+The relative contributions of different topologies to the local A-segment density can therefore vary across different local filling environments without strongly restricting the accessible topology ensemble.
+
+
+Thus, strong spatial variation of the preferred topology can coexist with a broadly accessible local sliding ensemble.
+This topology-based response enables the system to adapt to heterogeneous local packing environments by redistributing statistical weight toward suitable topologies while retaining broad configurational accessibility, and may thereby help reduce the stretching inhomogeneity associated with packing frustration.
+

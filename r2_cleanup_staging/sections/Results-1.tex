@@ -1,0 +1,155 @@
+\begin{table}[htbp]
+	\centering
+	\small
+	\renewcommand{\arraystretch}{1.37}
+	\caption{
+		Definitions of the theoretical systems considered for L--S TT copolymers.
+	}
+	\begin{tabular}{
+		>{\centering\arraybackslash}m{2.3cm}
+		>{\raggedright\arraybackslash}m{3.0cm}
+		>{\raggedright\arraybackslash}m{5.0cm}
+		>{\centering\arraybackslash}m{2.0cm}
+		>{\centering\arraybackslash}m{2.0cm}
+	}
+		\toprule
+		System & Topology treatment & Physical meaning & Transition parameter & Selected topology \\
+		\midrule
+        
+		RPA--Slide & Freely sliding topology & Spinodal instability of the actual sliding system & $N\chi_{\mathrm{sp}}^{\mathrm{Slide}}$ & -- \\
+        
+		RPA--MUT & Single topology channel $P_{\mathrm{RPA}}(f)=\delta(f-f_0)$ & First unstable fixed-topology mode & $N\chi_{\mathrm{sp}}^{\mathrm{MUT}}$ & $f_{\mathrm{RPA\text{-}MUT}}^\ast$ \\
+        
+		SCFT--Slide & Freely sliding topology & Effect of sliding freedom on the actual phase behavior & $N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}$ & $f_{\Lambda}^{\ast}$ \\
+        
+		SCFT--Fix & Fixed topology $f=f_{\mathrm{RPA\text{-}MUT}}^\ast$ & SCFT ODT used to assess the RPA spinodal prediction for the most unstable topology & $N\chi_{\mathrm{ODT}}^{\mathrm{Fix}}$ & -- \\
+        
+		Blend & Equal-weight mixture of all fixed topologies $f$ & Reference system for fixed-topology mixing & -- & -- \\
+
+		\bottomrule
+	\end{tabular}
+	\label{tab:TheoryModels}
+\end{table}
+
+
+
+Establishing the phase behavior of L--S TT copolymers requires identifying both the stability limit of the homogeneous phase and the onset of ordered microphase separation, characterized by the RPA spinodal and the SCFT ODT, respectively.
+Their comparison distinguishes the weak-segregation instability of the homogeneous state from nonlinear effects that shift the transition in the ordered phase.\cite{Matsen1996Unifying,Sides2004Continuous,Wang2008Microphase,Li2020Largely,Li2021Simplicity}
+We also examine the global preferred topology $f_\Lambda^\ast$ near the ODT, because the topology selected at the onset of instability provides a reference for the molecular architecture that initiates ordering.
+To separate the effects of freely sliding and fixed-topology treatments, we compare the five theoretical systems summarized in Table~\ref{tab:TheoryModels}.
+RPA--Slide and SCFT--Slide describe the freely sliding L--S TT system at the spinodal and ODT levels, whereas RPA--MUT and SCFT--Fix provide the corresponding fixed-topology references.
+
+The Blend system is included only as an equal-weight mixture of fixed topologies, thereby distinguishing prescribed statistical mixing from the self-consistently selected topology of the freely sliding L--S TT system.
+
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\linewidth]{./Figure/ODT.png}
+\caption{
+    (a) Global topology distribution $P_{\Lambda}(f)$ in the lamellar phase at fixed $\bar{\phi}_{\mathrm A}=0.50$ and $\phi_{\mathrm a}=0.50$ for different $N\chi$ near the ODT.
+    Symbols denote SCFT data, solid lines denote spline fits, and stars mark the preferred topology $f_{\Lambda}^{\ast}$.
+    (b) $P_{\Lambda}(f)$ for different $\phi_{\mathrm a}$ at fixed $\bar{\phi}_{\mathrm A}=0.50$ and $N\chi=N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}+0.5$.
+    (c) Spinodal and ODT interaction parameters as functions of $\phi_{\mathrm a}$.
+    The blue solid and red dashed lines show $N\chi_{\mathrm{sp}}^{\mathrm{MUT}}$ and $N\chi_{\mathrm{sp}}^{\mathrm{Slide}}$, while the green pluses and orange crosses show $N\chi_{\mathrm{ODT}}^{\mathrm{Fix}}$ and $N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}$, respectively.
+    The gray dashed line marks the linear-diblock reference $N\chi=10.495$.
+    (d) Preferred topology as a function of $\phi_{\mathrm a}$, with $f_{\mathrm{RPA\text{-}MUT}}^\ast$ from RPA--MUT shown by the blue line and $f_{\Lambda}^\ast$ from SCFT--Slide by the orange crosses.
+    (e) Effective conformational entropy scale $\Delta S_{\mathrm{conf}}/k_{\mathrm B}$, defined by the RPA spinodal difference $N\chi_{\mathrm{sp}}^{\mathrm{Slide}}-N\chi_{\mathrm{sp}}^{\mathrm{MUT}}$.
+    The SCFT ODT difference $N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}-N\chi_{\mathrm{ODT}}^{\mathrm{Fix}}$ is shown for comparison.
+    (f) Sliding distribution entropy loss $\Delta S_{\mathrm{Slide}}/k_{\mathrm B}$.
+}
+\label{fig:ODT}
+\end{figure}
+
+
+Fig.~\ref{fig:ODT}a shows the evolution of the global topology distribution $P_\Lambda(f)$ with increasing $N\chi$ at fixed $\bar{\phi}_{\mathrm A}=0.50$ and $\phi_{\mathrm a}=0.50$.
+At the ODT, $P_\Lambda(f)=1$, consistent with $P_{\mathrm{RPA}}(f)=1$ for RPA--Slide at the homogeneous saddle point; consequently, the freely sliding system shares the same spinodal instability as the equal-weight Blend.
+Beyond the ODT, $P_\Lambda(f)$ develops a maximum at the preferred topology $f_\Lambda^\ast$, showing that topology selection emerges with microphase separation.
+The uniform weighting in RPA--Slide does not identify a topology that preferentially contributes to the emerging ordered structure.
+RPA--MUT provides this complementary reference by searching the fixed-topology fluctuation channels for the first unstable topology, $f_{\mathrm{RPA\text{-}MUT}}^\ast$, which is expected to dominate the initial ordering near the ODT.
+Fig.~\ref{fig:ODT}b extends this comparison across $\phi_{\mathrm a}$ by showing $P_\Lambda(f)$ at $\bar{\phi}_{\mathrm A}=0.50$ and $N\chi=N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}+0.5$, revealing how the preferred topology shifts systematically with molecular architecture.
+The resulting $f_\Lambda^\ast$ is compared with $f_{\mathrm{RPA\text{-}MUT}}^\ast$ in Fig.~\ref{fig:ODT}d.
+The corresponding global preferred and mean topology statistics are discussed in Supporting Information Sec.~\ntxref{SI-sec:TopologyStatistics}, particularly Sec.~\ntxref{SI-subsec:TopologyStatisticsGlobal}.
+Their close agreement, including the star-to-linear topology-locking crossover at $\phi_{\mathrm a}\approx0.68$, supports RPA--MUT as a predictor of the topology selected at the onset of ordering~\cite{Zhao2024Phase}. 
+Here, topology locking refers to the selection of a preferred topology through the position of the distribution maximum, which identifies the topology favored by the ordered state while the full sliding ensemble can remain broadly distributed.
+
+
+
+As shown in Fig.~\ref{fig:ODT}c, $N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}$ closely follows $N\chi_{\mathrm{sp}}^{\mathrm{Slide}}$, while $N\chi_{\mathrm{ODT}}^{\mathrm{Fix}}$ similarly follows $N\chi_{\mathrm{sp}}^{\mathrm{MUT}}$; the endpoint values at $\phi_{\mathrm a}=0$ and $1$ are evaluated directly from the equivalent linear AB-diblock model. 
+The numerical determination of the ODT is described in Supporting Information Sec.~\ntxref{SI-sec:ODT}.
+ These parallel trends indicate that, near the ODT, the onset of microphase separation is governed primarily by the instability of the homogeneous phase against composition fluctuations, rather than by nonlinear effects specific to the ordered state. 
+
+Within the same RPA framework, RPA--Slide and RPA--MUT differ only in their treatment of $P_{\mathrm{RPA}}(f)$: the former retains the full sliding ensemble, whereas the latter selects the most unstable fixed-topology reference, resulting in different single-chain restoring responses.
+The resulting spinodal difference provides an effective conformational entropy scale that reflects the strength of this restoring response near the homogeneous instability, as detailed in Supporting Information Sec.~\ntxref{SI-sec:Entropy}.
+
+Accordingly,
+\begin{equation}
+    \frac{\Delta S_{\mathrm{conf}}}{k_{\mathrm B}}
+    \equiv
+    N\chi_{\mathrm{sp}}^{\mathrm{Slide}}
+    -
+    N\chi_{\mathrm{sp}}^{\mathrm{MUT}}.
+\end{equation}
+Fig.~\ref{fig:ODT}e shows $\Delta S_{\mathrm{conf}}$ obtained from the RPA spinodal difference.
+Because the SCFT ODT closely follows the corresponding RPA spinodal, the difference $N\chi_{\mathrm{ODT}}^{\mathrm{Slide}}-N\chi_{\mathrm{ODT}}^{\mathrm{Fix}}$ provides a good approximation to $\Delta S_{\mathrm{conf}}$ near the transition.
+The maximum in $\Delta S_{\mathrm{conf}}$ occurs near the crossover between the star-locked and linear-locked regimes, where the preferred topology changes most rapidly with $\phi_{\mathrm a}$.
+This behavior is consistent with the physical picture described above: competition between conformations with long and short side chains is strongest at the locking transition, maximizing the conformational benefit of sliding in this intermediate regime.
+
+
+% The effective conformational-entropy measure $\Delta S_{\mathrm{conf}}$ compares the limiting fluctuation treatments of RPA--MUT and RPA--Slide and thus characterizes the stabilization of the full sliding ensemble relative to the most unstable fixed-topology channel.
+% Once microphase separation occurs, the sliding ensemble becomes topologically and spatially biased; its entropy loss must therefore be evaluated from the local topology distribution $P_{\mathcal R(\bm r)}(f)$.
+% We define this sliding-entropy loss as
+% \begin{equation}
+%     \frac{\Delta S_{\mathrm{Slide}}}{k_{\mathrm B}}
+%     =
+%     \frac{1}{\bar{\phi}_{\mathrm A}}
+%     \int_\Lambda
+%     \frac{\mathrm d\bm r}{V}\,
+%     \phi_{\mathrm A}(\bm r)
+%     \int_0^1
+%     \mathrm df\,
+%     P_{\mathcal R(\bm r)}(f)
+%     \ln P_{\mathcal R(\bm r)}(f).
+% \end{equation}
+% Here, $\phi_{\mathrm A}(\bm r)$ weights the local entropy loss by the A-segment population sampled by $P_{\mathcal R(\bm r)}(f)$, and $\bar{\phi}_{\mathrm A}=V^{-1}\int_\Lambda\phi_{\mathrm A}(\bm r)\,\mathrm d\bm r$ provides the normalization.
+% Marginalizing over $\bm r$ yields the global distribution $P_\Lambda(f)$ and the corresponding $\Delta S_\Lambda/k_{\mathrm B}=\int_0^1P_\Lambda(f)\ln P_\Lambda(f)\,\mathrm df$, which retains the global topology bias but omits the entropy contribution from spatially heterogeneous topology selection.
+% The difference, $I_{f;\mathcal R}=(\Delta S_{\mathrm{Slide}}-\Delta S_\Lambda)/k_{\mathrm B}$, measures this missing contribution.
+% Thus, $\Delta S_{\mathrm{Slide}}$ is a distribution-based entropy loss of the ordered sliding state, whereas $\Delta S_{\mathrm{conf}}$ is inferred from the shift between the fixed-topology and fully sliding instability limits and serves as an effective conformational-stabilization scale.
+% As shown in Fig.~\ref{fig:ODT}e,f, $\Delta S_{\mathrm{Slide}}$ remains substantially smaller than $\Delta S_{\mathrm{conf}}$, consistent with the broad topology distribution that persists after the onset of microphase separation.
+% Beyond their different magnitudes, the three entropy measures also exhibit distinct maxima as functions of $\phi_{\mathrm a}$, revealing different levels of topological response.
+% $\Delta S_{\mathrm{conf}}$ is governed by the competition between topology channels at the homogeneous instability, whereas $\Delta S_{\mathrm{Slide}}$ captures the strongest spatially resolved topology selection in the ordered phase.
+% Spatial marginalization further shifts the maximum of $\Delta S_\Lambda$, because locally preferred topologies can partially cancel when integrated over $\bm r$; the strongest local topology selection therefore need not coincide with the strongest global topology bias.
+
+The effective conformational-entropy scale $\Delta S_{\mathrm{conf}}$ characterizes the increased resistance of the full sliding ensemble to composition fluctuations relative to the most unstable fixed-topology reference.
+After microphase separation, local topology selection changes the topology weights from the uniform reference distribution.
+We quantify the local departure from uniform sliding by the Kullback--Leibler (KL) divergence
+\begin{equation}
+    D_{\mathcal R}(\bm r)
+    =
+    \int_0^1
+    \mathrm df\,
+    P_{\mathcal R(\bm r)}(f)
+    \ln P_{\mathcal R(\bm r)}(f).
+    \label{eq:LocalDivergence}
+\end{equation}
+Here, $D_{\mathcal R}=0$ corresponds to a uniform local topology distribution, whereas larger $D_{\mathcal R}$ indicates a stronger local departure from uniform sliding.
+The corresponding sliding-distribution entropy loss is defined as
+\begin{equation}
+    \frac{\Delta S_{\mathrm{Slide}}}{k_{\mathrm B}}
+    =
+    \frac{1}{V\bar{\phi}_{\mathrm A}}
+    \int_\Lambda 
+    \phi_{\mathrm A}(\bm r) D_{\mathcal R}(\bm r) \, \mathrm d\bm r.
+    \label{eq:SlideEntropy}
+\end{equation}
+Here, $\phi_{\mathrm A}(\bm r)$ weights the local entropy loss by the A-segment population.
+The normalization is provided by $\bar{\phi}_{\mathrm A}=V^{-1}\int_\Lambda \phi_{\mathrm A}(\bm r)\,\mathrm d\bm r$.
+
+
+
+The local distribution is retained because different spatial regions can favor different topologies, whose preferences may be obscured in the global distribution $P_\Lambda(f)$.
+The statistical construction and the comparison with the global description are given in Supporting Information Sec.~\ntxref{SI-sec:Entropy}.
+Fig.~\ref{fig:ODT}e,f therefore characterizes two complementary aspects of the sliding response: the effective conformational entropy scale near the homogeneous instability and the sliding distribution entropy loss in the ordered phase.
+As shown in Fig.~\ref{fig:ODT}f, $\Delta S_{\mathrm{Slide}}$ peaks near $\phi_{\mathrm a}=0.5$, indicating the strongest departure of the local topology distribution from uniform sliding at the intermediate architecture.
+Its maximum occurs at a different $\phi_{\mathrm a}$ value from that of $\Delta S_{\mathrm{conf}}$, showing that the two quantities probe distinct aspects of the same sliding degree of freedom.
+Their responses remain coupled because topology redistribution and chain conformations are determined self-consistently by the same molecular fields, as discussed further in Supporting Information Sec.~\ntxref{SI-sec:Entropy}.
+

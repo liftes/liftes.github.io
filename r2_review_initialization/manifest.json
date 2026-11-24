@@ -1,0 +1,59 @@
+{
+  "r1": {
+    "cleaned.bib": "5b8a30435587003511dcd89c45c6c441d600c1ff86115a6ef8d06abb4b69985b",
+    "CrossPdfLinks.tex": "eae1b7fac148999a1bdaa5e5f5a97c23961a0243bb546d3e7535b88ddc6ab49c",
+    "Manuscript.tex": "a22231cfe7e2ef6c6ab702bcc5394253ebb96cbb4f9cbd8ead27b4b9e6741143",
+    "STATIC_AUDIT_TODO.md": "b68689deb92d5ebb8d6f3b11b00614d5d5f5f9c4171de8e33f15c78c196cb95a",
+    "SupportingInformation.tex": "78146ed4ae8811b2a288f4b1ac57046d984dcd91a702e6c5eb6912d847c044dd",
+    "#1st\\cleaned.bib": "f28177dbcc3612fc7a1b8837709eff9ca31f5c6a16895b97152fd7c4a504ad57",
+    "#1st\\ResponsetoReviewers.tex": "b54f3adfe35badeca5f8794e2861580304016b8c97b2741b3b8f49cc6762ddfc",
+    "#1st\\@source\\\u5ba1\u7a3f\u610f\u89c1\u9010\u6761\u6458\u8981\u4e0e\u4fee\u6539\u987a\u5e8f.md": "bcb9fe81145ef76e9c510aa6959fc7c8dfe629ad45ab6bfac9778a19724144da",
+    "#1st\\sections\\Reviewer1.tex": "2e1f43501d4cb86659136918094534b2f16ac836987f44639a0d318ecf7e0a5e",
+    "#1st\\sections\\Reviewer2.tex": "d1b0cd01e46ae2b90fce65043b8760b98116afe9f7629b517c3de5bffedb0941",
+    "#CoverLetter\\CoverLetter.tex": "0deff5da9077ea15ff1ddec36587b52b1cc2ee1efc58e5a56edc9fc3ce5cb0bb",
+    "build\\acs-Manuscript.bib": "da1c8455555a4731e8ae8883b5b8817e0f3e024c08aaa252594bed845e0f3084",
+    "build\\acs-SupportingInformation.bib": "da1c8455555a4731e8ae8883b5b8817e0f3e024c08aaa252594bed845e0f3084",
+    "sections\\Conclusion.tex": "65e3302856c43f302bb75038249f8afe37aa8ed76745192c36c7c1d6cdb9f01c",
+    "sections\\Introduction.tex": "acf476726d801d6854aa19219a22178bcd25c2800f581588e9568aa139e5a4e9",
+    "sections\\Methods.tex": "651e4e7376a57e2dcbf7c8e5c0e16b345f4eaa8d15cafffa149dd12c38280ffa",
+    "sections\\NumericalMethods.tex": "a73664ebca51df3ce379c31064bf47a2e268de280df3ba488c9734de6c8cacf5",
+    "sections\\Results-1.tex": "d37270538cb041ae8aeccab5d0f936fd95a3226447d6d94a889a9554f2284b86",
+    "sections\\Results-2.tex": "747dc67033e6ebd649812c8a60f2cc4bd6813237ca7ec6af5ae357c29df011ff",
+    "sections\\Results-3.tex": "e18f110d75f49a63fed704f44e3f982c0df5fcaf98bf72c89ef043eac6f5f432",
+    "sections\\Results-4.tex": "79e7c44473d349575d6de7b3cd32394cec7b56deeed2d76277bbdfcf61192e50",
+    "sections\\Results-5.tex": "26ba82364447b0cb8a04714157093196b8b337637fd96ccef35cb491fce7068f",
+    "sections\\ResultsOverview.tex": "e807b90b3fc4a6d0ea77f3398ee41e8b959efd114ac24072a26d9950657f6a0a"
+  },
+  "r2": {
+    "cleaned.bib": "5b8a30435587003511dcd89c45c6c441d600c1ff86115a6ef8d06abb4b69985b",
+    "CrossPdfLinks.tex": "eae1b7fac148999a1bdaa5e5f5a97c23961a0243bb546d3e7535b88ddc6ab49c",
+    "Manuscript.tex": "86053cdc7b0898523b9fd496ad0febaef12cf0f3e735a53bb472f0052f18c4f8",
+    "STATIC_AUDIT_TODO.md": "b68689deb92d5ebb8d6f3b11b00614d5d5f5f9c4171de8e33f15c78c196cb95a",
+    "SupportingInformation.tex": "6fb26a4facee56c7830cfe62c9d896606a2aa3dd902e4f20147339715408570f",
+    "#2st\\cleaned.bib": "f28177dbcc3612fc7a1b8837709eff9ca31f5c6a16895b97152fd7c4a504ad57",
+    "#2st\\ResponsetoReviewers.tex": "a10e974b8733434cb54729bab7250a289de9dafa901089534c2803b9b253428d",
+    "#2st\\@source\\Decision.md": "405a271a3a40a392b8934443deb11918d7bee99dff7b018beb2c543bfe090b14",
+    "#2st\\sections\\Reviewer1.tex": "1268b497f0401f829ea0835a0ae3471d61d2e515aa24de71cdf8913338d67da5",
+    "#2st\\sections\\Reviewer2.tex": "1268b497f0401f829ea0835a0ae3471d61d2e515aa24de71cdf8913338d67da5",
+    "build\\acs-Manuscript.bib": "da1c8455555a4731e8ae8883b5b8817e0f3e024c08aaa252594bed845e0f3084",
+    "build\\acs-SupportingInformation.bib": "da1c8455555a4731e8ae8883b5b8817e0f3e024c08aaa252594bed845e0f3084",
+    "sections\\Conclusion.tex": "9d6c7587d7f70166ddd519b81eac6742d9eac249bddececb42446da7fc66b39f",
+    "sections\\Introduction.tex": "b1b983ec4ccad3be716410de9f8a6d2282d555bf5e5c8c9bf67b34d5b91137ad",
+    "sections\\Methods.tex": "6720127b9a1b48b713c9eba54b8d493f34091b99dca136d890fe691f92575ce6",
+    "sections\\NumericalMethods.tex": "b08a4db4007fe2397a0ebfd880002464844c9c8d4df66e80d46a33eb90083582",
+    "sections\\Results-1.tex": "ae21b0f8db4e02c8f55c080ce2f59aa6457f95b5f654c9b7889fc39c7fbba7f9",
+    "sections\\Results-2.tex": "5adc1a89daaa48be23ff33977fcc9b2b2e2aa8cc14222e23297a6c88d50a8fbb",
+    "sections\\Results-3.tex": "61db0fbf4ba74ba5c7b8abd9fcae2c3b2a9644a9fb593b1dad74dec364ab6d14",
+    "sections\\Results-4.tex": "6b3446e615797e7f5953161dd65ddcb8561cba31545ea2c6eb5201ce44e8fd1a",
+    "sections\\Results-5.tex": "64f0ce5b9e39fffa3c5311bef01f487020210fcdd4439b22bd09e20da7df39af",
+    "sections\\ResultsOverview.tex": "23064d5a15b3cbe34d0b6055494996c9573b725f59ab8c251778d2c9ed96a9cc"
+  },
+  "sources": {
+    "7351126_File000012_143679827.pdf": "ad3447e8fd84ff2403029d35f174ce477a339f1314864e4e09122fc3aa705928",
+    "Decision.md": "405a271a3a40a392b8934443deb11918d7bee99dff7b018beb2c543bfe090b14"
+  },
+  "outputs": {
+    "#2st\\sections\\Reviewer1.tex": "a87b296e50bad082532f2f60494b8d39be526e2ab856493ec215fb5406f689b9",
+    "#2st\\sections\\Reviewer2.tex": "3c3301c38ced4c6c3533a3ec4d827ae5360617a6904fb225e808ff4c6b4a8d0d"
+  }
+}

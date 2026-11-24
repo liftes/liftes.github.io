@@ -1,0 +1,230 @@
+\documentclass[en]{response}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{subfiles}
+
+% The compact contents implementation is provided by response.cls.
+
+% ============================================================
+% Cross-reference appearance
+% ============================================================
+\usepackage{booktabs}
+\usepackage{array}
+
+\usepackage{microtype}
+\emergencystretch=1em
+
+\usepackage{xcolor}
+\input{\subfix{../CrossPdfLinks.tex}}
+
+\definecolor{refBlue}{HTML}{24558A}
+\definecolor{unresolvedRed}{HTML}{C44438}
+
+\NewDocumentCommand{\xrefok}{m}{%
+  {\color{refBlue}#1}%
+}
+
+\NewDocumentCommand{\xrefbad}{m}{%
+  {\color{unresolvedRed}\bfseries #1}%
+}
+
+% ============================================================
+% Cross-references to the revised manuscript
+% ============================================================
+
+% \usepackage{xr-hyper}
+\usepackage{xr}
+\usepackage{refcount}
+
+\usepackage{silence}
+\WarningFilter{hyperref}{Invalid page number}
+
+% Read labels from:
+%   #ACS-R1/build/Manuscript.aux
+%
+% \subfix keeps the path valid when Reviewer1.tex or Reviewer2.tex
+% is compiled separately as a subfile.
+% The URLs are evaluated from #1st/build/ResponsetoReviewers.pdf.
+\externaldocument[SI-]{\subfix{../build/SupportingInformation}}[../../build/SupportingInformation.pdf]
+\externaldocument[M-]{\subfix{../build/Manuscript}}[../../build/Manuscript.pdf]
+
+% ============================================================
+% Cross-references to the revised manuscript
+% ============================================================
+
+% A colored revision range created by \ntq{<ID>}{...}.
+% Examples:
+%   p. 6, line 115
+%   p. 6, lines 115--117
+%   pp. 6--7, lines 115--121
+\NewDocumentCommand{\msloc}{m}{%
+  \IfRefUndefinedExpandable{M-rev:#1:StartAnchor}
+    {\xrefbad{[unresolved manuscript location]}}
+    {%
+      \ntcrosslink{M-rev:#1:StartAnchor}{\xrefok{%
+      \ifnum
+        \getpagerefnumber{M-rev:#1:start}=
+        \getpagerefnumber{M-rev:#1:end}
+        p.~\pageref*{M-rev:#1:start}%
+      \else
+        pp.~\pageref*{M-rev:#1:start}--%
+        \pageref*{M-rev:#1:end}%
+      \fi
+      ,\space
+      \ifnum
+        \getrefnumber{M-rev:#1:start}=
+        \getrefnumber{M-rev:#1:end}
+        line~\ref*{M-rev:#1:start}%
+      \else
+        lines~\ref*{M-rev:#1:start}--%
+        \ref*{M-rev:#1:end}%
+      \fi
+      }}%
+    }%
+}
+
+% A location-only anchor created by \ntqpoint{<ID>}.
+\NewDocumentCommand{\mspoint}{m}{%
+  \IfRefUndefinedExpandable{M-rev:#1:PointAnchor}
+    {\xrefbad{[unresolved manuscript location]}}
+    {%
+      \ntcrosslink{M-rev:#1:PointAnchor}{\xrefok{%
+        p.~\pageref*{M-rev:#1:point},
+        line~\ref*{M-rev:#1:point}%
+      }}%
+    }%
+}
+
+% Page-only reference to an ordinary manuscript label.
+\NewDocumentCommand{\mspage}{m}{%
+  \IfRefUndefinedExpandable{M-#1}
+    {\xrefbad{[unresolved manuscript reference]}}
+    {\xrefok{p.~\ntxpageref{M-#1}}}%
+}
+
+% Numbered manuscript figures.  The optional braced second argument is a panel
+% suffix, so \msfig{fig:Example}{a} renders as ``Fig. 1a (p. 2)''.
+\NewDocumentCommand{\msfig}{m g}{%
+  \IfRefUndefinedExpandable{M-#1}
+    {\xrefbad{[unresolved manuscript figure]}}
+    {\xrefok{Fig.~\ntxref{M-#1}\IfNoValueTF{#2}{}{#2} (p.~\ntxpageref{M-#1})}}%
+}
+
+\NewDocumentCommand{\mseq}{m}{%
+  \IfRefUndefinedExpandable{M-#1}
+    {\xrefbad{[unresolved manuscript equation]}}
+    {\xrefok{Eq.~(\ntxref{M-#1}) (p.~\ntxpageref{M-#1})}}%
+}
+
+\NewDocumentCommand{\mstable}{m}{%
+  \IfRefUndefinedExpandable{M-#1}
+    {\xrefbad{[unresolved manuscript table]}}
+    {\xrefok{Table~\ntxref{M-#1} (p.~\ntxpageref{M-#1})}}%
+}
+
+
+% ============================================================
+% Cross-references to the Supporting Information
+% ============================================================
+
+% Colored revision range in SI.
+\NewDocumentCommand{\siloc}{m}{%
+  \IfRefUndefinedExpandable{SI-rev:#1:StartAnchor}
+    {\xrefbad{[unresolved SI location]}}
+    {%
+      \ntcrosslink{SI-rev:#1:StartAnchor}{\xrefok{%
+      \ifnum
+        \getpagerefnumber{SI-rev:#1:start}=
+        \getpagerefnumber{SI-rev:#1:end}
+        p.~\pageref*{SI-rev:#1:start}%
+      \else
+        pp.~\pageref*{SI-rev:#1:start}--%
+        \pageref*{SI-rev:#1:end}%
+      \fi
+      ,\space
+      \ifnum
+        \getrefnumber{SI-rev:#1:start}=
+        \getrefnumber{SI-rev:#1:end}
+        line~\ref*{SI-rev:#1:start}%
+      \else
+        lines~\ref*{SI-rev:#1:start}--%
+        \ref*{SI-rev:#1:end}%
+      \fi
+      }}%
+    }%
+}
+
+% Location-only anchor in SI.
+\NewDocumentCommand{\sipoint}{m}{%
+  \IfRefUndefinedExpandable{SI-rev:#1:PointAnchor}
+    {\xrefbad{[unresolved SI location]}}
+    {%
+      \ntcrosslink{SI-rev:#1:PointAnchor}{\xrefok{%
+        p.~\pageref*{SI-rev:#1:point},
+        line~\ref*{SI-rev:#1:point}%
+      }}%
+    }%
+}
+
+% Page-only reference to an ordinary SI label.
+\NewDocumentCommand{\sipage}{m}{%
+  \IfRefUndefinedExpandable{SI-#1}
+    {\xrefbad{[unresolved SI reference]}}
+    {\xrefok{p.~\ntxpageref{SI-#1}}}%
+}
+
+% SI section number only.
+\NewDocumentCommand{\sisec}{m}{%
+  \IfRefUndefinedExpandable{SI-#1}
+    {\xrefbad{[unresolved SI section]}}
+    {\xrefok{\ntxref{SI-#1}}}%
+}
+
+% SI figure number only; the optional braced second argument is a panel suffix.
+\NewDocumentCommand{\sifig}{m g}{%
+  \IfRefUndefinedExpandable{SI-#1}
+    {\xrefbad{[unresolved SI figure]}}
+    {\xrefok{\ntxref{SI-#1}\IfNoValueTF{#2}{}{#2}}}%
+}
+
+% SI equation number only.
+\NewDocumentCommand{\sieq}{m}{%
+  \IfRefUndefinedExpandable{SI-#1}
+    {\xrefbad{[unresolved SI equation]}}
+    {\xrefok{\ntxref{SI-#1}}}%
+}
+
+% SI table number only.
+\NewDocumentCommand{\sitable}{m}{%
+  \IfRefUndefinedExpandable{SI-#1}
+    {\xrefbad{[unresolved SI table]}}
+    {\xrefok{\ntxref{SI-#1}}}%
+}
+
+% 一个简单的使用案例如下：
+% \noindent\textbf{Cross-reference test (remove before submission).}
+% Revision range: \msloc{R1AQtest-a};\\
+% single revision point: \mspoint{R1AQtest-b};\\
+% page only: \mspage{fig:01};\\
+% figure: \msfig{fig:01};\\
+% equation: \mseq{eq:FreeEnergy};\\
+% table-format test using the existing figure label: \mstable{fig:01}.
+
+\title{Response to Reviewers}
+
+\begin{document}
+
+\maketitle
+
+% Replace the following placeholder when the new manuscript ID is available.
+\noindent\textbf{Manuscript ID:} [To be added.]
+
+
+\responsecontents[2]
+
+\newpage
+\subfile{sections/Reviewer1}
+\newpage
+\subfile{sections/Reviewer2}
+
+\end{document}
