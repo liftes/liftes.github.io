@@ -2,6 +2,11 @@
    Add a new entry when a work needs richer interpretation. */
 
 window.WORK_NOTES = {
+    Chen2026Sliding: {
+        summary: "Develops SCFT for sliding-topology copolymers in selective solvents, showing how sliding junctions regulate micellization thresholds, interfacial curvature, and morphology selection.",
+        contribution: "Developed the SCFT framework for copolymer/homopolymer blends and the theoretical analysis linking sliding topology to micellization and morphology selection."
+    },
+
     zhang2026wetting: {
         summary: "Demonstrates partial wetting in an externally driven ternary laning system, showing transitions among drying, partial-wetting, and complete-wetting states and a Neumann-type force balance at the contact line.",
         contribution: "Developed and refined an Onsager-based theoretical description of phase separation in multicomponent laning systems."
