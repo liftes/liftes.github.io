@@ -7,24 +7,42 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v6
+      - name: Prepare static website
+        shell: bash
+        run: |
+          set -euo pipefail
+          site_dir="$RUNNER_TEMP/github-pages-site"
+          mkdir -p "$site_dir"
+          cp index.html app.js styles.css research.css brand.css "$site_dir/"
+          cp -R assets data Photo "$site_dir/"
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v5
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/github-pages-site
+
   deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
+        with:
+          artifact_name: github-pages
